@@ -1,0 +1,32 @@
+th {
+  text-align: left;
+  font-weight: bold;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  color: #0b0c10;
+}
+
+.firstRow {
+  background-color: #c5c6c7;
+  border-bottom: 1px solid #0b0c10;
+}
+
+.secondRow {
+  background-color: #ffffff;
+  border-bottom: 1px solid #0b0c10;
+}
+
+.headerSection {
+  border-bottom: 1px solid #0b0c10;
+  border-top: 1px solid #0b0c10;
+  background-color: #45a29e;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  height: 50px;
+  padding: 0px;
+}

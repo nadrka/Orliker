@@ -1,0 +1,41 @@
+.RegisterBox {
+  margin: 100px auto;
+  width: 35%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.RegisterButton {
+  width: 40%;
+  background-color: #45a29e;
+  border: none;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px;
+  margin: 20px 10px 40px 10px;
+  font-weight: bold;
+}
+
+.RegisterButton:first-of-type {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.RegisterButton:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.Success {
+  color: #5c9210;
+}
+
+.Danger {
+  color: #944317;
+}

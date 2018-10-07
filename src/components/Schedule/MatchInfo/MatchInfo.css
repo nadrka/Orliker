@@ -1,0 +1,14 @@
+.MatchInfo {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  position: relative;
+  align-items: center;
+  width: 80%;
+  background-color: #f1f1f1;
+  margin: 20px auto 20px auto;
+  min-height: 100px;
+  border-radius: 15px;
+}

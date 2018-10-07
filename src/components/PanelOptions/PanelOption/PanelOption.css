@@ -1,0 +1,34 @@
+.Option {
+  display: table;
+  width: 30%;
+  height: 50px;
+  color: #1f2833;
+  font-size: 150%;
+  background-color: #45a29e;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.ActiveOption {
+  display: table;
+  width: 30%;
+  height: 50px;
+  color: #66fcf1;
+  font-size: 150%;
+  background-color: #45a29e;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.Option:hover {
+  width: 30%;
+  color: #66fcf1;
+  background-color: #45a29e;
+}
+span {
+  display: table-cell;
+  vertical-align: middle;
+}
+span:hover {
+  color: #66fcf1;
+}

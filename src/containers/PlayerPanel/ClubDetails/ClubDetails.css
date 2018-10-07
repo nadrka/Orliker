@@ -1,0 +1,25 @@
+.ClubDetails {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5%;
+  margin-left: 32%;
+}
+.Span {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+span {
+  text-align: center;
+  vertical-align: middle;
+}
+
+span:hover {
+  cursor: pointer;
+  color: #45a29e;
+}
+
+.Active {
+  color: #45a29e;
+}

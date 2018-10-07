@@ -1,0 +1,17 @@
+.kg-nav {
+  background-color: #0b0c10;
+  color: white;
+  padding: 20px;
+}
+
+.kg-nav-list {
+  font-size: 25px;
+  padding: 10px;
+}
+
+.kg-nav-item {
+  color: white;
+}
+.kg-nav-item:hover {
+  color: yellow;
+}

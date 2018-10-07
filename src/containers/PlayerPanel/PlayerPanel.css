@@ -1,0 +1,10 @@
+.PlayerPanel {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background: #1f2833;
+  color: white;
+}
+.ProfilePicture {
+  margin-left: 10%;
+}

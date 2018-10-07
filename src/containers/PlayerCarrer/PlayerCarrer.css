@@ -1,0 +1,26 @@
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 40px auto 40px auto;
+  font-size: 20px;
+}
+
+.borderedTr {
+  border-top: solid 1px #2b7a78;
+  border-bottom: solid 1px #2b7a78;
+  background-color: #3aafa9;
+  margin-bottom: 10px;
+  border-collapse: separate;
+  border-spacing: 5em;
+}
+.superTD {
+  text-align: left;
+  font-size: 20px;
+  padding-top: 17px;
+  padding-left: 17px;
+  padding-bottom: 17px;
+}
+
+tr:nth-child(even) {
+  background-color: #def2f1;
+}
