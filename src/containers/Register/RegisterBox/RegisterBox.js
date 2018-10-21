@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./RegisterBox.css";
 import Form from "../../../components/Form/Form";
-import Aux from "../../../hoc/Aux";
+//import Aux from "../../../hoc/Aux";
 
 class RegisterBox extends Component {
   state = {
@@ -160,17 +160,13 @@ class RegisterBox extends Component {
     const updatedFormElement = {
       ...updatedOrderForm.fields[inputIdentifier]
     };
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedOrderForm.fields[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm.fields) {
-      formIsValid =
-        updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
+      formIsValid = updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
     }
     updatedOrderForm.formIsValid = formIsValid;
     this.setState({
@@ -179,9 +175,7 @@ class RegisterBox extends Component {
   };
 
   handleInputChanged = (value, inputIdentifier) => {
-    const form = this.state.isLogin
-      ? this.state.loginForm
-      : this.state.registrationForm;
+    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
 
     const updatedOrderForm = {
       ...form
@@ -200,15 +194,9 @@ class RegisterBox extends Component {
 
   render() {
     const form = this.state.isLogin ? (
-      <Form
-        fields={this.state.loginForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.loginForm.fields} onChanged={this.handleInputChanged} />
     ) : (
-      <Form
-        fields={this.state.registrationForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.registrationForm.fields} onChanged={this.handleInputChanged} />
     );
 
     return (
@@ -216,9 +204,7 @@ class RegisterBox extends Component {
         <div>
           <h4>Zaloguj się, aby dołączyć do drużyny lub założyć własną!</h4>
           <button onClick={this.handleLoginButtonClicked}>Zaloguj się</button>
-          <button onClick={this.handleRegistrationButtonClicked}>
-            Załóż konto
-          </button>
+          <button onClick={this.handleRegistrationButtonClicked}>Załóż konto</button>
         </div>
         {form}
         <button className="RegisterButton">Zarejestruj się</button>

@@ -7,6 +7,8 @@ import Register from "../Register/RegisterBox/RegisterBox";
 import LeagueTable from "../LeagueTable/LeagueTable";
 import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
 import TeamPanel from "../TeamPanel/TeamPanel";
+import News from "../News/News";
+import SingleNews from "../SingleNews/SingleNews";
 class NavigationBar extends Component {
   state = {};
   render() {
@@ -30,12 +32,7 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img
-                src={soccerLogo}
-                width="35"
-                height="35"
-                style={{ marginRight: "7px" }}
-              />
+              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
               NL3
             </div>
             <Navbar.Toggle />
@@ -43,8 +40,11 @@ class NavigationBar extends Component {
           <Navbar.Collapse>
             <Nav />
             <Nav pullRight>
+              <NavItem eventKey={0}>
+                <Link to="/news">Aktualności</Link>
+              </NavItem>
               <NavItem eventKey={1} href="#">
-                <Link to="/schedule">Terminarz </Link>
+                <Link to="/schedule">Terminarz</Link>
               </NavItem>
               <NavItem eventKey={2}>
                 <Link to="/table">Tabela</Link>
@@ -61,6 +61,8 @@ class NavigationBar extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        <Route path="/news" exact component={News} />
+        <Route path="/singleNews" exact component={SingleNews} />
         <Route path="/panel/player" exact component={PlayerPanel} />
         <Route path="/panel/team" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../../hoc/Aux";
+//import Aux from "../../hoc/Aux";
 import ClubDetails from "./ClubDetails/ClubDetails";
 import PlayerDetails from "./PlayerDetails/PlayerDetails";
 import PlayerPanelOptions from "./PlayerPanelOptions/PlayerPanelOptions";
@@ -30,7 +30,7 @@ class PlayerPanel extends Component {
         break;
     }
     return (
-      <Aux>
+      <div>
         <div className="PlayerPanel">
           <div className="ProfilePicture">
             <img src={profilePicture} width="300" height="300" />
@@ -40,7 +40,7 @@ class PlayerPanel extends Component {
         </div>
         <PlayerPanelOptions onOptionChanged={this.handleOptionChange} />
         {choosenOption}
-      </Aux>
+      </div>
     );
   }
 }
