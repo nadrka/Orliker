@@ -1,12 +1,33 @@
 .Header {
   width: 80%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   background: #1f2833;
   opacity: 0.8;
   color: white;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.TeamPosition {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 80%;
+  font-size: 20px;
+  padding: 15px;
 }
 
 .LeagueLabel {
-  font-size: 20px;
+  padding: 15px;
+  font-size: 28px;
+}
+
+.Result {
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }

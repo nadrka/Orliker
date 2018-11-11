@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import MatchDetails from "../../components/Match/Details/MatchDetails";
 import MatchHeader from "../../components/Match/Header/MatchHeader";
-import StatisticSwitcher from "../../components/Match/StatisticSwitcher/StatisticSwitcher";
+import "./Match.css";
+import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 
 class Match extends Component {
   state = {
@@ -33,15 +34,40 @@ class Match extends Component {
       referee: {
         id: 1,
         name: "Janusz Spawacz"
-      }
+      },
+      homeTeam: true
     }
+  };
+
+  updateOption = isHomeTeamClicked => {
+    this.setState({ homeTeam: isHomeTeamClicked });
+  };
+
+  showHomeTeamStatistics = choosenOption => {
+    this.updateOption(false);
+  };
+  showAwayTeamStatistics = choosenOption => {
+    this.updateOption(true);
   };
   render() {
     return (
       <div>
-        <MatchHeader />
+        <MatchHeader match={this.state.match} />
         <MatchDetails />
-        <StatisticSwitcher />
+        <div className="Switcher">
+          <PanelOption
+            name={this.state.match.firstTeam.name}
+            clicked={this.showHomeTeamStatistics}
+            key="homeTeam"
+            isActive={!this.state.homeTeam}
+          />
+          <PanelOption
+            name={this.state.match.secondTeam.name}
+            clicked={this.showAwayTeamStatistics}
+            key="awayTeam"
+            isActive={this.state.homeTeam}
+          />
+        </div>
       </div>
     );
   }

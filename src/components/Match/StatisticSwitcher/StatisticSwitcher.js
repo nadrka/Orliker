@@ -1,14 +1,20 @@
 import React from "react";
 import PanelOption from "../../PanelOptions/PanelOption/PanelOption";
-
-const statisticSwitcher = () => {
-  const TeamEnum = { homeTeam: 1, awayTeam: 2 };
-  var currentTeam = TeamEnum.awayTeam;
-
+import "./StatisticSwitcher.css";
+const statisticSwitcher = props => {
   return (
-    <div>
-      <PanelOption />
-      <PanelOption />
+    <div className="Switcher">
+      <PanelOption
+        isActive={true}
+        name={props.firstTeam.name}
+        clicked={props.showAwayTeamStatistics}
+        key="homeTeam"
+      />
+      <PanelOption
+        name={props.secondTeam.name}
+        clicked={props.showAwayTeamStatistics}
+        key="awayTeam"
+      />
     </div>
   );
 };
