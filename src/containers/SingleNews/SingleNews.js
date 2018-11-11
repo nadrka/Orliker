@@ -8,7 +8,19 @@ class SingleNews extends Component {
   render() {
     return (
       <div className="flex mainContainer">
-        <div className="header">Aktualności</div>
+        <div className="header">
+          <a
+            href="/news"
+            className="btn btn-info btn-lg"
+            style={{
+              backgroundColor: "#d3d3d3",
+              borderColor: "#d2d2d2"
+            }}
+          >
+            <span className="glyphicon glyphicon-arrow-left" />
+          </a>
+          Aktualności
+        </div>
         <div className="newsContainer">
           <div className="newsHeader">Lorem ipsum</div>
           <div className="newsDate">07.10.2018 15:43</div>

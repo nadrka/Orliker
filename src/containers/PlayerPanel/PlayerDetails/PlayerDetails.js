@@ -27,18 +27,31 @@ class PlayerDetails extends Component {
       }
     }
   };
+
+  /*async getData() {
+    let response = await fetch(`http://127.0.0.1:3000/api/players/1`, {
+      method: "GET",
+      headers: Object.assign({
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      })
+    });
+    let responseJson = await response.json();
+    if (response.status === 200) {
+      return responseJson;
+    } else {
+      throw new Error("BLAD!");
+    }
+  }
+  async componentDidMount() {
+    let data = await this.getData();
+    console.log(data);
+  }*/
   render() {
-    const transformedPlayerDetails = Object.keys({ ...this.state.labels }).map(
-      key => {
-        return (
-          <PlayerDetail
-            key={key}
-            name={this.state.labels[key].title}
-            value={this.state.labels[key].value}
-          />
-        );
-      }
-    );
+    const transformedPlayerDetails = Object.keys({ ...this.state.labels }).map(key => {
+      return <PlayerDetail key={key} name={this.state.labels[key].title} value={this.state.labels[key].value} />;
+    });
     return <div className="PlayerDetails">{transformedPlayerDetails}</div>;
   }
 }
