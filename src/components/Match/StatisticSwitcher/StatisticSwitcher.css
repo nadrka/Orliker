@@ -1,8 +1,0 @@
-.Switcher {
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  flex: 1;
-  justify-content: space-evenly;
-}
