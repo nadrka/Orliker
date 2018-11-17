@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./News.css";
+import { Link } from "react-router-dom";
 
 class News extends Component {
   text =
@@ -10,9 +11,9 @@ class News extends Component {
       return (
         <div>
           {text.substring(0, 450) + "..."}{" "}
-          <a className="linkContainer" href="/singleNews">
+          <Link className="linkContainer" to="/singleNews">
             Zobacz więcej
-          </a>
+          </Link>
         </div>
       );
     } else return text;

@@ -2,6 +2,7 @@ import React from "react";
 import MatchResult from "../MatchResult/MatchResult";
 import MatchDate from "../MatchDate/MatchDate";
 import "./MatchInfo.css";
+import { Link } from "react-router-dom";
 const matchInfo = props => {
   return (
     <div className="MatchInfo">
@@ -12,8 +13,8 @@ const matchInfo = props => {
         secondTeam={props.matchDetails.secondTeam}
       />
       <div>
-        <a
-          href="#"
+        <Link
+          to="#"
           className="btn btn-info btn-lg"
           style={{
             backgroundColor: "#d3d3d3",
@@ -21,7 +22,7 @@ const matchInfo = props => {
           }}
         >
           <span className="glyphicon glyphicon-arrow-right" />
-        </a>
+        </Link>
       </div>
     </div>
   );

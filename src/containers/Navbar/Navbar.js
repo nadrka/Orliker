@@ -6,9 +6,9 @@ import PlayerPanel from "../PlayerPanel/PlayerPanel";
 import Register from "../Register/RegisterBox/RegisterBox";
 import LeagueTable from "../LeagueTable/LeagueTable";
 import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
-import TeamPanel from "../TeamPanel/TeamPanel";
 import News from "../News/News";
 import SingleNews from "../SingleNews/SingleNews";
+import TeamPanel from "../TeamPanel/TeamPanel";
 import Match from "../Match/Match";
 class NavigationBar extends Component {
   state = {};
@@ -33,12 +33,7 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img
-                src={soccerLogo}
-                width="35"
-                height="35"
-                style={{ marginRight: "7px" }}
-              />
+              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
               NL3
             </div>
             <Navbar.Toggle />

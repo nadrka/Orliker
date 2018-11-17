@@ -5,7 +5,7 @@
 .mainContainer {
   flex: 1;
   flex-direction: column;
-  background-color: #0b0c10;
+  background-color: #000;
   border-radius: 20px;
   padding-bottom: 10px;
   margin-right: 10%;

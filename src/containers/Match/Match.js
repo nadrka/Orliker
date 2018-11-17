@@ -60,12 +60,14 @@ class Match extends Component {
             clicked={this.showHomeTeamStatistics}
             key="homeTeam"
             isActive={!this.state.homeTeam}
+            howManyButtons={2}
           />
           <PanelOption
             name={this.state.match.secondTeam.name}
             clicked={this.showAwayTeamStatistics}
             key="awayTeam"
             isActive={this.state.homeTeam}
+            howManyButtons={2}
           />
         </div>
       </div>

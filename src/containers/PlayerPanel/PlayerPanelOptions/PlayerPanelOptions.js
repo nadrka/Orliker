@@ -48,6 +48,7 @@ class PlayerPanelOptions extends Component {
           isActive={this.state.options[key].isActive}
           clicked={this.handleOptionClick}
           option={key}
+          howManyButtons={Object.keys(this.state.options).length}
         />
       );
     });

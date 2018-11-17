@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./SingleNews.css";
+import { Link } from "react-router-dom";
 
 class SingleNews extends Component {
   text =
@@ -9,8 +10,8 @@ class SingleNews extends Component {
     return (
       <div className="flex mainContainer">
         <div className="header">
-          <a
-            href="/news"
+          <Link
+            to="/news"
             className="btn btn-info btn-lg"
             style={{
               backgroundColor: "#d3d3d3",
@@ -18,7 +19,7 @@ class SingleNews extends Component {
             }}
           >
             <span className="glyphicon glyphicon-arrow-left" />
-          </a>
+          </Link>
           Aktualności
         </div>
         <div className="newsContainer">

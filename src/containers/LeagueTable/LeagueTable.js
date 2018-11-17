@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./LeagueTable.css";
+import { Link } from "react-router-dom";
 
 const TABLE = [
   {
@@ -94,9 +95,9 @@ class LeagueTable extends Component {
             />
           </td>
           <td>
-            <a className="teamLink" href="/panel/team">
+            <Link className="teamLink" to="/panel/team">
               {team.name}
-            </a>
+            </Link>
           </td>
           <td>{team.matches}</td>
           <td>{team.wins}</td>

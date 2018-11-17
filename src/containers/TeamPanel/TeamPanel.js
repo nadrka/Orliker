@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TeamPanel.css";
 import PlayerStatistics from "../PlayersStatistics/PlayersStatistics";
 import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
+import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 
 const MENUOPTIONS = {
   MATCHES: 0,
@@ -30,41 +31,59 @@ class TeamPanel extends Component {
   }
   render() {
     return (
-      <div className="flex mainContainer">
+      <div className="flex mainContainerTeamPanel">
         <div className="flex topSection">
           <div className="flex picSection">
-            <img
-              src={require("../../assets/images/apoel.png")}
-              alt="no pic"
-              className="img"
-            />
+            <img src={require("../../assets/images/apoel.png")} alt="no pic" className="img" />
           </div>
           <div className="flex textSection">
-            <div className="flex teamName">Apoel Morena</div>
-            <div className="flex teamPlace"> 1. miejsce - 1. liga</div>
-            <div className="flex teamStats">3 Z 0 R 0 P</div>
+            <div className="bigFontBigMargin">Apoel Morena</div>
+            <div className="mediumFontMediumMargin mediumMarginWithBorder"> 1. miejsce - 1. liga</div>
+            <div className="mediumFontMediumMargin">Bilans: 3 Z 0 R 0 P</div>
+            <div className="mediumFontMediumMargin">Kapitan: Gustaw Ohler</div>
+            <div className="mediumFontMediumMargin">Ostatni mecz: Apoel Morena 5-0 Ego</div>
           </div>
           <div className="flex marginSection" />
         </div>
-        <div className="flex menuSection">
-          <div
-            className={"flex buttons rightMargin " + this.getStyle(0)}
-            onClick={() => {
-              this.setState({ option: MENUOPTIONS.MATCHES });
-            }}
-          >
-            Mecze
+        <div className="flex bottomSection">
+          <div className="flex menuSection">
+            <PanelOption
+              name={"Mecze"}
+              clicked={() => {
+                this.setState({ option: MENUOPTIONS.MATCHES });
+              }}
+              //key="Mecze"
+              isActive={this.state.option == MENUOPTIONS.MATCHES}
+              howManyButtons={2}
+            />
+            <PanelOption
+              name={"Zawodnicy"}
+              clicked={() => {
+                this.setState({ option: MENUOPTIONS.PLAYERS });
+              }}
+              //key="awayTeam"
+              isActive={this.state.option == MENUOPTIONS.PLAYERS}
+              howManyButtons={2}
+            />
+            {/*            <div
+              className={"flex buttons rightMargin " + this.getStyle(0)}
+              onClick={() => {
+                this.setState({ option: MENUOPTIONS.MATCHES });
+              }}
+            >
+              Mecze
+            </div>
+            <div
+              className={"flex buttons " + this.getStyle(1)}
+              onClick={() => {
+                this.setState({ option: MENUOPTIONS.PLAYERS });
+              }}
+            >
+              Zawodnicy
+            </div>*/}
           </div>
-          <div
-            className={"flex buttons " + this.getStyle(1)}
-            onClick={() => {
-              this.setState({ option: MENUOPTIONS.PLAYERS });
-            }}
-          >
-            Zawodnicy
-          </div>
+          {this.renderOption()}
         </div>
-        {this.renderOption()}
       </div>
     );
   }

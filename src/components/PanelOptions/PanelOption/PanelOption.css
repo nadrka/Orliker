@@ -1,6 +1,5 @@
 .Option {
   display: table;
-  width: 30%;
   height: 50px;
   color: #1f2833;
   font-size: 150%;
@@ -11,7 +10,6 @@
 
 .ActiveOption {
   display: table;
-  width: 30%;
   height: 50px;
   color: #66fcf1;
   font-size: 150%;
@@ -21,7 +19,6 @@
 }
 
 .Option:hover {
-  width: 30%;
   color: #66fcf1;
   background-color: #45a29e;
 }
