@@ -1,0 +1,15 @@
+.TeamStatistics {
+  width: 45%;
+}
+
+.TeamName {
+  width: 100%;
+  color: #1f2833;
+
+  background-color: #45a29e;
+  padding: 20px;
+  font-size: 28px;
+  border-radius: 15px;
+  margin: 20px auto 0px auto;
+  text-align: center;
+}

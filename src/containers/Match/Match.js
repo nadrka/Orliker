@@ -3,6 +3,7 @@ import MatchDetails from "../../components/Match/Details/MatchDetails";
 import MatchHeader from "../../components/Match/Header/MatchHeader";
 import "./Match.css";
 import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
+import MatchStatistics from "../../components/Match/Statistics/Statistics";
 
 class Match extends Component {
   state = {
@@ -16,7 +17,7 @@ class Match extends Component {
         position: 7
       },
       secondTeam: {
-        name: "HanzaLider",
+        name: "Hanza Lider",
         scoredGoals: 4,
         isPlayingHome: false,
         position: 7
@@ -35,39 +36,98 @@ class Match extends Component {
         id: 1,
         name: "Janusz Spawacz"
       },
-      homeTeam: true
+      matchStatistics: {
+        homeTeam: {
+          playerStatistics: [
+            {
+              name: "Karol",
+              surName: "Nadratowski",
+              goals: 1,
+              assists: 2,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Midfielder"
+            },
+            {
+              name: "Kamil",
+              surName: "Nadratowski",
+              goals: 0,
+              assists: 1,
+              redCards: 0,
+              yellowCards: 1,
+              position: "Defender"
+            },
+            {
+              name: "Kuba",
+              surName: "Morawski",
+              goals: 0,
+              assists: 0,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Goalkeeper"
+            },
+            {
+              name: "Gustaw",
+              surName: "Ohler",
+              goals: 2,
+              assists: 0,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Stiker"
+            }
+          ]
+        },
+        awayTeam: {
+          playerStatistics: [
+            {
+              name: "Karol",
+              surName: "Nadratowski",
+              goals: 1,
+              assists: 2,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Midfielder"
+            },
+            {
+              name: "Kamil",
+              surName: "Nadratowski",
+              goals: 0,
+              assists: 1,
+              redCards: 0,
+              yellowCards: 1,
+              position: "Defender"
+            },
+            {
+              name: "Kuba",
+              surName: "Morawski",
+              goals: 0,
+              assists: 0,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Goalkeeper"
+            },
+            {
+              name: "Gustaw",
+              surName: "Ohler",
+              goals: 2,
+              assists: 0,
+              redCards: 0,
+              yellowCards: 0,
+              position: "Stiker"
+            }
+          ]
+        },
+        homeTeam: true
+      }
     }
   };
 
-  updateOption = isHomeTeamClicked => {
-    this.setState({ homeTeam: isHomeTeamClicked });
-  };
-
-  showHomeTeamStatistics = choosenOption => {
-    this.updateOption(false);
-  };
-  showAwayTeamStatistics = choosenOption => {
-    this.updateOption(true);
-  };
   render() {
     return (
       <div>
         <MatchHeader match={this.state.match} />
         <MatchDetails />
-        <div className="Switcher">
-          <PanelOption
-            name={this.state.match.firstTeam.name}
-            clicked={this.showHomeTeamStatistics}
-            key="homeTeam"
-            isActive={!this.state.homeTeam}
-          />
-          <PanelOption
-            name={this.state.match.secondTeam.name}
-            clicked={this.showAwayTeamStatistics}
-            key="awayTeam"
-            isActive={this.state.homeTeam}
-          />
-        </div>
+        <MatchStatistics />
       </div>
     );
   }
