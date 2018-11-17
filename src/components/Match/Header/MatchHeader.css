@@ -1,15 +1,13 @@
 .Header {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-flow: column;
   background: #1f2833;
-  opacity: 0.8;
   color: white;
   margin: auto;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  border-radius: 15px;
 }
 
 .TeamPosition {

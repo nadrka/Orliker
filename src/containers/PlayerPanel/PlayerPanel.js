@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import Aux from "../../hoc/Aux";
 import ClubDetails from "./ClubDetails/ClubDetails";
 import PlayerDetails from "./PlayerDetails/PlayerDetails";
 import PlayerPanelOptions from "./PlayerPanelOptions/PlayerPanelOptions";
@@ -11,7 +10,6 @@ import PlayerDetailsForm from "../PlayerDetailsForm/PlayerDetailsForm";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
 class PlayerPanel extends Component {
   state = { choosenOption: "schedule" };
-
   handleOptionChange = option => {
     this.setState({ choosenOption: option });
   };

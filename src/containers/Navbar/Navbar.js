@@ -10,6 +10,7 @@ import News from "../News/News";
 import SingleNews from "../SingleNews/SingleNews";
 import TeamPanel from "../TeamPanel/TeamPanel";
 import Match from "../Match/Match";
+import TeamList from "../TeamList/TeamList";
 class NavigationBar extends Component {
   state = {};
   render() {
@@ -62,7 +63,7 @@ class NavigationBar extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Route path="/news" exact component={Match} />
+        <Route path="/news" exact component={TeamList} />
         <Route path="/singleNews" exact component={SingleNews} />
         <Route path="/panel/player" exact component={PlayerPanel} />
         <Route path="/panel/team" exact component={TeamPanel} />
