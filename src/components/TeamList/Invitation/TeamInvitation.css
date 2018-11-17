@@ -1,0 +1,54 @@
+.TeamInvitations {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: 45px;
+  margin-top: 30px;
+}
+
+.TeamInvitation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #f1f1f1;
+  margin: 5px auto 5px auto;
+  min-height: 50px;
+  border-radius: 15px;
+  text-align: center;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.TeamInvitationInfo {
+  font-size: 25px;
+  color: darkgray;
+  margin: auto;
+  margin-left: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.TeamInvitationOption {
+  margin: auto;
+  margin-right: 20px;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+}
+
+.TeamInvitationHeader {
+  width: 80%;
+  color: #1f2833;
+  background-color: #45a29e;
+  padding: 10px;
+  font-size: 24px;
+  border-radius: 15px;
+  text-align: center;
+  margin: auto;
+}
