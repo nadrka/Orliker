@@ -22,10 +22,12 @@
   border-radius: 15px;
   text-align: center;
   padding: 10px;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .TeamInvitationInfo {
+  display: flex;
+  flex-direction: row;
   font-size: 25px;
   color: darkgray;
   margin: auto;
@@ -34,12 +36,16 @@
   justify-content: center;
 }
 
-.TeamInvitationOption {
+.TeamInvitationOptions {
   margin: auto;
-  margin-right: 20px;
+  margin-right: 15px;
   align-items: center;
   justify-content: center;
-  padding-left: 20px;
+}
+
+.TeamInvitationOption {
+  cursor: pointer;
+  margin-right: 15px;
 }
 
 .TeamInvitationHeader {
@@ -51,4 +57,15 @@
   border-radius: 15px;
   text-align: center;
   margin: auto;
+  margin-bottom: 20px;
+}
+
+.TeamInvitationName {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.TeamInvitationLeague {
+  font-size: 16px;
+  margin-right: 10px;
 }
