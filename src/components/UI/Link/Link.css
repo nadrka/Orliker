@@ -1,0 +1,63 @@
+.NavLink a {
+  text-decoration: none;
+  color: white;
+}
+
+.NavLink a:hover {
+  color: #45a29e;
+  text-decoration: none;
+}
+
+.NavLink a:active,
+.NavLink a.active {
+  color: #45a29e;
+  text-decoration: none;
+}
+
+.Link a {
+  text-decoration: none;
+  color: white;
+}
+
+.Link a:hover {
+  color: red;
+  text-decoration: none;
+}
+
+.Link a:active,
+.Link a.active {
+  color: black;
+  text-decoration: none;
+}
+
+.GrayLink a {
+  text-decoration: none;
+  color: gray;
+}
+
+.GrayLink a:hover {
+  color: lightgray;
+  text-decoration: none;
+}
+
+.GrayLink a:active,
+.GrayLink a.active {
+  color: black;
+  text-decoration: none;
+}
+
+.BlackLink a {
+  text-decoration: none;
+  color: #000;
+}
+
+.BlackLink a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.BlackLink a:active,
+.BlackLink a.active {
+  color: black;
+  text-decoration: none;
+}

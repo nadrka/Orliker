@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from "react-bootstrap";
 import soccerLogo from "../../assets/images/soccer-logo.png";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, NavLink } from "react-router-dom";
 import PlayerPanel from "../PlayerPanel/PlayerPanel";
 import Register from "../Register/RegisterBox/RegisterBox";
 import LeagueTable from "../LeagueTable/LeagueTable";
@@ -11,11 +11,12 @@ import SingleNews from "../SingleNews/SingleNews";
 import TeamPanel from "../TeamPanel/TeamPanel";
 import Match from "../Match/Match";
 import TeamList from "../TeamList/TeamList";
+import "../../components/UI/Link/Link.css";
 class NavigationBar extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <div className="NavLink">
         <Navbar
           inverse
           collapseOnSelect
@@ -48,22 +49,22 @@ class NavigationBar extends Component {
             <Nav />
             <Nav pullRight>
               <NavItem eventKey={0}>
-                <Link to="/news">Aktualności</Link>
+                <NavLink to="/news">Aktualności</NavLink>
               </NavItem>
-              <NavItem eventKey={1} href="#">
-                <Link to="/schedule">Terminarz</Link>
+              <NavItem eventKey={1}>
+                <NavLink to="/schedule">Terminarz</NavLink>
               </NavItem>
               <NavItem eventKey={2}>
-                <Link to="/table">Tabela</Link>
+                <NavLink to="/table">Tabela</NavLink>
               </NavItem>
               <NavItem eventKey={3}>
-                <Link to="/panel/team">Panel Druzyny</Link>
+                <NavLink to="/panel/team">Panel Druzyny</NavLink>
               </NavItem>
               <NavItem eventKey={4}>
-                <Link to="/panel/player">Panel Zawodnika</Link>
+                <NavLink to="/panel/player">Panel Zawodnika</NavLink>
               </NavItem>
               <NavItem eventKey={5}>
-                <Link to="/login">Logowanie</Link>
+                <NavLink to="/login">Logowanie</NavLink>
               </NavItem>
             </Nav>
           </Navbar.Collapse>
@@ -74,6 +75,8 @@ class NavigationBar extends Component {
         <Route path="/panel/team" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />
+        <Route path="/siemka" exact component={Match} />
+
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/" exact component={Register} />
       </div>

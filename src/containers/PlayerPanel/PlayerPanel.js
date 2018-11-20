@@ -35,8 +35,8 @@ class PlayerPanel extends Component {
         </div>
         <div className="flex bottomSection">
           <PanelOptions
-            labels={["Terminarz", "Statystyki", "Dane zawodnika"]}
-            options={["schedule", "statistics", "playerDetails"]}
+            labels={["Terminarz", "Statystyki"]}
+            options={["schedule", "statistics"]}
             fun={arg => {
               this.setState({ choosenOption: arg });
             }}

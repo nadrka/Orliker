@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./ClubDetails.css";
 import apoelPicture from "../../../assets/images/apoel.png";
-
+import { Link } from "react-router-dom";
+import TeamPanel from "../../TeamPanel/TeamPanel";
+import Match from "../../Match/Match";
 class ClubDetails extends Component {
   state = {};
   render() {
@@ -10,8 +12,10 @@ class ClubDetails extends Component {
         <div>
           <img src={apoelPicture} width="150" height="150" />
         </div>
-        <div className="Span">
-          <span>Apoel Morena</span>
+        <div className="Span Link">
+          <span>
+            <Link to="/panel/team">Apoel Morena</Link>
+          </span>
         </div>
         <div className="Span">
           <span>Gdańsk - 1 liga</span>

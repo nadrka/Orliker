@@ -70,9 +70,14 @@ class LeagueTable extends Component {
       team["points"] = team.wins * 3 + team.draws;
     });
     TABLE.sort((team1, team2) => {
-      if (team2["points"] !== team1["points"]) return team2["points"] - team1["points"];
+      if (team2["points"] !== team1["points"])
+        return team2["points"] - team1["points"];
       else {
-        return team2.scoredGoals - team2.conceidedGoals - (team1.scoredGoals - team1.conceidedGoals);
+        return (
+          team2.scoredGoals -
+          team2.conceidedGoals -
+          (team1.scoredGoals - team1.conceidedGoals)
+        );
       }
     });
     var toRender = TABLE.map((team, i) => {
@@ -80,7 +85,10 @@ class LeagueTable extends Component {
       return (
         <tr
           className={classToUse}
-          style={{ backgroundColor: i == 0 ? "#33F422" : i > TABLE.length - 4 ? "#F5260A" : undefined }}
+          style={{
+            backgroundColor:
+              i == 0 ? "#33F422" : i > TABLE.length - 4 ? "#F5260A" : undefined
+          }}
         >
           <td>{`${i + 1}.`}</td>
           <td
@@ -102,7 +110,7 @@ class LeagueTable extends Component {
               }}
             />
           </td>
-          <td>
+          <td className="BlackLink">
             <Link className="teamLink" to="/panel/team">
               {team.name}
             </Link>

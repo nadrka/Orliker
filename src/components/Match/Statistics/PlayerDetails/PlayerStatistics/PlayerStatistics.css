@@ -1,0 +1,10 @@
+.MatchPlayerStatistics {
+  display: flex;
+  margin: auto 20px auto 0px;
+  flex-direction: row;
+}
+
+.MatchPlayerStatistic {
+  font-size: 15px;
+  margin-right: 10px;
+}
