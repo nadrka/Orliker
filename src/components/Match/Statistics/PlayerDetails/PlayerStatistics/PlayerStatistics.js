@@ -8,17 +8,17 @@ const playerStatistics = props => {
   return (
     <div className="MatchPlayerStatistics">
       <div className="MatchPlayerStatistic">
-        <img title="Gole" src={goals} width="30" height="30" />2
+        <img title="Gole" src={goals} width="30" height="30" /> x 2
       </div>
       <div className="MatchPlayerStatistic">
-        <img title="Asysty" src={assist} width="30" height="30" />3
+        <img title="Asysty" src={assist} width="30" height="30" />x 3
       </div>
       {/* <div className="MatchPlayerStatistic">
         1x
         <img title="Czerwone kartki" src={redCard} width="30" height="30" />
       </div> */}
       <div className="MatchPlayerStatistic">
-        <img title="Żółte kartki" src={yellowCard} width="30" height="30" />1
+        <img title="Żółte kartki" src={yellowCard} width="30" height="30" /> x 1
       </div>
     </div>
   );
