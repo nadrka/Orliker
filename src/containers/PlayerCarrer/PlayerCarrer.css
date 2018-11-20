@@ -3,6 +3,7 @@ table {
   width: 80%;
   margin: 40px auto 40px auto;
   font-size: 20px;
+  border-bottom: 1px solid black;
 }
 
 .borderedTr {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./LeagueTable.css";
 import { Link } from "react-router-dom";
 import { LEAGUEOPTIONS } from "../LeagueSchedule/LeagueSchedule";
+import { DropdownButton, MenuItem } from "react-bootstrap";
 
 const TABLE = [
   {
@@ -62,7 +63,7 @@ const TABLE = [
 
 class LeagueTable extends Component {
   state = {
-    leagueOption: LEAGUEOPTIONS
+    leagueOption: LEAGUEOPTIONS.LIGA1
   };
   renderTable() {
     TABLE.forEach(team => {
@@ -119,19 +120,18 @@ class LeagueTable extends Component {
   }
 
   render() {
+    console.log(this.state.leagueOption);
+
     return (
       <div>
         <div className="flex topSection" style={{ justifyContent: "center" }}>
           <div className="flex class">
             <div className="bigFontBigMargin">Tabela</div>
             <div className="flex selectClass">
-              <label>
-                Liga:
-                <select value={this.state.leagueOption} onChange={e => this.setState({ leagueOption: e.target.value })}>
-                  <option value={LEAGUEOPTIONS.LIGA1}>1. liga</option>
-                  <option value={LEAGUEOPTIONS.LIGA2}>2. liga</option>
-                </select>
-              </label>
+              <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
+                <MenuItem onSelect={() => this.setState({ leagueOption: LEAGUEOPTIONS.LIGA1 })}>1. liga</MenuItem>
+                <MenuItem onSelect={() => this.setState({ leagueOption: LEAGUEOPTIONS.LIGA2 })}>2. liga</MenuItem>
+              </DropdownButton>
             </div>
           </div>
         </div>
