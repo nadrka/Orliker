@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import "./Team.css";
 import profilePicture from "../../../assets/images/profilePicture.jpg";
 import apoel from "../../../assets/images/apoel.png";
+import { Link } from "react-router-dom";
 const team = props => {
   let teamNameWithLogo;
   if (props.isPlayingHome) {
     teamNameWithLogo = (
       <div className="Team">
-        {props.name}
+        <Link to="/panel/team">{props.name}</Link>
         <img
           src={apoel}
           width="50"
@@ -25,7 +26,7 @@ const team = props => {
           height="50"
           style={{ marginRight: "15px" }}
         />
-        {props.name}
+        <Link to="/panel/team">{props.name}</Link>
       </div>
     );
   }

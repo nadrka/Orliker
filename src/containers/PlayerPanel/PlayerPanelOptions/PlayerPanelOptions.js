@@ -48,11 +48,7 @@ class PlayerPanelOptions extends Component {
         />
       );
     });
-    return (
-      <div>
-        <div className="PlayerPanelOptions">{transformedPanelOptions}</div>
-      </div>
-    );
+    return <div className="PlayerPanelOptions">{transformedPanelOptions}</div>;
   }
 }
 

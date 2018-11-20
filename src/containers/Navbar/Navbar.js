@@ -74,6 +74,8 @@ class NavigationBar extends Component {
         <Route path="/panel/team" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />
+        <Route path="/siemka" exact component={Match} />
+
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/" exact component={Register} />
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import "./MatchResult.css";
 import Team from "../Team/Team";
+
 const matchResult = props => {
   return (
     <div className="MatchResult">

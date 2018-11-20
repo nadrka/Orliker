@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./RegisterBox.css";
 import Form from "../../../components/Form/Form";
-//import Aux from "../../../hoc/Aux";
-
+const axios = require("axios");
 class RegisterBox extends Component {
   state = {
     loginForm: {
@@ -160,13 +159,17 @@ class RegisterBox extends Component {
     const updatedFormElement = {
       ...updatedOrderForm.fields[inputIdentifier]
     };
-    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
     updatedFormElement.touched = true;
     updatedOrderForm.fields[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm.fields) {
-      formIsValid = updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
+      formIsValid =
+        updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
     }
     updatedOrderForm.formIsValid = formIsValid;
     this.setState({
@@ -174,8 +177,23 @@ class RegisterBox extends Component {
     });
   };
 
+  isFormValid = () => {
+    const form = this.state.isLogin
+      ? this.state.loginForm
+      : this.state.registrationForm;
+
+    let formIsValid = true;
+
+    for (let inputIdentifier in form.fields) {
+      formIsValid = form.fields[inputIdentifier].valid && formIsValid;
+    }
+    return formIsValid;
+  };
+
   handleInputChanged = (value, inputIdentifier) => {
-    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
+    const form = this.state.isLogin
+      ? this.state.loginForm
+      : this.state.registrationForm;
 
     const updatedOrderForm = {
       ...form
@@ -192,11 +210,41 @@ class RegisterBox extends Component {
     this.updateValidation(inputIdentifier, form);
   };
 
+  handleRegistration = () => {
+    if (!this.isFormValid()) return;
+    console.log(this.isFormValid());
+    if (this.state.isLogin) {
+    } else {
+      axios({
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        },
+        method: "POST",
+        url: "http://127.0.0.1:3000/api/users",
+        data: {
+          firstName: this.state.registrationForm.fields.firsName.value,
+          secondName: this.state.registrationForm.fields.secondName.value,
+          login: "karoll0245643s73343",
+          password: this.state.registrationForm.fields.password.value
+        }
+      }).then(function(response) {
+        console.log(response.data);
+      });
+    }
+  };
+
   render() {
     const form = this.state.isLogin ? (
-      <Form fields={this.state.loginForm.fields} onChanged={this.handleInputChanged} />
+      <Form
+        fields={this.state.loginForm.fields}
+        onChanged={this.handleInputChanged}
+      />
     ) : (
-      <Form fields={this.state.registrationForm.fields} onChanged={this.handleInputChanged} />
+      <Form
+        fields={this.state.registrationForm.fields}
+        onChanged={this.handleInputChanged}
+      />
     );
 
     return (
@@ -204,10 +252,14 @@ class RegisterBox extends Component {
         <div>
           <h4>Zaloguj się, aby dołączyć do drużyny lub założyć własną!</h4>
           <button onClick={this.handleLoginButtonClicked}>Zaloguj się</button>
-          <button onClick={this.handleRegistrationButtonClicked}>Załóż konto</button>
+          <button onClick={this.handleRegistrationButtonClicked}>
+            Załóż konto
+          </button>
         </div>
         {form}
-        <button className="RegisterButton">Zarejestruj się</button>
+        <button className="RegisterButton" onClick={this.handleRegistration}>
+          Zarejestruj się
+        </button>
       </div>
     );
   }

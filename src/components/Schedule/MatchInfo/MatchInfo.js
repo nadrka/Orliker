@@ -14,7 +14,7 @@ const matchInfo = props => {
       />
       <div>
         <Link
-          to="#"
+          to="/siemka"
           className="btn btn-info btn-lg"
           style={{
             backgroundColor: "#d3d3d3",
