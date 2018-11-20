@@ -7,7 +7,7 @@ const team = props => {
   let teamNameWithLogo;
   if (props.isPlayingHome) {
     teamNameWithLogo = (
-      <div className="Team">
+      <div className="Team GrayLink">
         <Link to="/panel/team">{props.name}</Link>
         <img
           src={apoel}
@@ -19,7 +19,7 @@ const team = props => {
     );
   } else {
     teamNameWithLogo = (
-      <div className="Team">
+      <div className="Team GrayLink">
         <img
           src={apoel}
           width="50"

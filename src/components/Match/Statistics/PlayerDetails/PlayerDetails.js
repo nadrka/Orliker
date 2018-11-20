@@ -9,7 +9,7 @@ const playerDetails = props => {
       <div className="MatchPlayerInfo">
         <div className="MatchPlayerInfoNumber">21</div>
         <img src={profilePicture} width="60" height="60" />
-        <div className="MatchPlayerInfoName">
+        <div className="MatchPlayerInfoName GrayLink">
           <Link to="panel/player">Karol Nadratowski</Link>
         </div>
       </div>

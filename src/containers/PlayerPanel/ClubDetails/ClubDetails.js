@@ -12,7 +12,7 @@ class ClubDetails extends Component {
         <div>
           <img src={apoelPicture} width="150" height="150" />
         </div>
-        <div className="Span">
+        <div className="Span Link">
           <span>
             <Link to="/panel/team">Apoel Morena</Link>
           </span>
