@@ -77,12 +77,7 @@ class PlayerLeagueSchedule extends Component {
     ]
   };
   render() {
-    return (
-      <Schedule
-        incomingMatches={this.state.incomingMatches}
-        playedMatches={this.state.playedMatches}
-      />
-    );
+    return <Schedule incomingMatches={this.state.incomingMatches} playedMatches={this.state.playedMatches} />;
   }
 }
 

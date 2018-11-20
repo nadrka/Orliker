@@ -1,0 +1,18 @@
+.class {
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectClass {
+  width: 50%;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+select {
+  color: black !important;
+  font-weight: normal !important;
+}

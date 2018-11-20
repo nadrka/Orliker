@@ -8,6 +8,7 @@ import PlayerCarrer from "../PlayerCarrer/PlayerCarrer";
 import Schedule from "../../components/Schedule/Schedule";
 import PlayerDetailsForm from "../PlayerDetailsForm/PlayerDetailsForm";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
+import PanelOptions from "../../components/PanelOptions/PanelOptions";
 class PlayerPanel extends Component {
   state = { choosenOption: "schedule" };
   handleOptionChange = option => {
@@ -36,8 +37,16 @@ class PlayerPanel extends Component {
           <PlayerDetails />
           <ClubDetails />
         </div>
-        <PlayerPanelOptions onOptionChanged={this.handleOptionChange} />
-        {choosenOption}
+        <div className="flex bottomSection">
+          <PanelOptions
+            labels={["Terminarz", "Statystyki", "Dane zawodnika"]}
+            options={["schedule", "statistics", "playerDetails"]}
+            fun={arg => {
+              this.setState({ choosenOption: arg });
+            }}
+          />
+          {choosenOption}
+        </div>
       </div>
     );
   }

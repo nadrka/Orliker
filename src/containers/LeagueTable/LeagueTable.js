@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./LeagueTable.css";
 import { Link } from "react-router-dom";
+import { LEAGUEOPTIONS } from "../LeagueSchedule/LeagueSchedule";
 
 const TABLE = [
   {
@@ -60,6 +61,9 @@ const TABLE = [
 ];
 
 class LeagueTable extends Component {
+  state = {
+    leagueOption: LEAGUEOPTIONS
+  };
   renderTable() {
     TABLE.forEach(team => {
       team["points"] = team.wins * 3 + team.draws;
@@ -73,13 +77,16 @@ class LeagueTable extends Component {
     var toRender = TABLE.map((team, i) => {
       let classToUse = i % 2 ? "secondRow" : "firstRow";
       return (
-        <tr className={classToUse}>
+        <tr
+          className={classToUse}
+          style={{ backgroundColor: i == 0 ? "#33F422" : i > TABLE.length - 4 ? "#F5260A" : undefined }}
+        >
           <td>{`${i + 1}.`}</td>
           <td
             style={{
               flexDirection: "row",
               justifyContent: "flex-end",
-              display: "flex"
+              textAlign: "right"
             }}
           >
             <img
@@ -88,8 +95,8 @@ class LeagueTable extends Component {
               style={{
                 height: "50px",
                 width: "auto",
-                verticalAlign: "top",
-                align: "right",
+                verticalAlign: "center",
+                align: "middle",
                 paddingRight: "10px"
               }}
             />
@@ -113,20 +120,36 @@ class LeagueTable extends Component {
 
   render() {
     return (
-      <table style={{ width: "80%" }}>
-        <tr className="headerSection">
-          <th>Pozycja</th>
-          <th />
-          <th>Drużyna</th>
-          <th>M</th>
-          <th>Z</th>
-          <th>R</th>
-          <th>P</th>
-          <th>Bramki</th>
-          <th>Punkty</th>
-        </tr>
-        {this.renderTable()}
-      </table>
+      <div>
+        <div className="flex topSection" style={{ justifyContent: "center" }}>
+          <div className="flex class">
+            <div className="bigFontBigMargin">Tabela</div>
+            <div className="flex selectClass">
+              <label>
+                Liga:
+                <select value={this.state.leagueOption} onChange={e => this.setState({ leagueOption: e.target.value })}>
+                  <option value={LEAGUEOPTIONS.LIGA1}>1. liga</option>
+                  <option value={LEAGUEOPTIONS.LIGA2}>2. liga</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+        <table style={{ width: "80%" }}>
+          <tr className="headerSection">
+            <th>Pozycja</th>
+            <th />
+            <th>Drużyna</th>
+            <th>M</th>
+            <th>Z</th>
+            <th>R</th>
+            <th>P</th>
+            <th>Bramki</th>
+            <th>Punkty</th>
+          </tr>
+          {this.renderTable()}
+        </table>
+      </div>
     );
   }
 }

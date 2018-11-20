@@ -5,3 +5,9 @@ export const COLORS = {
   DARKCYAN: "45A29E",
   DARK: "1F2833"
 };
+
+export const BASEURL = "http://localhost:3000/api/";
+
+export const ROUTES = {
+  LEAGUES: "leagues"
+};
