@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./RegisterBox.css";
 import Form from "../../../components/Form/Form";
-const axios = require("axios");
+import { postDataWithResponse } from "../../../utils/NetworkFunctions";
+import { withRouter } from "react-router-dom";
+
 class RegisterBox extends Component {
   state = {
     loginForm: {
@@ -212,26 +214,42 @@ class RegisterBox extends Component {
 
   handleRegistration = () => {
     if (!this.isFormValid()) return;
-    console.log(this.isFormValid());
     if (this.state.isLogin) {
+      this.login();
     } else {
-      axios({
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        },
-        method: "POST",
-        url: "http://127.0.0.1:3000/api/users",
-        data: {
-          firstName: this.state.registrationForm.fields.firsName.value,
-          secondName: this.state.registrationForm.fields.secondName.value,
-          login: "karoll0245643s73343",
-          password: this.state.registrationForm.fields.password.value
-        }
-      }).then(function(response) {
-        console.log(response.data);
-      });
+      this.register();
     }
+  };
+
+  login = () => {
+    let data = {
+      login: this.state.loginForm.fields.email.value,
+      password: this.state.loginForm.fields.password.value
+    };
+    this.props.history.push("/panel/player");
+    postDataWithResponse("auth", data)
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+  register = () => {
+    let data = {
+      firstName: this.state.registrationForm.fields.firsName.value,
+      secondName: this.state.registrationForm.fields.secondName.value,
+      login: this.state.registrationForm.fields.email.value,
+      password: this.state.registrationForm.fields.password.value
+    };
+    postDataWithResponse("users", data)
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   render() {
@@ -265,4 +283,4 @@ class RegisterBox extends Component {
   }
 }
 
-export default RegisterBox;
+export default withRouter(RegisterBox);
