@@ -6,7 +6,6 @@ import "./PlayerPanel.css";
 import profilePicture from "../../assets/images/profilePicture.jpg";
 import PlayerCarrer from "../PlayerCarrer/PlayerCarrer";
 import Schedule from "../../components/Schedule/Schedule";
-import PlayerDetailsForm from "../PlayerDetailsForm/PlayerDetailsForm";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 class PlayerPanel extends Component {
@@ -23,9 +22,6 @@ class PlayerPanel extends Component {
         break;
       case "statistics":
         choosenOption = <PlayerCarrer />;
-        break;
-      case "playerDetails":
-        choosenOption = <PlayerDetailsForm />;
         break;
     }
     return (

@@ -12,10 +12,6 @@ class PlayerPanelOptions extends Component {
       statistics: {
         name: "Statystyki",
         isActive: false
-      },
-      playerDetails: {
-        name: "Dane zawodnika",
-        isActive: false
       }
     },
     lastChosen: "schedule"

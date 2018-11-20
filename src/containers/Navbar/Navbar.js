@@ -34,7 +34,12 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
+              <img
+                src={soccerLogo}
+                width="35"
+                height="35"
+                style={{ marginRight: "7px" }}
+              />
               NL3
             </div>
             <Navbar.Toggle />
@@ -63,7 +68,7 @@ class NavigationBar extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Route path="/news" exact component={TeamList} />
+        <Route path="/news" exact component={Match} />
         <Route path="/singleNews" exact component={SingleNews} />
         <Route path="/panel/player" exact component={PlayerPanel} />
         <Route path="/panel/team" exact component={TeamPanel} />
