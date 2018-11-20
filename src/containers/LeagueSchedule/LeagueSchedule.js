@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Schedule from "../../components/Schedule/Schedule";
 import "./LeagueSchedule.css";
+import { DropdownButton, MenuItem } from "react-bootstrap";
 
 export const LEAGUEOPTIONS = {
   LIGA1: "1LIGA",
@@ -200,21 +201,15 @@ class LeagueSchedule extends Component {
           <div className="flex class">
             <div className="flex bigFontBigMargin">Terminarz</div>
             <div className="flex selectClass">
-              <label className="flex">
-                Liga:
-                <select value={this.state.leagueOption} onChange={e => this.setState({ leagueOption: e.target.value })}>
-                  <option value={LEAGUEOPTIONS.LIGA1}>1. liga</option>
-                  <option value={LEAGUEOPTIONS.LIGA2}>2. liga</option>
-                </select>
-              </label>
-              <label className="flex">
-                Rodzaj meczy:
-                <select value={this.state.matchOption} onChange={e => this.setState({ matchOption: e.target.value })}>
-                  <option value={MATCHOPTIONS.ALL}>Wszystkie</option>
-                  <option value={MATCHOPTIONS.FUTURE}>Nadchodzące</option>
-                  <option value={MATCHOPTIONS.PAST}>Przeszłe</option>
-                </select>
-              </label>
+              <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
+                <MenuItem onSelect={() => this.setState({ leagueOption: LEAGUEOPTIONS.LIGA1 })}>1. liga</MenuItem>
+                <MenuItem onSelect={() => this.setState({ leagueOption: LEAGUEOPTIONS.LIGA2 })}>2. liga</MenuItem>
+              </DropdownButton>
+              <DropdownButton title="Rodzaj meczy" style={{ marginBottom: 5 }}>
+                <MenuItem onSelect={() => this.setState({ matchOption: MATCHOPTIONS.ALL })}>Wszystkie</MenuItem>
+                <MenuItem onSelect={() => this.setState({ matchOption: MATCHOPTIONS.FUTURE })}>Nadchodzące</MenuItem>
+                <MenuItem onSelect={() => this.setState({ matchOption: MATCHOPTIONS.PAST })}>Przeszłe</MenuItem>
+              </DropdownButton>
             </div>
           </div>
         </div>

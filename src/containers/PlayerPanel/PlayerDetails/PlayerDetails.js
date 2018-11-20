@@ -50,7 +50,18 @@ class PlayerDetails extends Component {
   }*/
   render() {
     const transformedPlayerDetails = Object.keys({ ...this.state.labels }).map(key => {
-      return <PlayerDetail key={key} name={this.state.labels[key].title} value={this.state.labels[key].value} />;
+      return (
+        <PlayerDetail
+          key={key}
+          name={this.state.labels[key].title}
+          value={this.state.labels[key].value}
+          onChange={value => {
+            let toChange = this.state.labels;
+            toChange[key].value = value;
+            this.setState({ labels: toChange });
+          }}
+        />
+      );
     });
     return <div className="PlayerDetails">{transformedPlayerDetails}</div>;
   }

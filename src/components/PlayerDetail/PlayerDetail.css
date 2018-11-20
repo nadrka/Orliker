@@ -20,3 +20,14 @@
   padding-left: 10px;
   padding-bottom: 2px;
 }
+
+.glyphicon {
+  margin-left: 5px;
+}
+
+.inputClass {
+  color: black;
+  background-color: white;
+  height: 20px;
+  margin-top: 20px;
+}

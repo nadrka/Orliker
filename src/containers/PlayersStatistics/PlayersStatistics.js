@@ -7,21 +7,27 @@ const PLAYERS = [
     nameAndSurname: "Sebastian Karwowski",
     age: 21,
     playedMatches: 2,
-    scoredGoals: 1
+    scoredGoals: 1,
+    yellowCards: 1,
+    redCards: 0
   },
   {
     number: 6,
     nameAndSurname: "Karol Nadratowski",
     age: 22,
     playedMatches: 3,
-    scoredGoals: 6
+    scoredGoals: 6,
+    yellowCards: 1,
+    redCards: 0
   },
   {
     number: 8,
     nameAndSurname: "Gustaw Ohler",
     age: 22,
     playedMatches: 3,
-    scoredGoals: 6
+    scoredGoals: 6,
+    yellowCards: 1,
+    redCards: 0
   }
 ];
 
@@ -58,6 +64,8 @@ class PlayersStatistics extends Component {
           <td>{player.age}</td>
           <td>{player.playedMatches}</td>
           <td>{player.scoredGoals}</td>
+          <td>{player.yellowCards}</td>
+          <td>{player.redCards}</td>
         </tr>
       );
     });
@@ -66,7 +74,7 @@ class PlayersStatistics extends Component {
 
   render() {
     return (
-      <table style={{ width: "80%", alignSelf: "center" }}>
+      <table style={{ width: "90%", alignSelf: "center" }}>
         <tr className="headerSection">
           <th>Numer</th>
           <th />
@@ -74,6 +82,8 @@ class PlayersStatistics extends Component {
           <th>Wiek</th>
           <th>Rozegrane mecze</th>
           <th>Zdobyte bramki</th>
+          <th>Żółte kartki</th>
+          <th>Czerwone kartki</th>
         </tr>
         {this.renderTable()}
       </table>
