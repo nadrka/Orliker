@@ -12,10 +12,22 @@ import TeamPanel from "../TeamPanel/TeamPanel";
 import Match from "../Match/Match";
 import TeamList from "../TeamList/TeamList";
 import "../../components/UI/Link/Link.css";
-import { setUser } from "../../actions/actions";
+import { setUser, setLeagues } from "../../actions/actions";
 import { connect } from "react-redux";
+import { getData } from "../../utils/NetworkFunctions";
+import { ROUTES } from "../../utils/Constants";
 
 class NavigationBar extends Component {
+  async componentDidMount() {
+    try {
+      let response = await getData(ROUTES.LEAGUES);
+      console.log(response);
+      this.props.setLeagues(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   navBar() {
     if (this.props.user) {
       console.log(this.props.user);
@@ -114,12 +126,17 @@ const mapStateToProps = state => {
   return { user: state.user };
 };
 
-/*const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
-    setUser: user => {
-      dispatch(setUser(user));
+    setLeagues: leagues => {
+      dispatch(setLeagues(leagues));
     }
   };
-};*/
+};
 
-export default withRouter(connect(mapStateToProps)(NavigationBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NavigationBar)
+);

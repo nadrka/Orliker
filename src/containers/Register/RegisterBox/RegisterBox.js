@@ -5,6 +5,7 @@ import { postDataWithResponse } from "../../../utils/NetworkFunctions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser } from "../../../actions/actions";
+import { ROUTES } from "../../../utils/Constants";
 
 class RegisterBox extends Component {
   state = {
@@ -216,19 +217,19 @@ class RegisterBox extends Component {
     }
   };
 
-  login = () => {
+  login = async () => {
     let data = {
       login: this.state.loginForm.fields.email.value,
       password: this.state.loginForm.fields.password.value
     };
-    postDataWithResponse("auth", data)
-      .then(response => {
-        this.props.setUser(response.data);
-        this.props.history.push("/panel/player");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    console.log(data);
+    try {
+      let response = await postDataWithResponse(ROUTES.AUTH, data, {});
+      this.props.setUser(response);
+      this.props.history.push("/panel/player");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   register = () => {

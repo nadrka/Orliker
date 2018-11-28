@@ -1,4 +1,4 @@
-import { SET_USER } from "../actions/actions";
+import { SET_USER, SET_LEAGUES } from "../actions/actions";
 import { combineReducers } from "redux";
 
 function user(state = null, actions) {
@@ -10,4 +10,13 @@ function user(state = null, actions) {
   }
 }
 
-export default combineReducers({ user });
+function leagues(state = [], actions) {
+  switch (actions.type) {
+    case SET_LEAGUES:
+      return actions.leagues;
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ user, leagues });

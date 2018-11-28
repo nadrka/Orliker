@@ -9,5 +9,6 @@ export const COLORS = {
 export const BASEURL = "http://localhost:3000/api/";
 
 export const ROUTES = {
-  LEAGUES: "leagues"
+  LEAGUES: "leagues",
+  AUTH: "auth"
 };
