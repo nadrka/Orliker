@@ -3,6 +3,8 @@ import "./RegisterBox.css";
 import Form from "../../../components/Form/Form";
 import { postDataWithResponse } from "../../../utils/NetworkFunctions";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser } from "../../../actions/actions";
 
 class RegisterBox extends Component {
   state = {
@@ -140,7 +142,8 @@ class RegisterBox extends Component {
 
     if (rules.isEmail) {
       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
+      //isValid = pattern.test(value) && isValid;
+      isValid = true && isValid;
     }
 
     if (rules.isNumeric) {
@@ -161,17 +164,13 @@ class RegisterBox extends Component {
     const updatedFormElement = {
       ...updatedOrderForm.fields[inputIdentifier]
     };
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedOrderForm.fields[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm.fields) {
-      formIsValid =
-        updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
+      formIsValid = updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
     }
     updatedOrderForm.formIsValid = formIsValid;
     this.setState({
@@ -180,9 +179,7 @@ class RegisterBox extends Component {
   };
 
   isFormValid = () => {
-    const form = this.state.isLogin
-      ? this.state.loginForm
-      : this.state.registrationForm;
+    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
 
     let formIsValid = true;
 
@@ -193,9 +190,7 @@ class RegisterBox extends Component {
   };
 
   handleInputChanged = (value, inputIdentifier) => {
-    const form = this.state.isLogin
-      ? this.state.loginForm
-      : this.state.registrationForm;
+    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
 
     const updatedOrderForm = {
       ...form
@@ -226,10 +221,10 @@ class RegisterBox extends Component {
       login: this.state.loginForm.fields.email.value,
       password: this.state.loginForm.fields.password.value
     };
-    this.props.history.push("/panel/player");
     postDataWithResponse("auth", data)
-      .then(function(response) {
-        console.log(response.data);
+      .then(response => {
+        this.props.setUser(response.data);
+        this.props.history.push("/panel/player");
       })
       .catch(function(error) {
         console.log(error);
@@ -254,15 +249,9 @@ class RegisterBox extends Component {
 
   render() {
     const form = this.state.isLogin ? (
-      <Form
-        fields={this.state.loginForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.loginForm.fields} onChanged={this.handleInputChanged} />
     ) : (
-      <Form
-        fields={this.state.registrationForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.registrationForm.fields} onChanged={this.handleInputChanged} />
     );
 
     return (
@@ -270,9 +259,7 @@ class RegisterBox extends Component {
         <div>
           <h4>Zaloguj się, aby dołączyć do drużyny lub założyć własną!</h4>
           <button onClick={this.handleLoginButtonClicked}>Zaloguj się</button>
-          <button onClick={this.handleRegistrationButtonClicked}>
-            Załóż konto
-          </button>
+          <button onClick={this.handleRegistrationButtonClicked}>Załóż konto</button>
         </div>
         {form}
         <button className="RegisterButton" onClick={this.handleRegistration}>
@@ -283,4 +270,17 @@ class RegisterBox extends Component {
   }
 }
 
-export default withRouter(RegisterBox);
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => {
+      dispatch(setUser(user));
+    }
+  };
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(RegisterBox)
+);
