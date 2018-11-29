@@ -74,9 +74,15 @@ class LeagueTable extends Component {
     teams: []
   };
 
+  componentDidMount() {
+    if (this.props.leagues.length > 0) {
+      this.setState({ league: this.props.leagues[0].id });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
     if (prevState.league !== this.state.league) this.getTeamsForLeague(this.state.league);
+    if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
   }
 
   async getTeamsForLeague(id) {
@@ -124,7 +130,7 @@ class LeagueTable extends Component {
           <td>{team.draws}</td>
           <td>{team.loses}</td>
           <td>{`${team.scoredGoals}:${team.concedeGoals}`}</td>
-          <td>0</td>
+          <td>{team.points}</td>
         </tr>
       );
     });
