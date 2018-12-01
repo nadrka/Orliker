@@ -6,14 +6,14 @@ const schedule = props => {
     return <MatchInfo key={match.id} matchDetails={match} />;
   });
 
-  const incomingMatches = props.incomingMatches.map(match => {
+  const upcomingMatches = props.upcomingMatches.map(match => {
     return <MatchInfo key={match.id} matchDetails={match} />;
   });
 
   return (
     <div>
       <div className="Title">Nadchodzące Mecze</div>
-      <div>{incomingMatches}</div>
+      <div>{upcomingMatches}</div>
       <div className="Title">Rozegrane Mecze</div>
       <div>{playedMatches}</div>
     </div>

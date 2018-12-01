@@ -6,118 +6,61 @@ import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 import MatchStatistics from "../../components/Match/Statistics/Statistics";
 
 class Match extends Component {
+  // this.props.match.params.id
   state = {
     match: {
       id: 1,
-      league: "Gdańsk - 1 liga",
-      firstTeam: {
-        name: "Apoel Morena",
-        scoredGoals: 4,
-        isPlayingHome: true,
-        position: 7
+      matchInfo: {
+        leagueId: 1,
+        matchDate: "02-02-18",
+        refereeId: 3,
+        place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
+        acceptMatchDate: "12312",
+        homeTeam: {
+          id: 1,
+          name: "Hanza Lider",
+          result: 5
+        },
+        awayTeam: {
+          id: 2,
+          name: "Apoel Morena",
+          result: 7
+        }
       },
-      secondTeam: {
-        name: "Hanza Lider",
-        scoredGoals: 4,
-        isPlayingHome: false,
-        position: 7
-      },
-      matchDate: {
-        date: "09/09/2018",
-        time: "20:45"
-      },
-      place: {
-        name: "Za decathlonem",
-        address: "ul. Janusza 5a",
-        lon: 19.78,
-        lat: 51.23
-      },
-      referee: {
-        id: 1,
-        name: "Janusz Spawacz"
-      },
+
       matchStatistics: {
         homeTeam: {
-          playerStatistics: [
+          name: "Hanza Lider",
+          statistics: [
             {
-              name: "Karol",
-              surName: "Nadratowski",
+              playerId: 1,
+              playerNumber: 21,
+              playerFirstName: "Karol",
+              playerSecondName: "Nadratowski",
+              playerPosition: "Defender",
               goals: 1,
               assists: 2,
-              redCards: 0,
               yellowCards: 0,
-              position: "Midfielder"
-            },
-            {
-              name: "Kamil",
-              surName: "Nadratowski",
-              goals: 0,
-              assists: 1,
-              redCards: 0,
-              yellowCards: 1,
-              position: "Defender"
-            },
-            {
-              name: "Kuba",
-              surName: "Morawski",
-              goals: 0,
-              assists: 0,
-              redCards: 0,
-              yellowCards: 0,
-              position: "Goalkeeper"
-            },
-            {
-              name: "Gustaw",
-              surName: "Ohler",
-              goals: 2,
-              assists: 0,
-              redCards: 0,
-              yellowCards: 0,
-              position: "Stiker"
+              redCards: 1
             }
           ]
         },
         awayTeam: {
-          playerStatistics: [
+          name: "Apoel Morena",
+          statistics: [
             {
-              name: "Karol",
-              surName: "Nadratowski",
-              goals: 1,
+              playerId: 2,
+              playerNumber: 5,
+              playerFirstName: "Kamil",
+              playerSecondName: "Nadratowski",
+              playerPosition: "Defender",
+              goals: 0,
               assists: 2,
-              redCards: 0,
-              yellowCards: 0,
-              position: "Midfielder"
-            },
-            {
-              name: "Kamil",
-              surName: "Nadratowski",
-              goals: 0,
-              assists: 1,
-              redCards: 0,
               yellowCards: 1,
-              position: "Defender"
-            },
-            {
-              name: "Kuba",
-              surName: "Morawski",
-              goals: 0,
-              assists: 0,
-              redCards: 0,
-              yellowCards: 0,
-              position: "Goalkeeper"
-            },
-            {
-              name: "Gustaw",
-              surName: "Ohler",
-              goals: 2,
-              assists: 0,
-              redCards: 0,
-              yellowCards: 0,
-              position: "Stiker"
+              redCards: 1
             }
           ]
-        },
-        homeTeam: true
+        }
       }
     }
   };
@@ -125,9 +68,12 @@ class Match extends Component {
   render() {
     return (
       <div>
-        <MatchHeader match={this.state.match} />
-        <MatchDetails />
-        <MatchStatistics />
+        <MatchHeader match={this.state.match.matchInfo} />
+        <MatchDetails
+          date={this.state.match.matchInfo.matchDate}
+          place={this.state.match.matchInfo.place}
+        />
+        <MatchStatistics statistics={this.state.matchStatistics} />
       </div>
     );
   }

@@ -9,12 +9,12 @@ const matchInfo = props => {
       <MatchDate className="MatchDate" date={props.matchDetails.matchDate} />
       <MatchResult
         className="MatchResult"
-        firstTeam={props.matchDetails.firstTeam}
-        secondTeam={props.matchDetails.secondTeam}
+        homeTeam={props.matchDetails.homeTeam}
+        awayTeam={props.matchDetails.awayTeam}
       />
       <div>
         <Link
-          to="/siemka"
+          to={"/match/details/" + props.matchDetails.id}
           className="btn btn-info btn-lg"
           style={{
             backgroundColor: "#d3d3d3",

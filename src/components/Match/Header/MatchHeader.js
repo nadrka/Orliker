@@ -5,11 +5,11 @@ import MatchResult from "../../Schedule/MatchResult/MatchResult";
 const matchHeader = props => {
   return (
     <div className="Header">
-      <div className="LeagueLabel"> Gdańsk - 1 Liga </div>
+      <div className="LeagueLabel"> Gdańsk - {props.match.leagueId} Liga </div>
       <div className="Result">
         <MatchResult
-          firstTeam={props.match.firstTeam}
-          secondTeam={props.match.secondTeam}
+          homeTeam={props.match.homeTeam}
+          awayTeam={props.match.awayTeam}
         />
       </div>
       <div className="TeamPosition">

@@ -5,8 +5,7 @@ const matchDate = props => {
   return (
     <div>
       <div className="MatchDate">
-        <div className="Date">{props.date.date}</div>
-        <div className="Time">{props.date.time}</div>
+        <div className="Date">{props.date}</div>
       </div>
     </div>
   );
