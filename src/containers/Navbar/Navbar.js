@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatistics";
+import MatchRequest from "../MatchRequest/MatchRequest";
 
 class NavigationBar extends Component {
   async componentDidMount() {
@@ -79,6 +80,9 @@ class NavigationBar extends Component {
           <NavItem eventKey={4}>
             <NavLink to="/sedzia">Sedzia</NavLink>
           </NavItem>
+          <NavItem eventKey={4}>
+            <NavLink to="/matchRequest">Dupcia</NavLink>
+          </NavItem>
         </Nav>
       </Navbar.Collapse>
     );
@@ -116,6 +120,7 @@ class NavigationBar extends Component {
           </Navbar.Header>
           {this.navBar()}
         </Navbar>
+        <Route path="/matchRequest" exact component={MatchRequest} />
         <Route path="/sedzia" exact component={RefereeMatchStatistics} />
         <Route path="/news" exact component={News} />
         <Route path="/singleNews" exact component={SingleNews} />
