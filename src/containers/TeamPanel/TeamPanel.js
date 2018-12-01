@@ -200,7 +200,7 @@ class TeamPanel extends Component {
   async componentDidMount() {
     try {
       const team = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}`);
-      const players = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/players`);
+      const players = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/playersWithStats`);
       this.setState({
         team: team,
         players: players
@@ -234,7 +234,7 @@ class TeamPanel extends Component {
             <div className="flex textSection">
               <div className="bigFontBigMargin">{this.state.team.name}</div>
               <div className="mediumFontMediumMargin mediumMarginWithBorder">
-                1. miejsce - {this.state.team.currentLegue.leagueNumber} liga
+                {this.state.team.position}. miejsce - {this.state.team.currentLegue.leagueNumber} liga
               </div>
               <div className="mediumFontMediumMargin">
                 Bilans: {this.state.team.wins} Z {this.state.team.draws} R {this.state.team.loses} P

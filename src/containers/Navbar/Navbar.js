@@ -108,12 +108,7 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img
-                src={soccerLogo}
-                width="35"
-                height="35"
-                style={{ marginRight: "7px" }}
-              />
+              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
               NL3
             </div>
             <Navbar.Toggle />
@@ -124,7 +119,7 @@ class NavigationBar extends Component {
         <Route path="/sedzia" exact component={RefereeMatchStatistics} />
         <Route path="/news" exact component={News} />
         <Route path="/singleNews" exact component={SingleNews} />
-        <Route path="/panel/player" exact component={PlayerPanel} />
+        <Route path="/panel/player/:id" exact component={PlayerPanel} />
         <Route path="/panel/team/:id" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />

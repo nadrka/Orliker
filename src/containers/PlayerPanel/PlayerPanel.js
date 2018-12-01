@@ -8,11 +8,19 @@ import PlayerCarrer from "../PlayerCarrer/PlayerCarrer";
 import Schedule from "../../components/Schedule/Schedule";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
+import { ROUTES } from "../../utils/Constants";
+import { getData } from "../../utils/NetworkFunctions";
 class PlayerPanel extends Component {
-  state = { choosenOption: "schedule" };
+  state = { choosenOption: "schedule", player: null, team: null };
   handleOptionChange = option => {
     this.setState({ choosenOption: option });
   };
+
+  async componentDidMount() {
+    const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
+    const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
+    this.setState({ player: player, team: team });
+  }
 
   render() {
     let choosenOption;
@@ -30,8 +38,8 @@ class PlayerPanel extends Component {
           <div className="ProfilePicture">
             <img src={profilePicture} width="300" height="300" />
           </div>
-          <PlayerDetails />
-          <ClubDetails />
+          <PlayerDetails player={this.state.player} />
+          <ClubDetails team={this.state.team} />
         </div>
         <div className="flex bottomSection">
           <PanelOptions

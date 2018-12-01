@@ -2,31 +2,24 @@ import React, { Component } from "react";
 import "./PlayerDetails.css";
 import PlayerDetail from "../../../components/PlayerDetail/PlayerDetail";
 
+const labels = {
+  name: {
+    title: "Imię i nazwisko: "
+  },
+  number: {
+    title: "Numer: "
+  },
+  position: {
+    title: "Pozycja: "
+  },
+  strongerFoot: {
+    title: "Lepsza noga: "
+  }
+};
 class PlayerDetails extends Component {
-  state = {
-    labels: {
-      name: {
-        title: "Imię i nazwisko:",
-        value: "Karol Nadratowski"
-      },
-      height: {
-        title: "Wzrost:",
-        value: " 177"
-      },
-      weight: {
-        title: "Waga:",
-        value: " 72"
-      },
-      position: {
-        title: "Pozycja:",
-        value: " pomocnik"
-      },
-      betterFoot: {
-        title: "Lepsza noga:",
-        value: " lewa"
-      }
-    }
-  };
+  /*state = {
+    
+  };*/
 
   /*async getData() {
     let response = await fetch(`http://127.0.0.1:3000/api/players/1`, {
@@ -49,17 +42,22 @@ class PlayerDetails extends Component {
     console.log(data);
   }*/
   render() {
-    const transformedPlayerDetails = Object.keys({ ...this.state.labels }).map(key => {
+    const transformedPlayerDetails = Object.keys({ ...labels }).map(key => {
+      let value = "";
+      if (this.props.player) {
+        if (key === "name") value = `${this.props.player.user.firstName} ${this.props.player.user.secondName}`;
+        else value = this.props.player[key];
+      }
       return (
         <PlayerDetail
           key={key}
-          name={this.state.labels[key].title}
-          value={this.state.labels[key].value}
-          onChange={value => {
+          name={labels[key].title}
+          value={value}
+          /*onChange={value => {
             let toChange = this.state.labels;
             toChange[key].value = value;
             this.setState({ labels: toChange });
-          }}
+          }}*/
         />
       );
     });

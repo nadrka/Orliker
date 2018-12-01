@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../LeagueTable/LeagueTable.css";
+import { Link } from "react-router-dom";
 
 const PLAYERS = [
   {
@@ -60,14 +61,17 @@ class PlayersStatistics extends Component {
               }}
             />
           </td>
-          <td>
-            {player.user.firstName} {player.user.secondName}
+          <td className="BlackLink">
+            <Link className="teamLink" to={"/panel/player/" + player.id}>
+              {player.user.firstName} {player.user.secondName}
+            </Link>
           </td>
-          <td>nill</td>
-          <td>nill</td>
-          <td>nill</td>
-          <td>nill</td>
-          <td>nill</td>
+          <td>{player.age}</td>
+          <td>{player.appearance}</td>
+          <td>{player.goals}</td>
+          <td>{player.assists}</td>
+          <td>{player.yellowCards}</td>
+          <td>{player.redCards}</td>
         </tr>
       );
     });
@@ -76,7 +80,7 @@ class PlayersStatistics extends Component {
 
   render() {
     return (
-      <table style={{ width: "90%", alignSelf: "center" }}>
+      <table style={{ width: "95%", alignSelf: "center" }}>
         <tr className="headerSection">
           <th>Numer</th>
           <th />
@@ -84,6 +88,7 @@ class PlayersStatistics extends Component {
           <th>Wiek</th>
           <th>Rozegrane mecze</th>
           <th>Zdobyte bramki</th>
+          <th>Asysty</th>
           <th>Żółte kartki</th>
           <th>Czerwone kartki</th>
         </tr>

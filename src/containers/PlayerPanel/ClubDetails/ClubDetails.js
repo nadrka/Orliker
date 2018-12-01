@@ -5,23 +5,26 @@ import { Link } from "react-router-dom";
 import TeamPanel from "../../TeamPanel/TeamPanel";
 import Match from "../../Match/Match";
 class ClubDetails extends Component {
-  state = {};
   render() {
-    return (
-      <div className="ClubDetails">
-        <div>
-          <img src={apoelPicture} width="150" height="150" />
+    if (this.props.team)
+      return (
+        <div className="ClubDetails">
+          <div>
+            <img src={apoelPicture} width="150" height="150" />
+          </div>
+          <div className="Span Link">
+            <span>
+              <Link to={"/panel/team/" + this.props.team.id}>{this.props.team.name}</Link>
+            </span>
+          </div>
+          <div className="Span">
+            <span>
+              <Link to="/table">Gdańsk - {this.props.team.currentLegue.leagueNumber} liga</Link>
+            </span>
+          </div>
         </div>
-        <div className="Span Link">
-          <span>
-            <Link to="/panel/team">Apoel Morena</Link>
-          </span>
-        </div>
-        <div className="Span">
-          <span>Gdańsk - 1 liga</span>
-        </div>
-      </div>
-    );
+      );
+    return null;
   }
 }
 
