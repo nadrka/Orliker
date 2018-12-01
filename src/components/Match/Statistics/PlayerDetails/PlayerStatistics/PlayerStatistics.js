@@ -7,19 +7,30 @@ import "./PlayerStatistics.css";
 const playerStatistics = props => {
   return (
     <div className="MatchPlayerStatistics">
-      <div className="MatchPlayerStatistic">
-        <img title="Gole" src={goals} width="30" height="30" /> x 2
-      </div>
-      <div className="MatchPlayerStatistic">
-        <img title="Asysty" src={assist} width="30" height="30" />x 3
-      </div>
-      {/* <div className="MatchPlayerStatistic">
-        1x
-        <img title="Czerwone kartki" src={redCard} width="30" height="30" />
-      </div> */}
-      <div className="MatchPlayerStatistic">
-        <img title="Żółte kartki" src={yellowCard} width="30" height="30" /> x 1
-      </div>
+      {props.goals > 0 && (
+        <div className="MatchPlayerStatistic">
+          <img title="Gole" src={goals} width="30" height="30" /> x{" "}
+          {props.goals}
+        </div>
+      )}
+      {props.assists > 0 && (
+        <div className="MatchPlayerStatistic">
+          <img title="Asysty" src={assist} width="30" height="30" />x{" "}
+          {props.assists}
+        </div>
+      )}
+      {props.redCards > 0 && (
+        <div className="MatchPlayerStatistic">
+          <img title="Czerwone kartki" src={redCard} width="30" height="30" /> x{" "}
+          {props.redCards}
+        </div>
+      )}
+      {props.yellowCards > 0 && (
+        <div className="MatchPlayerStatistic">
+          <img title="Żółte kartki" src={yellowCard} width="30" height="30" /> x{" "}
+          {props.yellowCards}
+        </div>
+      )}
     </div>
   );
 };

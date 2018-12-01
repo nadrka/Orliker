@@ -4,74 +4,73 @@ import MatchHeader from "../../components/Match/Header/MatchHeader";
 import "./Match.css";
 import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 import MatchStatistics from "../../components/Match/Statistics/Statistics";
-
+import { getData } from "../../utils/NetworkFunctions";
+import { ROUTES } from "../../utils/Constants";
 class Match extends Component {
   // this.props.match.params.id
   state = {
-    match: {
-      id: 1,
-      matchInfo: {
-        leagueId: 1,
-        matchDate: "02-02-18",
-        refereeId: 3,
-        place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
-        acceptMatchDate: "12312",
-        homeTeam: {
-          id: 1,
-          name: "Hanza Lider",
-          result: 5
-        },
-        awayTeam: {
-          id: 2,
-          name: "Apoel Morena",
-          result: 7
-        }
+    id: 1,
+    matchInfo: {
+      leagueId: 1,
+      matchDate: "02-02-18",
+      refereeId: 3,
+      place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
+      acceptMatchDate: "12312",
+      homeTeam: {
+        id: 1,
+        name: "Hanza Lider",
+        result: 0,
+        position: 0
       },
+      awayTeam: {
+        id: 2,
+        name: "Apoel Morena",
+        result: 0,
+        position: 0
+      }
+    },
 
-      matchStatistics: {
-        homeTeam: {
-          name: "Hanza Lider",
-          statistics: [
-            {
-              playerId: 1,
-              playerNumber: 21,
-              playerFirstName: "Karol",
-              playerSecondName: "Nadratowski",
-              playerPosition: "Defender",
-              goals: 1,
-              assists: 2,
-              yellowCards: 0,
-              redCards: 1
-            }
-          ]
-        },
-        awayTeam: {
-          name: "Apoel Morena",
-          statistics: [
-            {
-              playerId: 2,
-              playerNumber: 5,
-              playerFirstName: "Kamil",
-              playerSecondName: "Nadratowski",
-              playerPosition: "Defender",
-              goals: 0,
-              assists: 2,
-              yellowCards: 1,
-              redCards: 1
-            }
-          ]
-        }
+    matchStatistics: {
+      homeTeam: {
+        result: 5,
+        name: null,
+        statistics: []
+      },
+      awayTeam: {
+        result: 5,
+        name: null,
+        statistics: []
       }
     }
+  };
+
+  componentDidMount() {
+    this.getMatchInfo();
+    this.getMatchStatistics();
+  }
+
+  getMatchInfo = async () => {
+    let matchInfo = await getData(
+      `${ROUTES.MATCHES}/${this.props.match.params.id}`
+    );
+    this.setState({ matchInfo: matchInfo });
+  };
+
+  getMatchStatistics = async () => {
+    let matchStatistics = await getData(
+      `${ROUTES.MATCHES}/${this.props.match.params.id}/statistics`
+    );
+    console.log(matchStatistics);
+    this.setState({ matchStatistics: matchStatistics });
   };
 
   render() {
     return (
       <div>
-        <MatchHeader match={this.state.match.matchInfo} />
+        <MatchHeader match={this.state.matchInfo} />
         <MatchDetails
-          date={this.state.match.matchInfo.matchDate}
-          place={this.state.match.matchInfo.place}
+          date={this.state.matchInfo.matchDate}
+          place={this.state.matchInfo.place}
         />
         <MatchStatistics statistics={this.state.matchStatistics} />
       </div>

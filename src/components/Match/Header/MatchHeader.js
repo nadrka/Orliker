@@ -13,8 +13,8 @@ const matchHeader = props => {
         />
       </div>
       <div className="TeamPosition">
-        <div> Postion in league: 7</div>
-        <div> Postion in league: 8</div>
+        <div> Postion in league: {props.match.homeTeam.position}</div>
+        <div> Postion in league: {props.match.awayTeam.position}</div>
       </div>
     </div>
   );

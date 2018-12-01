@@ -7,13 +7,18 @@ const playerDetails = props => {
   return (
     <div className="MatchPlayerDetails">
       <div className="MatchPlayerInfo">
-        <div className="MatchPlayerInfoNumber">21</div>
+        <div className="MatchPlayerInfoNumber">{props.number}</div>
         <img src={profilePicture} width="60" height="60" />
         <div className="MatchPlayerInfoName GrayLink">
-          <Link to="panel/player">Karol Nadratowski</Link>
+          <Link to="panel/player">{props.name}</Link>
         </div>
       </div>
-      <PlayerStatistics />
+      <PlayerStatistics
+        goals={props.goals}
+        assists={props.assists}
+        redCards={props.redCards}
+        yellowCards={props.yellowCards}
+      />
     </div>
   );
 };

@@ -13,5 +13,6 @@ export const ROUTES = {
   AUTH: "auth",
   TEAMS: "teams",
   PLAYERS: "players",
-  NEWSES: "news"
+  NEWSES: "news",
+  MATCHES: "matches"
 };
