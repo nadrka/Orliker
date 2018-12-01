@@ -16,6 +16,7 @@ import { setUser, setLeagues } from "../../actions/actions";
 import { connect } from "react-redux";
 import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
+import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatistics";
 
 class NavigationBar extends Component {
   async componentDidMount() {
@@ -75,6 +76,9 @@ class NavigationBar extends Component {
           <NavItem eventKey={3}>
             <NavLink to="/login">Logowanie</NavLink>
           </NavItem>
+          <NavItem eventKey={4}>
+            <NavLink to="/sedzia">Sedzia</NavLink>
+          </NavItem>
         </Nav>
       </Navbar.Collapse>
     );
@@ -100,13 +104,19 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
+              <img
+                src={soccerLogo}
+                width="35"
+                height="35"
+                style={{ marginRight: "7px" }}
+              />
               NL3
             </div>
             <Navbar.Toggle />
           </Navbar.Header>
           {this.navBar()}
         </Navbar>
+        <Route path="/sedzia" exact component={RefereeMatchStatistics} />
         <Route path="/news" exact component={News} />
         <Route path="/singleNews" exact component={SingleNews} />
         <Route path="/panel/player" exact component={PlayerPanel} />

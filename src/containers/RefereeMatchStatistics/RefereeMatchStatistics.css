@@ -1,0 +1,10 @@
+.teamStatisticsByReferee {
+  display: flex;
+  flex-direction: column;
+}
+
+.teamsStatisticsByReferee {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
