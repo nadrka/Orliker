@@ -36,7 +36,7 @@ class PlayersStatistics extends Component {
     PLAYERS.sort((player1, player2) => {
       return player1.number - player2.number;
     });
-    var toRender = PLAYERS.map((player, i) => {
+    var toRender = this.props.players.map((player, i) => {
       let classToUse = i % 2 ? "secondRow" : "firstRow";
       return (
         <tr className={classToUse}>
@@ -60,12 +60,14 @@ class PlayersStatistics extends Component {
               }}
             />
           </td>
-          <td>{player.nameAndSurname}</td>
-          <td>{player.age}</td>
-          <td>{player.playedMatches}</td>
-          <td>{player.scoredGoals}</td>
-          <td>{player.yellowCards}</td>
-          <td>{player.redCards}</td>
+          <td>
+            {player.user.firstName} {player.user.secondName}
+          </td>
+          <td>nill</td>
+          <td>nill</td>
+          <td>nill</td>
+          <td>nill</td>
+          <td>nill</td>
         </tr>
       );
     });

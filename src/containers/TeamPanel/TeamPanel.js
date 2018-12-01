@@ -5,6 +5,8 @@ import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
 import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import Schedule from "../../components/Schedule/Schedule";
+import { getData } from "../../utils/NetworkFunctions";
+import { ROUTES } from "../../utils/Constants";
 
 const MENUOPTIONS = {
   MATCHES: 0,
@@ -15,7 +17,9 @@ class TeamPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      team: null,
       option: MENUOPTIONS.MATCHES,
+      players: null,
       playedMatches: [
         {
           id: 1,
@@ -192,6 +196,20 @@ class TeamPanel extends Component {
       ]
     };
   }
+
+  async componentDidMount() {
+    try {
+      const team = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}`);
+      const players = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/players`);
+      this.setState({
+        team: team,
+        players: players
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   getStyle(index) {
     if (index === this.state.option) {
       return "activeColor";
@@ -200,7 +218,7 @@ class TeamPanel extends Component {
   }
   renderOption() {
     if (this.state.option == MENUOPTIONS.PLAYERS) {
-      return <PlayerStatistics />;
+      return <PlayerStatistics players={this.state.players} />;
     } else if (this.state.option == MENUOPTIONS.MATCHES) {
       return <Schedule incomingMatches={this.state.incomingMatches} playedMatches={this.state.playedMatches} />;
     }
@@ -212,13 +230,21 @@ class TeamPanel extends Component {
           <div className="flex picSection">
             <img src={require("../../assets/images/apoel.png")} alt="no pic" className="img" />
           </div>
-          <div className="flex textSection">
-            <div className="bigFontBigMargin">Apoel Morena</div>
-            <div className="mediumFontMediumMargin mediumMarginWithBorder"> 1. miejsce - 1. liga</div>
-            <div className="mediumFontMediumMargin">Bilans: 3 Z 0 R 0 P</div>
-            <div className="mediumFontMediumMargin">Kapitan: Gustaw Ohler</div>
-            <div className="mediumFontMediumMargin">Ostatni mecz: Apoel Morena 5-0 Ego</div>
-          </div>
+          {this.state.team && (
+            <div className="flex textSection">
+              <div className="bigFontBigMargin">{this.state.team.name}</div>
+              <div className="mediumFontMediumMargin mediumMarginWithBorder">
+                1. miejsce - {this.state.team.currentLegue.leagueNumber} liga
+              </div>
+              <div className="mediumFontMediumMargin">
+                Bilans: {this.state.team.wins} Z {this.state.team.draws} R {this.state.team.loses} P
+              </div>
+              <div className="mediumFontMediumMargin">
+                Kapitan: {this.state.team.captain.user.firstName} {this.state.team.captain.user.secondName}
+              </div>
+              <div className="mediumFontMediumMargin">Ostatni mecz: Apoel Morena 5-0 Ego</div>
+            </div>
+          )}
           <div className="flex marginSection" />
         </div>
         <div className="flex bottomSection">

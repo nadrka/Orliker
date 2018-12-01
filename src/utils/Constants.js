@@ -10,5 +10,6 @@ export const BASEURL = "http://localhost:3000/api/";
 
 export const ROUTES = {
   LEAGUES: "leagues",
-  AUTH: "auth"
+  AUTH: "auth",
+  TEAMS: "teams"
 };

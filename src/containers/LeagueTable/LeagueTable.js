@@ -7,63 +7,6 @@ import { connect } from "react-redux";
 import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 
-const TABLE = [
-  {
-    name: "Apoel Morena",
-    matches: 3,
-    wins: 3,
-    draws: 0,
-    loses: 0,
-    scoredGoals: 19,
-    conceidedGoals: 0
-  },
-  {
-    name: "Paladyni Prawilności",
-    matches: 1,
-    wins: 0,
-    draws: 0,
-    loses: 1,
-    scoredGoals: 0,
-    conceidedGoals: 9
-  },
-  {
-    name: "Hanza Lider",
-    matches: 2,
-    wins: 2,
-    draws: 0,
-    loses: 0,
-    scoredGoals: 10,
-    conceidedGoals: 1
-  },
-  {
-    name: "AST Wrzeszcz",
-    matches: 2,
-    wins: 1,
-    draws: 1,
-    loses: 0,
-    scoredGoals: 7,
-    conceidedGoals: 4
-  },
-  {
-    name: "EGO",
-    matches: 2,
-    wins: 0,
-    draws: 0,
-    loses: 2,
-    scoredGoals: 0,
-    conceidedGoals: 11
-  },
-  {
-    name: "KP Brzeźno",
-    matches: 1,
-    wins: 0,
-    draws: 0,
-    loses: 1,
-    scoredGoals: 0,
-    conceidedGoals: 4
-  }
-];
-
 class LeagueTable extends Component {
   /*state = {
     leagueOption: LEAGUEOPTIONS.LIGA1
@@ -97,7 +40,7 @@ class LeagueTable extends Component {
         <tr
           className={classToUse}
           style={{
-            backgroundColor: i == 0 ? "#33F422" : i > TABLE.length - 4 ? "#F5260A" : undefined
+            backgroundColor: i == 0 ? "#33F422" : i > this.state.teams.length - 4 ? "#F5260A" : undefined
           }}
         >
           <td>{`${i + 1}.`}</td>
@@ -121,7 +64,7 @@ class LeagueTable extends Component {
             />
           </td>
           <td className="BlackLink">
-            <Link className="teamLink" to="/panel/team">
+            <Link className="teamLink" to={"panel/team/" + team.id}>
               {team.name}
             </Link>
           </td>
