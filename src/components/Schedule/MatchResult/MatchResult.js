@@ -3,20 +3,19 @@ import "./MatchResult.css";
 import Team from "../Team/Team";
 
 const matchResult = props => {
+  if (props.homeTeam.result == null) {
+    props.homeTeam.result = "-";
+  }
+  if (props.awayTeam.result == null) {
+    props.awayTeam.result = "-";
+  }
   return (
     <div className="MatchResult">
-      {" "}
-      <Team
-        name={props.firstTeam.name}
-        isPlayingHome={props.firstTeam.isPlayingHome}
-      />
+      <Team name={props.homeTeam.name} isPlayingHome={true} />
       <div className="Result">
-        {props.firstTeam.scoredGoals} : {props.secondTeam.scoredGoals}
+        {props.homeTeam.result} : {props.awayTeam.result}
       </div>
-      <Team
-        name={props.secondTeam.name}
-        isPlayingHome={props.secondTeam.isPlayingHome}
-      />
+      <Team name={props.awayTeam.name} isPlayingHome={false} />
     </div>
   );
 };

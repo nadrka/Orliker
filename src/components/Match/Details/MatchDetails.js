@@ -9,7 +9,7 @@ const matchDetails = props => {
           <span className="glyphicon glyphicon-map-marker" />
           &nbsp;Miejsce spotkania:
         </div>
-        <div>Boisko Orlik SP 76 Arena - Jagiellońska 14</div>
+        <div>{props.place}</div>
       </div>
       <div className="DetailFields">
         <div className="RowFlex">
@@ -17,7 +17,7 @@ const matchDetails = props => {
           &nbsp;Data spotkania:
         </div>
 
-        <div>21-11-18 | 19:30</div>
+        <div>{props.date}</div>
       </div>
       <div className="DetailFields">
         <div className="RowFlex">

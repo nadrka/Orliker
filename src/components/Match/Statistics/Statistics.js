@@ -4,8 +4,8 @@ import "./Statistics.css";
 const matchStatistics = props => {
   return (
     <div className="MatchStatistics">
-      <TeamStatistics />
-      <TeamStatistics />
+      <TeamStatistics team={props.homeTeam} />
+      <TeamStatistics team={props.awayTeam} />
     </div>
   );
 };
