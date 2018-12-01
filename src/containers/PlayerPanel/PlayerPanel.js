@@ -11,7 +11,7 @@ import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import { ROUTES } from "../../utils/Constants";
 import { getData } from "../../utils/NetworkFunctions";
 class PlayerPanel extends Component {
-  state = { choosenOption: "schedule", player: null, team: null };
+  state = { choosenOption: "schedule", player: null, team: null, playedMatches: [], upcomingMatches: [] };
   handleOptionChange = option => {
     this.setState({ choosenOption: option });
   };
@@ -19,14 +19,18 @@ class PlayerPanel extends Component {
   async componentDidMount() {
     const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
     const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
-    this.setState({ player: player, team: team });
+    const upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
+    const playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
+    this.setState({ player: player, team: team, playedMatches: playedMatches, upcomingMatches: upcomingMatches });
   }
 
   render() {
     let choosenOption;
     switch (this.state.choosenOption) {
       case "schedule":
-        choosenOption = <PlayerLeagueSchedule />;
+        choosenOption = (
+          <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} />
+        );
         break;
       case "statistics":
         choosenOption = <PlayerCarrer />;

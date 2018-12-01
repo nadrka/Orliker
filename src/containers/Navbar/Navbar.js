@@ -118,7 +118,7 @@ class NavigationBar extends Component {
         <Route path="/matchRequest" exact component={MatchRequest} />
         <Route path="/sedzia" exact component={RefereeMatchStatistics} />
         <Route path="/news" exact component={News} />
-        <Route path="/singleNews" exact component={SingleNews} />
+        <Route path="/singleNews/:id" exact component={SingleNews} />
         <Route path="/panel/player/:id" exact component={PlayerPanel} />
         <Route path="/panel/team/:id" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />
