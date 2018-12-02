@@ -8,7 +8,9 @@ const team = props => {
   if (props.isPlayingHome) {
     teamNameWithLogo = (
       <div className="Team GrayLink">
-        <Link to="/panel/team">{props.name}</Link>
+        <Link to="/panel/team" className="Result">
+          {props.name}
+        </Link>
         <img
           src={apoel}
           width="50"
@@ -26,7 +28,9 @@ const team = props => {
           height="50"
           style={{ marginRight: "15px" }}
         />
-        <Link to="/panel/team">{props.name}</Link>
+        <Link to="/panel/team" className="Result">
+          {props.name}
+        </Link>
       </div>
     );
   }

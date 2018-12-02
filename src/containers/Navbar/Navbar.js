@@ -18,6 +18,7 @@ import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatistics";
 import MatchRequest from "../MatchRequest/MatchRequest";
+import PlayerList from "../PlayerList/PlayerList";
 
 class NavigationBar extends Component {
   async componentDidMount() {
@@ -108,7 +109,12 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
+              <img
+                src={soccerLogo}
+                width="35"
+                height="35"
+                style={{ marginRight: "7px" }}
+              />
               NL3
             </div>
             <Navbar.Toggle />

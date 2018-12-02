@@ -1,18 +1,18 @@
 import React from "react";
-import "./TeamInvitation.css";
+import "./PlayerRequest";
+import profilePicture from "../../../assets/images/profilePicture.jpg";
 import accept from "../../../assets/images/accept.png";
 import reject from "../../../assets/images/reject.png";
-import apoel from "../../../assets/images/apoel.png";
-const teamInvitation = props => {
-  const invitations = props.invitations.map(invitation => {
+const PlayerRequest = props => {
+  const requests = props.request.map(r => {
     return (
       <div className="TeamInvitation">
         <div className="TeamInvitationInfo">
-          <div className="TeamInvitationLeague">
-            {invitation.team.league} Liga
+          <img src={profilePicture} width="50" height="50" />
+          <div className="TeamInvitationName">{r.player.number}</div>
+          <div className="TeamInvitationName">
+            {r.player.firstName + " " + r.player.secondName}
           </div>
-          <img src={apoel} width="50" height="50" />
-          <div className="TeamInvitationName">{invitation.team.name}</div>
         </div>
         <div className="TeamInvitationOptions">
           <img
@@ -33,10 +33,10 @@ const teamInvitation = props => {
   });
   return (
     <div className="TeamInvitations">
-      <div className="TeamInvitationHeader">Zaproszenia</div>
-      {invitations}
+      <div className="TeamInvitationHeader">Prośby o dołączenie do druzyny</div>
+      {requests}
     </div>
   );
 };
 
-export default teamInvitation;
+export default PlayerRequest;

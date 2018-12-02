@@ -2,9 +2,27 @@ import React, { Component } from "react";
 import TeamInvitation from "../../components/TeamList/Invitation/TeamInvitation";
 import TeamRequest from "../../components/TeamList/Request/TeamRequest";
 import Searchbar from "../../components/UI/Searchbar/Searchbar";
+import { getData } from "../../utils/NetworkFunctions";
+import { ROUTES } from "../../utils/Constants";
 import "./TeamList.css";
 class TeamList extends Component {
-  state = {};
+  state = {
+    invitations: []
+  };
+
+  componentDidMount() {
+    this.getInvitations();
+  }
+
+  getInvitations = async () => {
+    let invitations = await getData(`${ROUTES.PLAYERS}/1/invitations`);
+    this.setState({ invitations: invitations });
+  };
+
+  getAllTeams = async () => {
+    // let joinRequests = await getData(`${ROUTES.TEAMS}/1/invitations`);
+    // this.setState({ request: joinRequests });
+  };
   handleSearchbarChange = inputValue => {
     console.log(inputValue);
   };
@@ -15,7 +33,7 @@ class TeamList extends Component {
           <Searchbar onSerchbarChanged={this.handleSearchbarChange} />
         </div>
 
-        <TeamInvitation />
+        <TeamInvitation invitations={this.state.invitations} />
         <TeamRequest />
       </div>
     );

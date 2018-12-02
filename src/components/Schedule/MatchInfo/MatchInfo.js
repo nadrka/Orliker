@@ -3,10 +3,14 @@ import MatchResult from "../MatchResult/MatchResult";
 import MatchDate from "../MatchDate/MatchDate";
 import "./MatchInfo.css";
 import { Link } from "react-router-dom";
+import moment from "moment";
 const matchInfo = props => {
   return (
     <div className="MatchInfo">
-      <MatchDate className="MatchDate" date={props.matchDetails.matchDate} />
+      <MatchDate
+        className="MatchDate"
+        date={moment(props.matchDetails.matchDate).format("DD.MM.YYYY HH:mm")}
+      />
       <MatchResult
         className="MatchResult"
         homeTeam={props.matchDetails.homeTeam}
