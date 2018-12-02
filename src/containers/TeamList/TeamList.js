@@ -7,11 +7,57 @@ import { ROUTES } from "../../utils/Constants";
 import "./TeamList.css";
 class TeamList extends Component {
   state = {
-    invitations: []
+    invitations: [],
+    teamsForLeague: [
+      {
+        league: 1,
+        teams: [
+          {
+            id: 3,
+            name: "Parówy Mrówy",
+            currentLegueId: 1
+          },
+          {
+            id: 4,
+            name: "Efce Janki",
+            currentLegueId: 1
+          }
+        ]
+      },
+      {
+        league: 2,
+        teams: [
+          {
+            id: 1,
+            name: "Arawa Karwa",
+            currentLegueId: 1
+          },
+          {
+            id: 2,
+            name: "Depce po Metce",
+            currentLegueId: 1
+          }
+        ]
+      }
+    ]
   };
 
-  componentDidMount() {
-    this.getInvitations();
+  async componentDidMount() {
+    await this.getInvitations();
+    await this.getAllTeams();
+    const teamsWithoutInvitation = this.state.teamsForLeague.map(league => {
+      return {
+        league: league.league,
+        teams: league.teams.filter(team => {
+          const invitationForTeam = this.state.invitations.filter(inv => {
+            return inv.team.id == team.id;
+          });
+          return !(invitationForTeam.length > 0);
+        })
+      };
+    });
+
+    this.setState({ teamsForLeague: teamsWithoutInvitation });
   }
 
   getInvitations = async () => {
@@ -20,8 +66,8 @@ class TeamList extends Component {
   };
 
   getAllTeams = async () => {
-    // let joinRequests = await getData(`${ROUTES.TEAMS}/1/invitations`);
-    // this.setState({ request: joinRequests });
+    let teams = await getData(`${ROUTES.TEAMS}`);
+    this.setState({ teamsForLeague: teams });
   };
   handleSearchbarChange = inputValue => {
     console.log(inputValue);
@@ -34,7 +80,7 @@ class TeamList extends Component {
         </div>
 
         <TeamInvitation invitations={this.state.invitations} />
-        <TeamRequest />
+        <TeamRequest teams={this.state.teamsForLeague} />
       </div>
     );
   }
