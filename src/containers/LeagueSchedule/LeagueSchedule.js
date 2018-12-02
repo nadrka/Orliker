@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Schedule from "../../components/Schedule/Schedule";
 import "./LeagueSchedule.css";
+import { connect } from "react-redux";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
@@ -18,6 +19,7 @@ const MATCHOPTIONS = {
 
 class LeagueSchedule extends Component {
   state = {
+    league: null,
     leagueOption: LEAGUEOPTIONS.LIGA1,
     matchOption: MATCHOPTIONS.ALL,
     playedMatches: [],
@@ -25,17 +27,31 @@ class LeagueSchedule extends Component {
   };
 
   componentDidMount() {
-    this.getUpcomingMatches();
-    this.getPlayedMatches();
+    if (this.props.leagues.length > 0) {
+      this.setState({ league: this.props.leagues[0].id });
+    }
   }
 
-  getUpcomingMatches = async () => {
-    let upcomingMatches = await getData(`${ROUTES.LEAGUES}/1/matches/upcoming`);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.league !== this.state.league) {
+      this.getPlayedMatches(this.state.league);
+      this.getUpcomingMatches(this.state.league);
+    }
+    if (!prevState.league && this.props.leagues.length > 0)
+      this.setState({ league: this.props.leagues[0].id });
+  }
+
+  getUpcomingMatches = async league => {
+    let upcomingMatches = await getData(
+      `${ROUTES.LEAGUES}/${league}/matches/upcoming`
+    );
     this.setState({ upcomingMatches });
   };
 
-  getPlayedMatches = async () => {
-    let playedMatches = await getData(`${ROUTES.LEAGUES}/1/matches/played`);
+  getPlayedMatches = async league => {
+    let playedMatches = await getData(
+      `${ROUTES.LEAGUES}/${league}/matches/played`
+    );
     this.setState({ playedMatches });
   };
 
@@ -47,20 +63,15 @@ class LeagueSchedule extends Component {
             <div className="flex bigFontBigMargin">Terminarz</div>
             <div className="flex selectClass">
               <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
-                <MenuItem
-                  onSelect={() =>
-                    this.setState({ leagueOption: LEAGUEOPTIONS.LIGA1 })
-                  }
-                >
-                  1. liga
-                </MenuItem>
-                <MenuItem
-                  onSelect={() =>
-                    this.setState({ leagueOption: LEAGUEOPTIONS.LIGA2 })
-                  }
-                >
-                  2. liga
-                </MenuItem>
+                {this.props.leagues.map(league => {
+                  return (
+                    <MenuItem
+                      onSelect={() => this.setState({ league: league.id })}
+                    >
+                      {league.leagueNumber}. liga
+                    </MenuItem>
+                  );
+                })}
               </DropdownButton>
               <DropdownButton title="Rodzaj meczy" style={{ marginBottom: 5 }}>
                 <MenuItem
@@ -91,10 +102,14 @@ class LeagueSchedule extends Component {
         <Schedule
           upcomingMatches={this.state.upcomingMatches}
           playedMatches={this.state.playedMatches}
+          category={this.state.matchOption}
         />
       </div>
     );
   }
 }
+const mapStateToProps = state => {
+  return { leagues: state.leagues };
+};
 
-export default LeagueSchedule;
+export default connect(mapStateToProps)(LeagueSchedule);

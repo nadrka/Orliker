@@ -1,5 +1,6 @@
 import React from "react";
 import "./MatchDetails.css";
+import moment from "moment";
 
 const matchDetails = props => {
   return (
@@ -17,7 +18,7 @@ const matchDetails = props => {
           &nbsp;Data spotkania:
         </div>
 
-        <div>{props.date}</div>
+        <div>{moment(props.date).format("DD.MM.YYYY HH:mm")}</div>
       </div>
       <div className="DetailFields">
         <div className="RowFlex">

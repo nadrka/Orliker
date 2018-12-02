@@ -8,38 +8,7 @@ import "./TeamList.css";
 class TeamList extends Component {
   state = {
     invitations: [],
-    teamsForLeague: [
-      {
-        league: 1,
-        teams: [
-          {
-            id: 3,
-            name: "Parówy Mrówy",
-            currentLegueId: 1
-          },
-          {
-            id: 4,
-            name: "Efce Janki",
-            currentLegueId: 1
-          }
-        ]
-      },
-      {
-        league: 2,
-        teams: [
-          {
-            id: 1,
-            name: "Arawa Karwa",
-            currentLegueId: 1
-          },
-          {
-            id: 2,
-            name: "Depce po Metce",
-            currentLegueId: 1
-          }
-        ]
-      }
-    ]
+    teamsForLeague: []
   };
 
   async componentDidMount() {

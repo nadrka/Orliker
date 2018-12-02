@@ -10,14 +10,33 @@ const schedule = props => {
     return <MatchInfo key={match.id} matchDetails={match} />;
   });
 
-  return (
-    <div>
-      <div className="Title">Nadchodzące Mecze</div>
-      <div>{upcomingMatches}</div>
-      <div className="Title">Rozegrane Mecze</div>
-      <div>{playedMatches}</div>
-    </div>
-  );
+  let layout;
+  console.log(props.category);
+  if (props.category == 0) {
+    layout = (
+      <div>
+        <div className="Title">Nadchodzące Mecze</div>
+        <div>{upcomingMatches}</div>
+        <div className="Title">Rozegrane Mecze</div>
+        <div>{playedMatches}</div>
+      </div>
+    );
+  } else if (props.category == 1) {
+    layout = (
+      <div>
+        <div className="Title">Rozegrane Mecze</div>
+        <div>{playedMatches}</div>
+      </div>
+    );
+  } else if (props.category == 2) {
+    layout = (
+      <div>
+        <div className="Title">Nadchodzące Mecze</div>
+        <div>{upcomingMatches}</div>
+      </div>
+    );
+  }
+  return <div>{layout}</div>;
 };
 
 export default schedule;

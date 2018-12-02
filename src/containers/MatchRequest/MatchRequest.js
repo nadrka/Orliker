@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import App from "../../App";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./MatchRequest";
+import { DropdownButton, MenuItem } from "react-bootstrap";
+import "./MatchRequest.css";
 const customStyles = {
   content: {
     top: "40%",
@@ -20,6 +21,10 @@ const customStyles = {
 Modal.setAppElement(App);
 class MatchRequest extends Component {
   state = {
+    places: [{ name: "ZADUPIE" }, { name: "Decathlon" }],
+    pickedPlace: null,
+    referees: [{ name: "Janusz Grzyb" }, { name: "Marian Paździoch" }],
+    pickeReferee: null,
     modalIsOpen: false,
     startDate: new Date()
   };
@@ -54,18 +59,69 @@ class MatchRequest extends Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleChange}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            dateFormat="MMMM d, yyyy h:mm aa"
-            timeCaption="time"
-          />
+          <div className="CenterContent">
+            <h2 ref={subtitle => (this.subtitle = subtitle)}>
+              MECZ PRZECIWKO: HANZA LIDER
+            </h2>
+            <h3>Szczegóły wyzwania:</h3>
+            <div className="space">
+              <span className="glyphicon glyphicon-calendar" />
+              Data i godzina: &nbsp;
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                timeCaption="time"
+              />
+            </div>
+            <div className="space">
+              <span className="glyphicon glyphicon-map-marker" />
+              &nbsp;Boisko do rozegrania meczu: &nbsp;
+              <DropdownButton
+                title={this.state.pickedPlace}
+                style={{ marginBottom: 5 }}
+              >
+                {this.state.places.map(place => {
+                  return (
+                    <MenuItem
+                      onSelect={() =>
+                        this.setState({ pickedPlace: place.name })
+                      }
+                    >
+                      {place.name}
+                    </MenuItem>
+                  );
+                })}
+              </DropdownButton>
+            </div>
+
+            <div className="space">
+              <span className="glyphicon glyphicon-eye-open" />
+              &nbsp; Sędzia spotkania: &nbsp;
+              <DropdownButton
+                title={this.state.pickeReferee}
+                style={{ marginBottom: 5 }}
+              >
+                {this.state.referees.map(referee => {
+                  return (
+                    <MenuItem
+                      onSelect={() =>
+                        this.setState({ pickeReferee: referee.name })
+                      }
+                    >
+                      {referee.name}
+                    </MenuItem>
+                  );
+                })}
+              </DropdownButton>
+            </div>
+            <button className="RegisterButton" onClick={this.closeModal}>
+              WYZWIJ
+            </button>
+          </div>
         </Modal>
       </div>
     );
