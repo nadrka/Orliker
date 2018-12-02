@@ -226,7 +226,7 @@ class RegisterBox extends Component {
     try {
       let response = await postDataWithResponse(ROUTES.AUTH, data, {});
       this.props.setUser(response);
-      this.props.history.push("/panel/player");
+      this.props.history.push("/panel/player/" + response.player.id);
     } catch (error) {
       console.log(error);
     }

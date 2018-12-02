@@ -21,7 +21,8 @@ class TeamPanel extends Component {
       option: MENUOPTIONS.MATCHES,
       players: null,
       playedMatches: [],
-      upcomingMatches: []
+      upcomingMatches: [],
+      lastMatch: null
     };
   }
 
@@ -31,11 +32,13 @@ class TeamPanel extends Component {
       const players = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/playersWithStats`);
       const upcomingMatches = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/matches/upcoming`);
       const playedMatches = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/matches/played`);
+      const lastMatch = playedMatches[0];
       this.setState({
         team: team,
         players: players,
         playedMatches: playedMatches,
-        upcomingMatches: upcomingMatches
+        upcomingMatches: upcomingMatches,
+        lastMatch: lastMatch
       });
     } catch (error) {
       console.log(error);
@@ -52,10 +55,13 @@ class TeamPanel extends Component {
     if (this.state.option == MENUOPTIONS.PLAYERS) {
       return <PlayerStatistics players={this.state.players} />;
     } else if (this.state.option == MENUOPTIONS.MATCHES) {
-      return <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} />;
+      return (
+        <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} category={0} />
+      );
     }
   }
   render() {
+    let { lastMatch } = this.state;
     return (
       <div className="flex mainContainerTeamPanel">
         <div className="flex topSection">
@@ -74,7 +80,14 @@ class TeamPanel extends Component {
               <div className="mediumFontMediumMargin">
                 Kapitan: {this.state.team.captain.user.firstName} {this.state.team.captain.user.secondName}
               </div>
-              <div className="mediumFontMediumMargin">Ostatni mecz: Apoel Morena 5-0 Ego</div>
+              <div className="mediumFontMediumMargin">
+                Ostatni mecz:{" "}
+                {lastMatch
+                  ? `${lastMatch.homeTeam.name} ${lastMatch.homeTeam.result}-${lastMatch.awayTeam.result} ${
+                      lastMatch.awayTeam.name
+                    }`
+                  : "-"}
+              </div>
             </div>
           )}
           <div className="flex marginSection" />
@@ -87,40 +100,6 @@ class TeamPanel extends Component {
               this.setState({ option: arg });
             }}
           />
-
-          {/* <PanelOption
-              name={"Mecze"}
-              clicked={() => {
-                this.setState({ option: MENUOPTIONS.MATCHES });
-              }}
-              //key="Mecze"
-              isActive={this.state.option == MENUOPTIONS.MATCHES}
-              howManyButtons={2}
-            />
-            <PanelOption
-              name={"Zawodnicy"}
-              clicked={() => {
-                this.setState({ option: MENUOPTIONS.PLAYERS });
-              }}
-              //key="awayTeam"
-              isActive={this.state.option == MENUOPTIONS.PLAYERS}
-              howManyButtons={2}
-            />           <div
-              className={"flex buttons rightMargin " + this.getStyle(0)}
-              onClick={() => {
-                this.setState({ option: MENUOPTIONS.MATCHES });
-              }}
-            >
-              Mecze
-            </div>
-            <div
-              className={"flex buttons " + this.getStyle(1)}
-              onClick={() => {
-                this.setState({ option: MENUOPTIONS.PLAYERS });
-              }}
-            >
-              Zawodnicy
-            </div>*/}
           {this.renderOption()}
         </div>
       </div>
