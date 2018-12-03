@@ -21,8 +21,8 @@ export function postDataWithoutResponse(route, data, additionalHeaders = {}) {
   });
 }
 
-export function putData(route, data, additionalHeaders = {}) {
-  axios.put(`${BASEURL}${route}`, data, {
+export async function putData(route, data, additionalHeaders = {}) {
+  await axios.put(`${BASEURL}${route}`, data, {
     headers: Object.assign({ "Content-Type": "application/json" }, additionalHeaders)
   });
 }
