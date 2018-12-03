@@ -49,10 +49,14 @@ class NavigationBar extends Component {
               <NavLink to="/table">Tabela</NavLink>
             </NavItem>
             <NavItem eventKey={3}>
-              <NavLink to={"/panel/team/" + this.props.user.player.teamId}>Panel Druzyny</NavLink>
+              <NavLink to={"/panel/team/" + this.props.user.player.teamId}>
+                Panel Druzyny
+              </NavLink>
             </NavItem>
             <NavItem eventKey={4}>
-              <NavLink to={"/panel/player/" + this.props.user.player.id}>Panel Zawodnika</NavLink>
+              <NavLink to={"/panel/player/" + this.props.user.player.id}>
+                Panel Zawodnika
+              </NavLink>
             </NavItem>
             <NavItem eventKey={5}>
               <NavLink to="/invitation">Zaproszenia</NavLink>
@@ -81,9 +85,6 @@ class NavigationBar extends Component {
           <NavItem eventKey={4}>
             <NavLink to="/sedzia">Sedzia</NavLink>
           </NavItem>
-          <NavItem eventKey={4}>
-            <NavLink to="/matchRequest">Dupcia</NavLink>
-          </NavItem>
         </Nav>
       </Navbar.Collapse>
     );
@@ -109,7 +110,12 @@ class NavigationBar extends Component {
             }}
           >
             <div>
-              <img src={soccerLogo} width="35" height="35" style={{ marginRight: "7px" }} />
+              <img
+                src={soccerLogo}
+                width="35"
+                height="35"
+                style={{ marginRight: "7px" }}
+              />
               NL3
             </div>
             <Navbar.Toggle />

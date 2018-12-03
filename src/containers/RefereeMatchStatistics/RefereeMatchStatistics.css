@@ -8,3 +8,13 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
+
+.requestButton {
+  width: 200px;
+  min-height: 50px;
+  border-radius: 15px;
+  background: #45a29e;
+  color: white;
+  font-size: 20px;
+  margin-top: 100px;
+}

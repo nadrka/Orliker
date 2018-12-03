@@ -1,21 +1,34 @@
-import React from "react";
 import NumericInput from "react-numeric-input";
 import "./TeamStatisticsByReferee.css";
-const TeamStatisticsByReferee = props => {
-  return (
-    <div className="matchStatisticsByReferee">
-      <div className="TeamNameInRefereeStatistics">HANZA LIDER</div>
-      <div className="smallNumeric">
-        <NumericInput
-          onChange={this.chuj}
-          className="form-control"
-          min={0}
-          max={100}
-          value={0}
-        />
+import React, { Component } from "react";
+
+class TeamStatisticsByReferee extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.name === nextProps.name) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  resultChanged = goals => {
+    this.props.onResultChanged(this.props.isHomeTeam, goals);
+  };
+  render() {
+    return (
+      <div className="matchStatisticsByReferee">
+        <div className="TeamNameInRefereeStatistics">{this.props.name}</div>
+        <div className="smallNumeric">
+          <NumericInput
+            onChange={this.resultChanged}
+            className="form-control"
+            min={0}
+            max={100}
+            value={0}
+          />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default TeamStatisticsByReferee;
