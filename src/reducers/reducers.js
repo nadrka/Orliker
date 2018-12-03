@@ -1,10 +1,16 @@
-import { SET_USER, SET_LEAGUES } from "../actions/actions";
+import { SET_USER, SET_LEAGUES, CHANGE_NAME, CHANGE_PLAYER } from "../actions/actions";
 import { combineReducers } from "redux";
 
 function user(state = null, actions) {
   switch (actions.type) {
     case SET_USER:
       return actions.user;
+    case CHANGE_NAME:
+      return { ...state, firstName: actions.firstName, secondName: actions.secondName };
+    case CHANGE_PLAYER:
+      let newObject = { ...state };
+      newObject.player[actions.param] = actions.value;
+      return newObject;
     default:
       return state;
   }

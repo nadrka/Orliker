@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import "./PlayerDetails.css";
 import PlayerDetail from "../../../components/PlayerDetail/PlayerDetail";
+import { connect } from "react-redux";
+import { putData } from "../../../utils/NetworkFunctions";
+import { ROUTES } from "../../../utils/Constants";
+import { changeName, changePlayer } from "../../../actions/actions";
 
 const labels = {
   name: {
@@ -17,30 +21,21 @@ const labels = {
   }
 };
 class PlayerDetails extends Component {
-  /*state = {
-    
-  };*/
-
-  /*async getData() {
-    let response = await fetch(`http://127.0.0.1:3000/api/players/1`, {
-      method: "GET",
-      headers: Object.assign({
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      })
-    });
-    let responseJson = await response.json();
-    if (response.status === 200) {
-      return responseJson;
-    } else {
-      throw new Error("BLAD!");
+  async changePlayer(toChange, value) {
+    try {
+      /*if (toChange==="name"){
+        this.props.changeName(value.split(" ")[0])
+      }*/
+      this.props.changePlayer(toChange, parseInt(value));
+      let objToSend = {};
+      objToSend[toChange] = parseInt(value);
+      await putData(ROUTES.PLAYERS, objToSend, { Authorization: this.props.loggedUser.token });
+      console.log("done");
+    } catch (error) {
+      console.log(error);
     }
   }
-  async componentDidMount() {
-    let data = await this.getData();
-    console.log(data);
-  }*/
+
   render() {
     const transformedPlayerDetails = Object.keys({ ...labels }).map(key => {
       let value = "";
@@ -48,16 +43,19 @@ class PlayerDetails extends Component {
         if (key === "name") value = `${this.props.player.user.firstName} ${this.props.player.user.secondName}`;
         else value = this.props.player[key];
       }
+      console.log(this.props.player);
+      console.log(this.props.loggedUser);
       return (
         <PlayerDetail
           key={key}
           name={labels[key].title}
           value={value}
-          /*onChange={value => {
-            let toChange = this.state.labels;
-            toChange[key].value = value;
-            this.setState({ labels: toChange });
-          }}*/
+          canChange={
+            this.props.loggedUser && this.props.player && this.props.player.id == this.props.loggedUser.player.id
+          }
+          onChange={value => {
+            this.changePlayer(key, value);
+          }}
         />
       );
     });
@@ -65,4 +63,22 @@ class PlayerDetails extends Component {
   }
 }
 
-export default PlayerDetails;
+const mapStateToProps = state => {
+  return { loggedUser: state.user };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeName: (firstName, secondName) => {
+      dispatch(changeName(firstName, secondName));
+    },
+    changePlayer: (param, value) => {
+      dispatch(changePlayer(param, value));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerDetails);

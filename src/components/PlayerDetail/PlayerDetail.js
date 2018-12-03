@@ -31,13 +31,15 @@ class PlayerDetail extends Component {
         {!this.state.isBeingChanged && (
           <div className="LabelValue">
             <label>{this.props.value}</label>
-            <Glyphicon
-              glyph="glyphicon glyphicon-pencil"
-              bsClass={"glyphicon"}
-              onClick={() => {
-                this.setState({ isBeingChanged: true });
-              }}
-            />
+            {this.props.canChange && (
+              <Glyphicon
+                glyph="glyphicon glyphicon-pencil"
+                bsClass={"glyphicon"}
+                onClick={() => {
+                  this.setState({ isBeingChanged: true });
+                }}
+              />
+            )}
           </div>
         )}
       </div>

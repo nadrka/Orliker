@@ -10,6 +10,8 @@ import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import { ROUTES } from "../../utils/Constants";
 import { getData } from "../../utils/NetworkFunctions";
+import { connect } from "react-redux";
+
 class PlayerPanel extends Component {
   state = { choosenOption: "schedule", player: null, team: null, playedMatches: [], upcomingMatches: [] };
   handleOptionChange = option => {
@@ -42,7 +44,16 @@ class PlayerPanel extends Component {
           <div className="ProfilePicture">
             <img src={profilePicture} width="300" height="300" />
           </div>
-          <PlayerDetails player={this.state.player} />
+          <PlayerDetails
+            player={
+              this.props.loggedUser && this.state.player && this.state.player.id == this.props.loggedUser.player.id
+                ? {
+                    ...this.props.loggedUser.player,
+                    user: { firstName: this.props.loggedUser.firstName, secondName: this.props.loggedUser.secondName }
+                  }
+                : this.state.player
+            }
+          />
           <ClubDetails team={this.state.team} />
         </div>
         <div className="flex bottomSection">
@@ -60,4 +71,8 @@ class PlayerPanel extends Component {
   }
 }
 
-export default PlayerPanel;
+const mapStateToProps = state => {
+  return { loggedUser: state.user };
+};
+
+export default connect(mapStateToProps)(PlayerPanel);
