@@ -23,14 +23,23 @@ const labels = {
 class PlayerDetails extends Component {
   async changePlayer(toChange, value) {
     try {
-      /*if (toChange==="name"){
-        this.props.changeName(value.split(" ")[0])
-      }*/
-      this.props.changePlayer(toChange, parseInt(value));
       let objToSend = {};
-      objToSend[toChange] = parseInt(value);
+      if (toChange === "name") {
+        var names = value.split(" ", 2);
+        console.log("First name: " + names[0]);
+        this.props.changeName(names[0], names[1]);
+        objToSend["firstName"] = names[0];
+        objToSend["secondName"] = names[1];
+      } else {
+        if (toChange === "number") {
+          this.props.changePlayer(toChange, parseInt(value));
+          objToSend[toChange] = parseInt(value);
+        } else {
+          this.props.changePlayer(toChange, value);
+          objToSend[toChange] = value;
+        }
+      }
       await putData(ROUTES.PLAYERS, objToSend, { Authorization: this.props.loggedUser.token });
-      console.log("done");
     } catch (error) {
       console.log(error);
     }
@@ -43,11 +52,12 @@ class PlayerDetails extends Component {
         if (key === "name") value = `${this.props.player.user.firstName} ${this.props.player.user.secondName}`;
         else value = this.props.player[key];
       }
-      console.log(this.props.player);
-      console.log(this.props.loggedUser);
+      /*console.log(this.props.player);
+      console.log(this.props.loggedUser);*/
       return (
         <PlayerDetail
           key={key}
+          serverKeyName={key}
           name={labels[key].title}
           value={value}
           canChange={
