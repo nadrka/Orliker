@@ -14,5 +14,7 @@ export const ROUTES = {
   TEAMS: "teams",
   PLAYERS: "players",
   NEWSES: "news",
-  MATCHES: "matches"
+  MATCHES: "matches",
+  PLACES: "places",
+  REFEREES: "referees"
 };

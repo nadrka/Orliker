@@ -4,9 +4,26 @@ import { Link } from "react-router-dom";
 import { LEAGUEOPTIONS } from "../LeagueSchedule/LeagueSchedule";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getData } from "../../utils/NetworkFunctions";
+import { getData, postDataWithResponse } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
+import Modal from "react-modal";
+import DatePicker from "react-datepicker";
+import App from "../../App";
+import "react-datepicker/dist/react-datepicker.css";
 
+const customStyles = {
+  content: {
+    top: "40%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: "45%",
+    width: "35%"
+  }
+};
+Modal.setAppElement(App);
 class LeagueTable extends Component {
   /*state = {
     leagueOption: LEAGUEOPTIONS.LIGA1
@@ -14,24 +31,100 @@ class LeagueTable extends Component {
   state = {
     //league: this.props.leagues[0].id,
     league: null,
-    teams: []
+    teams: [],
+    pickedTeam: {
+      name: "Unkown",
+      id: 0
+    },
+    places: [{ id: 1, place: "ZADUPIE" }, { id: 2, place: "Decathlon" }],
+    pickedPlace: { id: 1, place: "" },
+    referees: [
+      { id: 1, firstName: "Janusz", secondName: "Grzyb" },
+      { id: 1, firstName: "Janusz", secondName: "Grzyb" }
+    ],
+    pickeReferee: {
+      id: 1,
+      firstName: "",
+      secondName: ""
+    },
+    modalIsOpen: false,
+    startDate: new Date()
   };
 
   componentDidMount() {
+    this.getTeamsAllStadiums();
+    this.getTeamsAllReferees();
     if (this.props.leagues.length > 0) {
       this.setState({ league: this.props.leagues[0].id });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.league !== this.state.league) this.getTeamsForLeague(this.state.league);
-    if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
+    if (prevState.league !== this.state.league)
+      this.getTeamsForLeague(this.state.league);
+    if (!prevState.league && this.props.leagues.length > 0)
+      this.setState({ league: this.props.leagues[0].id });
   }
 
   async getTeamsForLeague(id) {
     let teams = await getData(`${ROUTES.LEAGUES}/${id}/teams`);
     this.setState({ teams: teams });
   }
+  async getTeamsAllStadiums(id) {
+    let places = await getData(`${ROUTES.PLACES}`);
+    this.setState({ places: places });
+  }
+
+  async getTeamsAllReferees(id) {
+    let referees = await getData(`${ROUTES.REFEREES}`);
+    this.setState({ referees: referees });
+  }
+
+  async createMatchRequest() {
+    try {
+      let objectToSend = {
+        homeTeamId: 2,
+        awayTeamId: this.state.pickedTeam.id,
+        status: "Upcoming",
+        leagueId: 1,
+        placeId: this.state.pickedPlace.id,
+        refereeId: this.state.pickeReferee.id,
+        matchDate: this.state.startDate
+      };
+      console.log(objectToSend);
+      await postDataWithResponse(ROUTES.MATCHES, objectToSend);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  handleChange = date => {
+    this.setState({
+      startDate: date
+    });
+  };
+
+  handleMatchRequest = (teamId, teamName) => {
+    const pickedTeamCopy = { ...this.state.pickedTeam };
+    pickedTeamCopy.name = teamName;
+    pickedTeamCopy.id = teamId;
+    this.setState({ pickedTeam: pickedTeamCopy });
+    this.setState({ modalIsOpen: true });
+  };
+
+  afterOpenModal = () => {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = "#45A29E";
+  };
+
+  closeModal = () => {
+    if (this.state.pickeReferee == null || this.state.pickedPlace == null) {
+      console.log("Stadion oraz sędzia musi zostać wybrany");
+    } else {
+      this.createMatchRequest();
+    }
+    this.setState({ modalIsOpen: false });
+  };
 
   renderTable() {
     var toRender = this.state.teams.map((team, i) => {
@@ -40,7 +133,12 @@ class LeagueTable extends Component {
         <tr
           className={classToUse}
           style={{
-            backgroundColor: i == 0 ? "#33F422" : i > this.state.teams.length - 4 ? "#F5260A" : undefined
+            backgroundColor:
+              i == 0
+                ? "#33F422"
+                : i > this.state.teams.length - 4
+                ? "#F5260A"
+                : undefined
           }}
         >
           <td>{`${i + 1}.`}</td>
@@ -67,6 +165,13 @@ class LeagueTable extends Component {
             <Link className="teamLink" to={"panel/team/" + team.id}>
               {team.name}
             </Link>
+            {"  "}
+            <button
+              class="btn btn-light"
+              onClick={() => this.handleMatchRequest(team.id, team.name)}
+            >
+              Wyzwij
+            </button>
           </td>
           <td>{team.matches}</td>
           <td>{team.wins}</td>
@@ -77,63 +182,11 @@ class LeagueTable extends Component {
         </tr>
       );
     });
-    /*TABLE.forEach(team => {
-      team["points"] = team.wins * 3 + team.draws;
-    });
-    TABLE.sort((team1, team2) => {
-      if (team2["points"] !== team1["points"]) return team2["points"] - team1["points"];
-      else {
-        return team2.scoredGoals - team2.conceidedGoals - (team1.scoredGoals - team1.conceidedGoals);
-      }
-    });
-    var toRender = TABLE.map((team, i) => {
-      let classToUse = i % 2 ? "secondRow" : "firstRow";
-      return (
-        <tr
-          className={classToUse}
-          style={{
-            backgroundColor: i == 0 ? "#33F422" : i > TABLE.length - 4 ? "#F5260A" : undefined
-          }}
-        >
-          <td>{`${i + 1}.`}</td>
-          <td
-            style={{
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              textAlign: "right"
-            }}
-          >
-            <img
-              src={require("../../assets/images/apoel.png")}
-              alt="no pic"
-              style={{
-                height: "50px",
-                width: "auto",
-                verticalAlign: "center",
-                align: "middle",
-                paddingRight: "10px"
-              }}
-            />
-          </td>
-          <td className="BlackLink">
-            <Link className="teamLink" to="/panel/team">
-              {team.name}
-            </Link>
-          </td>
-          <td>{team.matches}</td>
-          <td>{team.wins}</td>
-          <td>{team.draws}</td>
-          <td>{team.loses}</td>
-          <td>{`${team.scoredGoals}:${team.conceidedGoals}`}</td>
-          <td>{team.points}</td>
-        </tr>
-      );
-    });*/
+
     return toRender;
   }
 
   render() {
-    //console.log(this.props.leagues);
     return (
       <div>
         <div className="flex topSection" style={{ justifyContent: "center" }}>
@@ -143,7 +196,9 @@ class LeagueTable extends Component {
               <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
                 {this.props.leagues.map(league => {
                   return (
-                    <MenuItem onSelect={() => this.setState({ league: league.id })}>
+                    <MenuItem
+                      onSelect={() => this.setState({ league: league.id })}
+                    >
                       {league.leagueNumber}. liga
                     </MenuItem>
                   );
@@ -166,6 +221,90 @@ class LeagueTable extends Component {
           </tr>
           {this.renderTable()}
         </table>
+
+        {/* MODAL */}
+        {/* <button onClick={this.openModal}>Open Modal</button> */}
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+          ariaHideApp={false}
+        >
+          <div className="outer">
+            <div className="middle">
+              <div className="inner">
+                <h2 ref={subtitle => (this.subtitle = subtitle)}>
+                  MECZ PRZECIWKO: {this.state.pickedTeam.name}
+                </h2>
+                <h3>Szczegóły wyzwania:</h3>
+                <div className="space">
+                  <span className="glyphicon glyphicon-calendar" />
+                  Data i godzina: &nbsp;
+                  <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    timeCaption="time"
+                  />
+                </div>
+                <div className="space">
+                  <span className="glyphicon glyphicon-map-marker" />
+                  &nbsp;Boisko do rozegrania meczu: &nbsp;
+                  <DropdownButton
+                    title={this.state.pickedPlace.place}
+                    style={{ marginBottom: 5 }}
+                  >
+                    {this.state.places.map(place => {
+                      return (
+                        <MenuItem
+                          onSelect={() => this.setState({ pickedPlace: place })}
+                        >
+                          {place.place}
+                        </MenuItem>
+                      );
+                    })}
+                  </DropdownButton>
+                </div>
+
+                <div className="space">
+                  <span className="glyphicon glyphicon-eye-open" />
+                  &nbsp; Sędzia spotkania: &nbsp;
+                  <DropdownButton
+                    title={
+                      this.state.pickeReferee.firstName +
+                      " " +
+                      this.state.pickeReferee.secondName
+                    }
+                    style={{ marginBottom: 5 }}
+                  >
+                    {this.state.referees.map(referee => {
+                      return (
+                        <MenuItem
+                          onSelect={() =>
+                            this.setState({
+                              pickeReferee: referee
+                            })
+                          }
+                        >
+                          {referee.firstName + " " + referee.secondName}
+                        </MenuItem>
+                      );
+                    })}
+                  </DropdownButton>
+                </div>
+                <button className="RegisterButton" onClick={this.closeModal}>
+                  WYZWIJ
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
       </div>
     );
   }
