@@ -46,9 +46,9 @@ class PlayerPanel extends Component {
           </div>
           <PlayerDetails
             player={
-              this.props.loggedUser && this.state.player && this.state.player.id == this.props.loggedUser.player.id
+              this.props.loggedUser && this.state.player && this.state.player.id == this.props.loggedUser.id
                 ? {
-                    ...this.props.loggedUser.player,
+                    ...this.props.loggedUser,
                     user: { firstName: this.props.loggedUser.firstName, secondName: this.props.loggedUser.secondName }
                   }
                 : this.state.player

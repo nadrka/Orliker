@@ -60,9 +60,7 @@ class PlayerDetails extends Component {
           serverKeyName={key}
           name={labels[key].title}
           value={value}
-          canChange={
-            this.props.loggedUser && this.props.player && this.props.player.id == this.props.loggedUser.player.id
-          }
+          canChange={this.props.loggedUser && this.props.player && this.props.player.id == this.props.loggedUser.id}
           onChange={value => {
             this.changePlayer(key, value);
           }}

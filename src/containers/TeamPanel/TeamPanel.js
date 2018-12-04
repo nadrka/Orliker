@@ -5,8 +5,10 @@ import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
 import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import Schedule from "../../components/Schedule/Schedule";
-import { getData } from "../../utils/NetworkFunctions";
+import { getData, putData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
+import { Glyphicon } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const MENUOPTIONS = {
   MATCHES: 0,
@@ -22,7 +24,9 @@ class TeamPanel extends Component {
       players: null,
       playedMatches: [],
       upcomingMatches: [],
-      lastMatch: null
+      lastMatch: null,
+      canChange: false,
+      isBeingChanged: false
     };
   }
 
@@ -38,7 +42,8 @@ class TeamPanel extends Component {
         players: players,
         playedMatches: playedMatches,
         upcomingMatches: upcomingMatches,
-        lastMatch: lastMatch
+        lastMatch: lastMatch,
+        canChange: this.props.user && this.props.user.isCaptain && this.props.match.params.id == this.props.user.teamId
       });
     } catch (error) {
       console.log(error);
@@ -60,6 +65,48 @@ class TeamPanel extends Component {
       );
     }
   }
+  async handlePressedKey(e) {
+    if (e.key === "Enter") {
+      try {
+        let name = e.target.value;
+        await putData(ROUTES.TEAMS, { name: name }, { Authorization: this.props.user.token });
+        this.setState(prevState => {
+          return { isBeingChanged: false, team: { ...prevState.team, name: name } };
+        });
+      } catch (error) {
+        console.log(error);
+        this.setState({ isBeingChanged: false });
+      }
+    }
+  }
+  renderName() {
+    if (this.state.isBeingChanged) {
+      return (
+        <input
+          className="inputClass big"
+          type="text"
+          onKeyPress={event => {
+            this.handlePressedKey(event);
+          }}
+          defaultValue={this.state.team.name}
+        />
+      );
+    } else
+      return (
+        <div className="bigFontBigMargin">
+          {this.state.team.name}{" "}
+          {this.state.canChange && (
+            <Glyphicon
+              glyph="glyphicon glyphicon-pencil"
+              bsClass={"glyphicon"}
+              onClick={() => {
+                this.setState({ isBeingChanged: true });
+              }}
+            />
+          )}
+        </div>
+      );
+  }
   render() {
     let { lastMatch } = this.state;
     return (
@@ -70,7 +117,7 @@ class TeamPanel extends Component {
           </div>
           {this.state.team && (
             <div className="flex textSection">
-              <div className="bigFontBigMargin">{this.state.team.name}</div>
+              {this.renderName()}
               <div className="mediumFontMediumMargin mediumMarginWithBorder">
                 {this.state.team.position}. miejsce - {this.state.team.currentLegue.leagueNumber} liga
               </div>
@@ -107,4 +154,8 @@ class TeamPanel extends Component {
   }
 }
 
-export default TeamPanel;
+const mapStateToProps = state => {
+  return { user: state.user };
+};
+
+export default connect(mapStateToProps)(TeamPanel);

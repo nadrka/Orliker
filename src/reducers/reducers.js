@@ -9,7 +9,7 @@ function user(state = null, actions) {
       return { ...state, firstName: actions.firstName, secondName: actions.secondName };
     case CHANGE_PLAYER:
       let newObject = { ...state };
-      newObject.player[actions.param] = actions.value;
+      newObject[actions.param] = actions.value;
       return newObject;
     default:
       return state;

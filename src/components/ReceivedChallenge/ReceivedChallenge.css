@@ -1,0 +1,35 @@
+.challengeHeight {
+  height: 80px;
+  min-height: 60px;
+}
+
+.imageWrapper {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  height: 80px;
+}
+
+.section {
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.width60percent {
+  width: 60%;
+}
+
+.contentInColumn {
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  height: inherit;
+}
+
+.contentInRow {
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}

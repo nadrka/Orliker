@@ -165,17 +165,13 @@ class RegisterBox extends Component {
     const updatedFormElement = {
       ...updatedOrderForm.fields[inputIdentifier]
     };
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedOrderForm.fields[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm.fields) {
-      formIsValid =
-        updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
+      formIsValid = updatedOrderForm.fields[inputIdentifier].valid && formIsValid;
     }
     updatedOrderForm.formIsValid = formIsValid;
     this.setState({
@@ -184,9 +180,7 @@ class RegisterBox extends Component {
   };
 
   isFormValid = () => {
-    const form = this.state.isLogin
-      ? this.state.loginForm
-      : this.state.registrationForm;
+    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
 
     let formIsValid = true;
 
@@ -197,9 +191,7 @@ class RegisterBox extends Component {
   };
 
   handleInputChanged = (value, inputIdentifier) => {
-    const form = this.state.isLogin
-      ? this.state.loginForm
-      : this.state.registrationForm;
+    const form = this.state.isLogin ? this.state.loginForm : this.state.registrationForm;
 
     const updatedOrderForm = {
       ...form
@@ -234,7 +226,7 @@ class RegisterBox extends Component {
     try {
       let response = await postDataWithResponse(ROUTES.AUTH, data, {});
       this.props.setUser(response);
-      this.props.history.push("/panel/player/" + response.player.id);
+      this.props.history.push("/panel/player/" + response.id);
     } catch (error) {
       console.log(error);
     }
@@ -258,31 +250,21 @@ class RegisterBox extends Component {
 
   render() {
     const form = this.state.isLogin ? (
-      <Form
-        fields={this.state.loginForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.loginForm.fields} onChanged={this.handleInputChanged} />
     ) : (
-      <Form
-        fields={this.state.registrationForm.fields}
-        onChanged={this.handleInputChanged}
-      />
+      <Form fields={this.state.registrationForm.fields} onChanged={this.handleInputChanged} />
     );
 
     return (
       <div className="RegisterBox">
         <div>
           <h4>Zaloguj się, aby dołączyć do drużyny lub założyć własną!</h4>
-          <button onClick={this.handleLoginButtonClicked}>
-            Zaloguj się
-          </button>{" "}
-          <button onClick={this.handleRegistrationButtonClicked}>
-            Załóż konto
-          </button>
+          <button onClick={this.handleLoginButtonClicked}>Zaloguj się</button>{" "}
+          <button onClick={this.handleRegistrationButtonClicked}>Załóż konto</button>
         </div>
         {form}
         <button className="RegisterButton" onClick={this.handleRegistration}>
-          Zarejestruj się
+          {this.state.isLogin ? "Zaloguj się" : "Zarejestruj się"}
         </button>
       </div>
     );
