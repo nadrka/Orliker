@@ -46,11 +46,25 @@
   right: 1em;
 }
 
-.CenterContent {
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
+}
 
-  text-align: center;
-  justify-content: center;
+.middle {
+  display: table-cell;
   vertical-align: middle;
-  margin: auto;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 550px;
+  justify-content: center;
+  text-align: center;
+  /*whatever width you want*/
 }
