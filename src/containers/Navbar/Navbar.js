@@ -58,10 +58,13 @@ class NavigationBar extends Component {
               <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
             </NavItem>
             <NavItem eventKey={5}>
-              <NavLink to="/invitation">Zaproszenia</NavLink>
+              <NavLink to="/player/invitation">Zaproszenia</NavLink>
             </NavItem>
             <NavItem eventKey={6}>
               <NavLink to="/matchInvitations">Wyzwania</NavLink>
+            </NavItem>
+            <NavItem eventKey={7}>
+              <NavLink to="/team/invitation">Zawodnicy</NavLink>
             </NavItem>
             {`${this.props.user.firstName} ${this.props.user.secondName}`}
           </Nav>
@@ -131,7 +134,8 @@ class NavigationBar extends Component {
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />
         <Route path="/match/details/:id" exact component={Match} />
-        <Route path="/invitation" exact component={TeamList} />
+        <Route path="/player/invitation" exact component={TeamList} />
+        <Route path="/team/invitation" exact component={PlayerList} />
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />

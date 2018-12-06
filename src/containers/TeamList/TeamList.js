@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import TeamInvitation from "../../components/TeamList/Invitation/TeamInvitation";
 import TeamRequest from "../../components/TeamList/Request/TeamRequest";
 import Searchbar from "../../components/UI/Searchbar/Searchbar";
-import { getData } from "../../utils/NetworkFunctions";
+import { getData, postDataWithResponse, postDataWithoutResponse } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import "./TeamList.css";
+import { createNotification } from "../../utils/Notification";
 class TeamList extends Component {
   state = {
     invitations: [],
@@ -30,7 +31,8 @@ class TeamList extends Component {
   }
 
   getInvitations = async () => {
-    let invitations = await getData(`${ROUTES.PLAYERS}/1/invitations`);
+    let invitations = await getData(`${ROUTES.PLAYERS}/7/invitations`);
+    console.log(invitations);
     this.setState({ invitations: invitations });
   };
 
@@ -38,9 +40,51 @@ class TeamList extends Component {
     let teams = await getData(`${ROUTES.TEAMS}`);
     this.setState({ teamsForLeague: teams });
   };
+
+  async createMatchRequest() {}
+
+  handleAcceptTap = async invitationId => {
+    console.log(invitationId);
+    try {
+      await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/accept`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleRejectTap = async invitationId => {
+    console.log(invitationId);
+    try {
+      postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
+      await this.getInvitations();
+      createNotification("success", "Niestety operacja nie udała się", "Zaproszenie zostało odrzucone!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleReuqestTap = async teamId => {
+    try {
+      let objectToSend = {
+        teamId: teamId,
+        requestType: "player",
+        playerId: 1
+      };
+
+      console.log(objectToSend);
+
+      await postDataWithResponse(ROUTES.INVITATIONS, objectToSend);
+      createNotification("success", "Niestety operacja nie udała się", "Prośba została wysłana!");
+    } catch (error) {
+      createNotification("success", "Niestety operacja nie udała się", "Prośba została wysłana!");
+      console.log(error);
+    }
+  };
+
   handleSearchbarChange = inputValue => {
     console.log(inputValue);
   };
+
   render() {
     return (
       <div>
@@ -48,8 +92,12 @@ class TeamList extends Component {
           <Searchbar onSerchbarChanged={this.handleSearchbarChange} />
         </div>
 
-        <TeamInvitation invitations={this.state.invitations} />
-        <TeamRequest teams={this.state.teamsForLeague} />
+        <TeamInvitation
+          onAcceptTapped={this.handleAcceptTap}
+          onRejectTapped={this.handleRejectTap}
+          invitations={this.state.invitations}
+        />
+        <TeamRequest onRequestTapped={this.handleReuqestTap} teams={this.state.teamsForLeague} />
       </div>
     );
   }

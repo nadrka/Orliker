@@ -8,11 +8,12 @@ const PlayerInvitation = props => {
         <div className="TeamInvitationInfo">
           <img src={profilePicture} width="50" height="50" />
           <div className="TeamInvitationName">{p.number} </div>
-          <div className="TeamInvitationName">
-            {p.firstName + " " + p.secondName}
-          </div>
+          <div className="TeamInvitationName">{p.firstName + " " + p.secondName}</div>
         </div>
-        <button className="RequestButton"> Zaproś do druzyny</button>
+        <button onClick={() => props.onRequestTapped(p.id)} className="RequestButton">
+          {" "}
+          Zaproś do druzyny
+        </button>
       </div>
     );
   });

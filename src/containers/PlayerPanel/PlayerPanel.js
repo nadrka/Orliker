@@ -18,7 +18,7 @@ import { ROUTES } from "../../utils/Constants";
 import "react-notifications/lib/notifications.css";
 import { connect } from "react-redux";
 import CreateNewTeam from "./CreateNewTeam";
-import { NotificationManager } from "react-notifications";
+import { createNotification } from "../../utils/Notification";
 
 class PlayerPanel extends Component {
   state = {
@@ -60,10 +60,10 @@ class PlayerPanel extends Component {
       };
       this.hideModal();
       await postDataWithResponse(ROUTES.TEAMS, objectToSend);
-      this.createNotification("success");
+      createNotification("success", "Druzyna została poprawnie stworzona!", "Tworzenie druzyny nie powiodło się");
     } catch (error) {
+      createNotification("error", "Druzyna została poprawnie stworzona!", "Tworzenie druzyny nie powiodło się");
       console.log(error);
-      this.createNotification("error");
     }
   };
 
@@ -86,7 +86,6 @@ class PlayerPanel extends Component {
     modalCopy.errorText = "";
     modalCopy.teamName = "";
     this.setState({ modal: modalCopy });
-    this.createNotification("success");
   };
 
   onChange = (event, newValue) => {
@@ -101,15 +100,6 @@ class PlayerPanel extends Component {
       modalCopy.isSubmitButtonDisable = true;
       modalCopy.errorText = "Team name must be longer than 3 characters";
       this.setState({ modal: modalCopy });
-    }
-  };
-
-  createNotification = type => {
-    if (type == "success") {
-      NotificationManager.success("Druzyna została poprawnie stworzona!", "Sukces", 2000);
-    }
-    if (type == "error") {
-      NotificationManager.error("Error", "Tworzenie druzyny nie powiodło się :(", 3000);
     }
   };
 
@@ -137,7 +127,7 @@ class PlayerPanel extends Component {
         break;
     }
     let teamView = null;
-    if (this.state.player != null && this.state.player.teamId != null) {
+    if (this.state.player != null && this.state.player.teamId.sd != null) {
       teamView = <ClubDetails team={this.state.team} />;
     } else {
       teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;

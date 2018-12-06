@@ -13,7 +13,10 @@ const TeamRequest = props => {
                 <img src={apoel} width="50" height="50" />
                 <div className="TeamInvitationName">{t.name}</div>
               </div>
-              <button className="RequestButton"> Dolącz do druzyny</button>
+              <button onClick={() => props.onRequestTapped(t.id)} className="RequestButton">
+                {" "}
+                Dolącz do druzyny
+              </button>
             </div>
           );
         })}
