@@ -60,10 +60,8 @@ class LeagueTable extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.league !== this.state.league)
-      this.getTeamsForLeague(this.state.league);
-    if (!prevState.league && this.props.leagues.length > 0)
-      this.setState({ league: this.props.leagues[0].id });
+    if (prevState.league !== this.state.league) this.getTeamsForLeague(this.state.league);
+    if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
   }
 
   async getTeamsForLeague(id) {
@@ -83,16 +81,17 @@ class LeagueTable extends Component {
   async createMatchRequest() {
     try {
       let objectToSend = {
-        homeTeamId: 2,
+        homeTeamId: this.props.user.teamId,
         awayTeamId: this.state.pickedTeam.id,
         status: "Upcoming",
         leagueId: 1,
-        placeId: this.state.pickedPlace.id,
-        refereeId: this.state.pickeReferee.id,
+        place: this.state.pickedPlace.place,
+        //placeId: this.state.pickedPlace.id,
+        //refereeId: this.state.pickeReferee.id,
         matchDate: this.state.startDate
       };
       console.log(objectToSend);
-      await postDataWithResponse(ROUTES.MATCHES, objectToSend);
+      await postDataWithResponse(ROUTES.MATCHES, objectToSend, { Authorization: this.props.user.token });
     } catch (error) {
       console.log(error);
     }
@@ -127,18 +126,14 @@ class LeagueTable extends Component {
   };
 
   renderTable() {
+    let canSend = this.props.user && this.props.user.isCaptain;
     var toRender = this.state.teams.map((team, i) => {
       let classToUse = i % 2 ? "secondRow" : "firstRow";
       return (
         <tr
           className={classToUse}
           style={{
-            backgroundColor:
-              i == 0
-                ? "#33F422"
-                : i > this.state.teams.length - 4
-                ? "#F5260A"
-                : undefined
+            backgroundColor: i == 0 ? "#33F422" : i > this.state.teams.length - 4 ? "#F5260A" : undefined
           }}
         >
           <td>{`${i + 1}.`}</td>
@@ -166,12 +161,13 @@ class LeagueTable extends Component {
               {team.name}
             </Link>
             {"  "}
-            <button
-              class="btn btn-light"
-              onClick={() => this.handleMatchRequest(team.id, team.name)}
-            >
-              Wyzwij
-            </button>
+          </td>
+          <td className="flex buttonCell">
+            {canSend && (
+              <button class="btn btn-light" onClick={() => this.handleMatchRequest(team.id, team.name)}>
+                Wyzwij
+              </button>
+            )}
           </td>
           <td>{team.matches}</td>
           <td>{team.wins}</td>
@@ -196,9 +192,7 @@ class LeagueTable extends Component {
               <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
                 {this.props.leagues.map(league => {
                   return (
-                    <MenuItem
-                      onSelect={() => this.setState({ league: league.id })}
-                    >
+                    <MenuItem onSelect={() => this.setState({ league: league.id })}>
                       {league.leagueNumber}. liga
                     </MenuItem>
                   );
@@ -212,6 +206,7 @@ class LeagueTable extends Component {
             <th>Pozycja</th>
             <th />
             <th>Drużyna</th>
+            <th />
             <th>M</th>
             <th>Z</th>
             <th>R</th>
@@ -236,9 +231,7 @@ class LeagueTable extends Component {
           <div className="outer">
             <div className="middle">
               <div className="inner">
-                <h2 ref={subtitle => (this.subtitle = subtitle)}>
-                  MECZ PRZECIWKO: {this.state.pickedTeam.name}
-                </h2>
+                <h2 ref={subtitle => (this.subtitle = subtitle)}>MECZ PRZECIWKO: {this.state.pickedTeam.name}</h2>
                 <h3>Szczegóły wyzwania:</h3>
                 <div className="space">
                   <span className="glyphicon glyphicon-calendar" />
@@ -256,18 +249,9 @@ class LeagueTable extends Component {
                 <div className="space">
                   <span className="glyphicon glyphicon-map-marker" />
                   &nbsp;Boisko do rozegrania meczu: &nbsp;
-                  <DropdownButton
-                    title={this.state.pickedPlace.place}
-                    style={{ marginBottom: 5 }}
-                  >
+                  <DropdownButton title={this.state.pickedPlace.place} style={{ marginBottom: 5 }}>
                     {this.state.places.map(place => {
-                      return (
-                        <MenuItem
-                          onSelect={() => this.setState({ pickedPlace: place })}
-                        >
-                          {place.place}
-                        </MenuItem>
-                      );
+                      return <MenuItem onSelect={() => this.setState({ pickedPlace: place })}>{place.place}</MenuItem>;
                     })}
                   </DropdownButton>
                 </div>
@@ -276,11 +260,7 @@ class LeagueTable extends Component {
                   <span className="glyphicon glyphicon-eye-open" />
                   &nbsp; Sędzia spotkania: &nbsp;
                   <DropdownButton
-                    title={
-                      this.state.pickeReferee.firstName +
-                      " " +
-                      this.state.pickeReferee.secondName
-                    }
+                    title={this.state.pickeReferee.firstName + " " + this.state.pickeReferee.secondName}
                     style={{ marginBottom: 5 }}
                   >
                     {this.state.referees.map(referee => {
@@ -311,7 +291,7 @@ class LeagueTable extends Component {
 }
 
 const mapStateToProps = state => {
-  return { leagues: state.leagues };
+  return { leagues: state.leagues, user: state.user };
 };
 
 export default connect(mapStateToProps)(LeagueTable);

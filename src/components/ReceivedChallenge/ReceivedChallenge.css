@@ -30,6 +30,11 @@
 
 .contentInRow {
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-content: center;
+}
+
+.separator {
+  width: 35px;
+  height: 15px;
 }

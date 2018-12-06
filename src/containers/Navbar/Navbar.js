@@ -58,6 +58,9 @@ class NavigationBar extends Component {
             <NavItem eventKey={5}>
               <NavLink to="/invitation">Zaproszenia</NavLink>
             </NavItem>
+            <NavItem eventKey={6}>
+              <NavLink to="/matchInvitations">Wyzwania</NavLink>
+            </NavItem>
             {`${this.props.user.firstName} ${this.props.user.secondName}`}
           </Nav>
         </Navbar.Collapse>
@@ -81,9 +84,6 @@ class NavigationBar extends Component {
           </NavItem>
           <NavItem eventKey={4}>
             <NavLink to="/sedzia">Sedzia</NavLink>
-          </NavItem>
-          <NavItem eventKey={5}>
-            <NavLink to="/matchInvitations">Wyzwania</NavLink>
           </NavItem>
         </Nav>
       </Navbar.Collapse>

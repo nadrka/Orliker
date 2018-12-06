@@ -209,7 +209,7 @@ class RegisterBox extends Component {
   };
 
   handleRegistration = () => {
-    if (!this.isFormValid()) return;
+    //if (!this.isFormValid()) return;
     if (this.state.isLogin) {
       this.login();
     } else {
@@ -221,6 +221,8 @@ class RegisterBox extends Component {
     let data = {
       login: this.state.loginForm.fields.email.value,
       password: this.state.loginForm.fields.password.value
+      /*login: "goodstuff",
+      password: "goodstuff"*/
     };
     console.log(data);
     try {
