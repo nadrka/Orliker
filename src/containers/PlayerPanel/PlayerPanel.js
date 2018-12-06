@@ -7,14 +7,16 @@ import profilePicture from "../../assets/images/profilePicture.jpg";
 import PlayerCarrer from "../PlayerCarrer/PlayerCarrer";
 import Schedule from "../../components/Schedule/Schedule";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
+import { getData, postDataWithResponse } from "../../utils/NetworkFunctions";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import TextField from "material-ui/TextField";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import RaisedButton from "material-ui/RaisedButton";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
 import { ROUTES } from "../../utils/Constants";
-import { getData } from "../../utils/NetworkFunctions";
+
+import CreateNewTeam from "./CreateNewTeam";
 
 class PlayerPanel extends Component {
   state = {
@@ -23,7 +25,12 @@ class PlayerPanel extends Component {
     team: null,
     playedMatches: [],
     upcomingMatches: [],
-    open: false
+    modal: {
+      open: false,
+      errorText: "",
+      isSubmitButtonDisable: true,
+      teamName: ""
+    }
   };
   handleOptionChange = option => {
     this.setState({ choosenOption: option });
@@ -48,12 +55,54 @@ class PlayerPanel extends Component {
     });
   }
 
+  createMatchRequest = async () => {
+    try {
+      let objectToSend = {
+        captainId: 5,
+        currentLegueId: 1,
+        name: this.state.modal.teamName
+      };
+      this.hideModal();
+      await postDataWithResponse(ROUTES.TEAMS, objectToSend);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   handleOpen = () => {
-    this.setState({ open: true });
+    const modalCopy = { ...this.state.modal };
+    modalCopy.open = true;
+    this.setState({ modal: modalCopy });
+  };
+
+  hideModal = () => {
+    const modalCopy = { ...this.state.modal };
+    modalCopy.open = false;
+    this.setState({ modal: modalCopy });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    const modalCopy = { ...this.state.modal };
+    modalCopy.open = false;
+    modalCopy.isSubmitButtonDisable = true;
+    modalCopy.errorText = "";
+    modalCopy.teamName = "";
+    this.setState({ modal: modalCopy });
+  };
+
+  onChange = (event, newValue) => {
+    const modalCopy = { ...this.state.modal };
+    modalCopy.teamName = newValue;
+
+    if (newValue.length > 3) {
+      modalCopy.isSubmitButtonDisable = false;
+      modalCopy.errorText = "";
+      this.setState({ modal: modalCopy });
+    } else {
+      modalCopy.isSubmitButtonDisable = true;
+      modalCopy.errorText = "Team name must be longer than 3 characters";
+      this.setState({ modal: modalCopy });
+    }
   };
 
   render() {
@@ -64,8 +113,8 @@ class PlayerPanel extends Component {
         <FlatButton
           label="Submit"
           primary={true}
-          disabled={true}
-          onClick={this.handleClose}
+          disabled={this.state.isSubmitButtonDisable}
+          onClick={this.createMatchRequest}
         />
       </MuiThemeProvider>
     ];
@@ -82,6 +131,17 @@ class PlayerPanel extends Component {
         choosenOption = <PlayerCarrer />;
         break;
     }
+    let teamView = null;
+    if (this.state.player != null && this.state.player.teamId.sd != null) {
+      teamView = <ClubDetails team={this.state.team} />;
+    } else {
+      teamView = (
+        <CreateNewTeam
+          onOpen={this.handleOpen}
+          onJoinRequest={this.handleOpen}
+        />
+      );
+    }
     return (
       <div>
         <div className="PlayerPanel">
@@ -89,7 +149,7 @@ class PlayerPanel extends Component {
             <img src={profilePicture} width="300" height="300" />
           </div>
           <PlayerDetails player={this.state.player} />
-          <ClubDetails team={this.state.team} />
+          {teamView}
         </div>
         <div className="flex bottomSection">
           <PanelOptions
@@ -103,21 +163,17 @@ class PlayerPanel extends Component {
         </div>
         <div>
           <MuiThemeProvider>
-            <RaisedButton label="Stwórz własną" onClick={this.handleOpen} />
-            <RaisedButton
-              label="Dołącz do istniejącej"
-              onClick={this.handleOpen}
-            />
             <Dialog
               title="Tworzenie własnej druzyny"
               actions={actions}
               modal={true}
-              open={this.state.open}
+              open={this.state.modal.open}
             >
               <TextField
-                hintText="Hint Text"
-                errorText="This field is required"
-                floatingLabelText="Floating Label Text"
+                hintText="Nazwa druzyny"
+                errorText={this.state.modal.errorText}
+                floatingLabelText="Nazwa druzyny"
+                onChange={this.onChange}
               />
               <br />
             </Dialog>
