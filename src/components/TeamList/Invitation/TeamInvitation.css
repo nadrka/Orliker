@@ -12,7 +12,8 @@
 .TeamInvitation {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-content: space-around;
   width: 80%;
   padding-left: 20px;
   padding-right: 20px;
@@ -29,9 +30,8 @@
   display: flex;
   flex-direction: row;
   font-size: 25px;
-  color: darkgray;
+  color: #a9a9a9;
   margin: auto;
-  margin-left: 10px;
   align-items: center;
   justify-content: center;
 }

@@ -20,6 +20,7 @@ import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatis
 import MatchRequest from "../MatchRequest/MatchRequest";
 import PlayerList from "../PlayerList/PlayerList";
 import MatchInvitations from "../MatchInvitations/MatchInvitations";
+import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
 
 class NavigationBar extends Component {
   async componentDidMount() {
@@ -85,6 +86,9 @@ class NavigationBar extends Component {
           <NavItem eventKey={4}>
             <NavLink to="/sedzia">Sedzia</NavLink>
           </NavItem>
+          <NavItem eventKey={5}>
+            <NavLink to="/league/statistics">Statystyki Ligi</NavLink>
+          </NavItem>
         </Nav>
       </Navbar.Collapse>
     );
@@ -128,6 +132,7 @@ class NavigationBar extends Component {
         <Route path="/match/details/:id" exact component={Match} />
         <Route path="/invitation" exact component={TeamList} />
         <Route path="/schedule" exact component={LeagueSchedule} />
+        <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />
         <Route path="/" exact component={Register} />
       </div>

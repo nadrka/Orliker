@@ -1,0 +1,18 @@
+.LeagueIndividualStatistic {
+  width: 60%;
+  justify-content: center;
+  margin: auto;
+  align-content: space-between;
+  margin-top: 40px;
+}
+
+.LeagueIndividualStatisticHeader {
+  width: 80%;
+  font-size: 32px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.TableWrapper {
+  margin: 0px auto 20px auto;
+}
