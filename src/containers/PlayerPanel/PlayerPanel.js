@@ -15,9 +15,9 @@ import RaisedButton from "material-ui/RaisedButton";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import { ROUTES } from "../../utils/Constants";
-
+import "react-notifications/lib/notifications.css";
 import CreateNewTeam from "./CreateNewTeam";
-
+import { NotificationManager } from "react-notifications";
 class PlayerPanel extends Component {
   state = {
     choosenOption: "schedule",
@@ -64,8 +64,10 @@ class PlayerPanel extends Component {
       };
       this.hideModal();
       await postDataWithResponse(ROUTES.TEAMS, objectToSend);
+      this.createNotification("success");
     } catch (error) {
       console.log(error);
+      this.createNotification("error");
     }
   };
 
@@ -88,6 +90,7 @@ class PlayerPanel extends Component {
     modalCopy.errorText = "";
     modalCopy.teamName = "";
     this.setState({ modal: modalCopy });
+    this.createNotification("success");
   };
 
   onChange = (event, newValue) => {
@@ -102,6 +105,23 @@ class PlayerPanel extends Component {
       modalCopy.isSubmitButtonDisable = true;
       modalCopy.errorText = "Team name must be longer than 3 characters";
       this.setState({ modal: modalCopy });
+    }
+  };
+
+  createNotification = type => {
+    if (type == "success") {
+      NotificationManager.success(
+        "Druzyna została poprawnie stworzona!",
+        "Sukces",
+        2000
+      );
+    }
+    if (type == "error") {
+      NotificationManager.error(
+        "Error",
+        "Tworzenie druzyny nie powiodło się :(",
+        3000
+      );
     }
   };
 

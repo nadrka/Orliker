@@ -19,7 +19,7 @@ import { ROUTES } from "../../utils/Constants";
 import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatistics";
 import MatchRequest from "../MatchRequest/MatchRequest";
 import PlayerList from "../PlayerList/PlayerList";
-
+import { NotificationContainer } from "react-notifications";
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -134,6 +134,7 @@ class NavigationBar extends Component {
         <Route path="/invitation" exact component={TeamList} />
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/" exact component={Register} />
+        <NotificationContainer />
       </div>
     );
   }
