@@ -19,9 +19,13 @@ import { ROUTES } from "../../utils/Constants";
 import RefereeMatchStatistics from "../RefereeMatchStatistics/RefereeMatchStatistics";
 import MatchRequest from "../MatchRequest/MatchRequest";
 import PlayerList from "../PlayerList/PlayerList";
+<<<<<<< HEAD
 import MatchInvitations from "../MatchInvitations/MatchInvitations";
 import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
 
+=======
+import { NotificationContainer } from "react-notifications";
+>>>>>>> karol
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -135,6 +139,7 @@ class NavigationBar extends Component {
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />
         <Route path="/" exact component={Register} />
+        <NotificationContainer />
       </div>
     );
   }
