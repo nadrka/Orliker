@@ -16,11 +16,10 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import { ROUTES } from "../../utils/Constants";
 import "react-notifications/lib/notifications.css";
-import { ROUTES } from "../../utils/Constants";
-import { getData } from "../../utils/NetworkFunctions";
 import { connect } from "react-redux";
 import CreateNewTeam from "./CreateNewTeam";
 import { NotificationManager } from "react-notifications";
+
 class PlayerPanel extends Component {
   state = {
     choosenOption: "schedule",
@@ -40,16 +39,10 @@ class PlayerPanel extends Component {
   };
 
   async componentDidMount() {
-    const player = await getData(
-      `${ROUTES.PLAYERS}/${this.props.match.params.id}`
-    );
+    const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
     const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
-    const upcomingMatches = await getData(
-      `${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`
-    );
-    const playedMatches = await getData(
-      `${ROUTES.TEAMS}/${player.teamId}/matches/played`
-    );
+    const upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
+    const playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
     this.setState({
       player: player,
       team: team,
@@ -113,18 +106,10 @@ class PlayerPanel extends Component {
 
   createNotification = type => {
     if (type == "success") {
-      NotificationManager.success(
-        "Druzyna została poprawnie stworzona!",
-        "Sukces",
-        2000
-      );
+      NotificationManager.success("Druzyna została poprawnie stworzona!", "Sukces", 2000);
     }
     if (type == "error") {
-      NotificationManager.error(
-        "Error",
-        "Tworzenie druzyny nie powiodło się :(",
-        3000
-      );
+      NotificationManager.error("Error", "Tworzenie druzyny nie powiodło się :(", 3000);
     }
   };
 
@@ -144,10 +129,7 @@ class PlayerPanel extends Component {
     switch (this.state.choosenOption) {
       case "schedule":
         choosenOption = (
-          <Schedule
-            upcomingMatches={this.state.upcomingMatches}
-            playedMatches={this.state.playedMatches}
-          />
+          <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} />
         );
         break;
       case "statistics":
@@ -155,15 +137,10 @@ class PlayerPanel extends Component {
         break;
     }
     let teamView = null;
-    if (this.state.player != null && this.state.player.teamId.sd != null) {
+    if (this.state.player != null && this.state.player.teamId != null) {
       teamView = <ClubDetails team={this.state.team} />;
     } else {
-      teamView = (
-        <CreateNewTeam
-          onOpen={this.handleOpen}
-          onJoinRequest={this.handleOpen}
-        />
-      );
+      teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;
     }
     return (
       <div>
@@ -174,9 +151,7 @@ class PlayerPanel extends Component {
           <div>
             <PlayerDetails
               player={
-                this.props.loggedUser &&
-                this.state.player &&
-                this.state.player.id == this.props.loggedUser.id
+                this.props.loggedUser && this.state.player && this.state.player.id == this.props.loggedUser.id
                   ? {
                       ...this.props.loggedUser,
                       user: {
@@ -187,37 +162,32 @@ class PlayerPanel extends Component {
                   : this.state.player
               }
             />
-            {teamView}
           </div>
-          <div className="flex bottomSection">
-            <PanelOptions
-              labels={["Terminarz", "Statystyki"]}
-              options={["schedule", "statistics"]}
-              fun={arg => {
-                this.setState({ choosenOption: arg });
-              }}
-            />
-            {choosenOption}
-          </div>
+          {teamView}
+        </div>
+        <div className="flex bottomSection">
+          <PanelOptions
+            labels={["Terminarz", "Statystyki"]}
+            options={["schedule", "statistics"]}
+            fun={arg => {
+              this.setState({ choosenOption: arg });
+            }}
+          />
+          {choosenOption}
+        </div>
 
-          <div>
-            <MuiThemeProvider>
-              <Dialog
-                title="Tworzenie własnej druzyny"
-                actions={actions}
-                modal={true}
-                open={this.state.modal.open}
-              >
-                <TextField
-                  hintText="Nazwa druzyny"
-                  errorText={this.state.modal.errorText}
-                  floatingLabelText="Nazwa druzyny"
-                  onChange={this.onChange}
-                />
-                <br />
-              </Dialog>
-            </MuiThemeProvider>
-          </div>
+        <div>
+          <MuiThemeProvider>
+            <Dialog title="Tworzenie własnej druzyny" actions={actions} modal={true} open={this.state.modal.open}>
+              <TextField
+                hintText="Nazwa druzyny"
+                errorText={this.state.modal.errorText}
+                floatingLabelText="Nazwa druzyny"
+                onChange={this.onChange}
+              />
+              <br />
+            </Dialog>
+          </MuiThemeProvider>
         </div>
       </div>
     );
