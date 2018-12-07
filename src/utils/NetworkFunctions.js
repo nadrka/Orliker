@@ -15,8 +15,8 @@ export async function postDataWithResponse(route, data, additionalHeaders = {}) 
   return response.data;
 }
 
-export function postDataWithoutResponse(route, data, additionalHeaders = {}) {
-  axios.post(`${BASEURL}${route}`, data, {
+export async function postDataWithoutResponse(route, data, additionalHeaders = {}) {
+  await axios.post(`${BASEURL}${route}`, data, {
     headers: Object.assign({ "Content-Type": "application/json" }, additionalHeaders)
   });
 }
@@ -27,8 +27,8 @@ export async function putData(route, data, additionalHeaders = {}) {
   });
 }
 
-export function deleteDate(route, additionalHeaders = {}) {
-  axios.delete(`${BASEURL}${route}`, {
+export async function deleteDate(route, additionalHeaders = {}) {
+  await axios.delete(`${BASEURL}${route}`, {
     headers: Object.assign({ "Content-Type": "application/json" }, additionalHeaders)
   });
 }
