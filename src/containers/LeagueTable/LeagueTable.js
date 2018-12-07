@@ -86,8 +86,8 @@ class LeagueTable extends Component {
         status: "Upcoming",
         leagueId: 1,
         place: this.state.pickedPlace.place,
-        //placeId: this.state.pickedPlace.id,
-        //refereeId: this.state.pickeReferee.id,
+        // placeId: this.state.pickedPlace.id,
+        // refereeId: this.state.pickeReferee.id,
         matchDate: this.state.startDate
       };
       console.log(objectToSend);

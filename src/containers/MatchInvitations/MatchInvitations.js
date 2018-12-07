@@ -36,19 +36,27 @@ class MatchInvitations extends Component {
       console.log(error);
     }
   }
-  async cancelInvitation(matchId) {
+  async cancelInvitation(matchId, sentByMe) {
     try {
       await postDataWithoutResponse(
         `${ROUTES.MATCHES}/cancelInvite`,
         { matchId: matchId },
         { Authorization: this.props.user.token }
       );
-      for (var index = 0; index < this.state.receivedInvitations.length; index++) {
-        if (this.state.receivedInvitations[index].id == matchId) {
-          this.state.receivedInvitations[index].canceled = true;
+      let newArray;
+      if (sentByMe) {
+        newArray = [...this.state.sentInvitations];
+      } else {
+        newArray = [...this.state.receivedInvitations];
+      }
+      for (var index = 0; index < newArray.length; index++) {
+        if (newArray[index].id == matchId) {
+          newArray[index].cancelled = true;
           break;
         }
       }
+      if (sentByMe) this.setState({ sentInvitations: newArray });
+      else this.setState({ receivedInvitations: newArray });
     } catch (error) {
       console.log(error);
     }
@@ -69,12 +77,22 @@ class MatchInvitations extends Component {
               accept={() => {
                 this.acceptInvitation(inv.id);
               }}
+              decline={() => {
+                this.cancelInvitation(inv.id, false);
+              }}
             />
           );
         })}
         <div className="Title">Wysłane wyzwania</div>
         {this.state.sentInvitations.map(inv => {
-          return <SentChallenge value={inv} />;
+          return (
+            <SentChallenge
+              value={inv}
+              cancel={() => {
+                this.cancelInvitation(inv.id, true);
+              }}
+            />
+          );
         })}
       </div>
     );

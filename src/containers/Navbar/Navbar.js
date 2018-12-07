@@ -33,39 +33,75 @@ class NavigationBar extends Component {
     }
   }
 
+  logout() {
+    this.props.setUser(null);
+    //this.props.history.push("/login");
+  }
+
   navBar() {
     if (this.props.user) {
-      console.log(this.props.user);
-
-      return (
-        <Navbar.Collapse>
-          <Nav />
-          <Nav pullRight>
-            <NavItem eventKey={0}>
-              <NavLink to="/news">Aktualności</NavLink>
-            </NavItem>
-            <NavItem eventKey={1}>
-              <NavLink to="/schedule">Terminarz</NavLink>
-            </NavItem>
-            <NavItem eventKey={2}>
-              <NavLink to="/table">Tabela</NavLink>
-            </NavItem>
-            <NavItem eventKey={3}>
-              <NavLink to={"/panel/team/" + this.props.user.teamId}>Panel Druzyny</NavLink>
-            </NavItem>
-            <NavItem eventKey={4}>
-              <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
-            </NavItem>
-            <NavItem eventKey={5}>
-              <NavLink to="/invitation">Zaproszenia</NavLink>
-            </NavItem>
-            <NavItem eventKey={6}>
-              <NavLink to="/matchInvitations">Wyzwania</NavLink>
-            </NavItem>
-            {`${this.props.user.firstName} ${this.props.user.secondName}`}
-          </Nav>
-        </Navbar.Collapse>
-      );
+      if (this.props.user.role === "Player")
+        return (
+          <Navbar.Collapse>
+            <Nav />
+            <Nav pullRight>
+              <NavItem eventKey={0}>
+                <NavLink to="/news">Aktualności</NavLink>
+              </NavItem>
+              <NavItem eventKey={1}>
+                <NavLink to="/schedule">Terminarz</NavLink>
+              </NavItem>
+              <NavItem eventKey={2}>
+                <NavLink to="/table">Tabela</NavLink>
+              </NavItem>
+              <NavItem eventKey={3}>
+                <NavLink to={"/panel/team/" + this.props.user.teamId}>Panel Druzyny</NavLink>
+              </NavItem>
+              <NavItem eventKey={4}>
+                <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
+              </NavItem>
+              <NavItem eventKey={5}>
+                <NavLink to="/invitation">Zaproszenia</NavLink>
+              </NavItem>
+              <NavItem eventKey={6}>
+                <NavLink to="/matchInvitations">Wyzwania</NavLink>
+              </NavItem>
+              <NavItem eventKey={7}>
+                <NavLink onClick={() => this.logout()} to="/login">
+                  Wyloguj
+                </NavLink>
+              </NavItem>
+              {`${this.props.user.firstName} ${this.props.user.secondName}`}
+            </Nav>
+          </Navbar.Collapse>
+        );
+      else if (this.props.user.role === "Referee") {
+        return (
+          <Navbar.Collapse>
+            <Nav />
+            <Nav pullRight>
+              <NavItem eventKey={0}>
+                <NavLink to="/news">Aktualności</NavLink>
+              </NavItem>
+              <NavItem eventKey={1}>
+                <NavLink to="/schedule">Terminarz</NavLink>
+              </NavItem>
+              <NavItem eventKey={2}>
+                <NavLink to="/table">Tabela</NavLink>
+              </NavItem>
+              <NavItem eventKey={3}>
+                <NavLink to={"/panel/player/" + this.props.user.id}>Panel Użytkownika</NavLink>
+              </NavItem>
+              <NavItem eventKey={4}>
+                <NavLink onClick={() => this.logout()} to="/login">
+                  Wyloguj
+                </NavLink>
+              </NavItem>
+              {`${this.props.user.firstName} ${this.props.user.secondName}`}
+            </Nav>
+          </Navbar.Collapse>
+        );
+      }
     }
     return (
       <Navbar.Collapse>
@@ -148,6 +184,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setLeagues: leagues => {
       dispatch(setLeagues(leagues));
+    },
+    setUser: user => {
+      dispatch(setUser(user));
     }
   };
 };

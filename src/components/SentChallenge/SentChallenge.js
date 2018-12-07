@@ -4,6 +4,8 @@ import "./SentChallenge.css";
 
 class SentChallenge extends Component {
   render() {
+    if (this.props.value.cancelled)
+      return <div className="MatchInfo challengeHeight width60percent">Mecz anulowany!</div>;
     return (
       <div className="MatchInfo challengeHeight width60percent">
         <div className="flex section">
@@ -22,7 +24,9 @@ class SentChallenge extends Component {
           Miejsce: {this.props.value.place}
         </div>
         <div className="flex section smallerSection">
-          <Button bsStyle="danger">Anuluj</Button>
+          <Button bsStyle="danger" onClick={this.props.cancel}>
+            Anuluj
+          </Button>
         </div>
       </div>
     );
