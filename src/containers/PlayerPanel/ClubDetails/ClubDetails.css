@@ -10,6 +10,17 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.noTeamLabel {
+  margin-bottom: 15px;
+  font-size: 30px;
+  color: #c5c6c7;
+  border-bottom: 5px dotted #c5c6c7;
+}
+.lineSeparator {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 span {
   text-align: center;
   vertical-align: middle;

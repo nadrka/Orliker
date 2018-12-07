@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, ButtonToolbar } from "react-bootstrap";
 import "./SentChallenge.css";
-
+import moment from "moment";
 class SentChallenge extends Component {
   render() {
     if (this.props.value.cancelled)
@@ -19,7 +19,7 @@ class SentChallenge extends Component {
           </div>
         </div>
         <div className="flex section">
-          Data meczu: {this.props.value.date}
+          Data meczu: {moment(this.props.value.date).format("DD/MM/YYYY HH:mm")}
           <br />
           Miejsce: {this.props.value.place}
         </div>

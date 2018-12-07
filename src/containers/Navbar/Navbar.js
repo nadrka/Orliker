@@ -22,6 +22,7 @@ import PlayerList from "../PlayerList/PlayerList";
 import MatchInvitations from "../MatchInvitations/MatchInvitations";
 import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
 
+import { NotificationContainer } from "react-notifications";
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -166,11 +167,13 @@ class NavigationBar extends Component {
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />
         <Route path="/match/details/:id" exact component={Match} />
-        <Route path="/invitation" exact component={TeamList} />
+        <Route path="/player/invitation" exact component={TeamList} />
+        <Route path="/team/invitation" exact component={PlayerList} />
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />
         <Route path="/" exact component={Register} />
+        <NotificationContainer />
       </div>
     );
   }

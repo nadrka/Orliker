@@ -23,81 +23,62 @@ class PlayerStatisticsByReferee extends Component {
   };
 
   yellowCardsNumberChanged = yellowCardsNumber => {
-    this.props.onYellowCardsChanged(
-      this.props.player.id,
-      yellowCardsNumber,
-      "yellowCards"
-    );
+    this.props.onYellowCardsChanged(this.props.player.id, yellowCardsNumber, "yellowCards");
   };
 
   redCardsNumberChanged = redCardsNumber => {
-    this.props.onRedCardsChanged(
-      this.props.player.id,
-      redCardsNumber,
-      "redCards"
-    );
+    this.props.onRedCardsChanged(this.props.player.id, redCardsNumber, "redCards");
   };
 
   checkboxChanged = event => {
-    this.props.onCheckboxChanged(
-      this.props.player.id,
-      event.target.checked,
-      "didPlay"
-    );
+    this.props.onCheckboxChanged(this.props.player.id, event.target.checked, "didPlay");
   };
   render() {
     return (
-      <div class="containerss">
-        <label class="customcheck">
-          <input onChange={this.checkboxChanged} type="checkbox" />
-          <span class="checkmark" />
-        </label>
-        <div class="label1">
-          {this.props.player.number +
-            ". " +
-            this.props.player.firstName +
-            " " +
-            this.props.player.secondName}{" "}
+      <div className="playerStatisticByRefereeGrid">
+        <div className="item-a">
+          <div className="playerStatisticByRefereeFlex">
+            <label class="customcheck">
+              <input onChange={this.checkboxChanged} type="checkbox" />
+              <span class="checkmark" />
+            </label>
+            <div class="label1">
+              {this.props.player.number + ". " + this.props.player.firstName + " " + this.props.player.secondName}{" "}
+            </div>
+          </div>
         </div>
-        <img src={goals} width="30" height="30" />
-        <div className="smallNumeric">
-          <NumericInput
-            onChange={this.goalsNumberChanged}
-            className="form-control"
-            min={0}
-            max={100}
-            value={0}
-          />
-        </div>
-        <img src={assists} width="30" height="30" />
-        <div className="smallNumeric">
-          <NumericInput
-            onChange={this.assistsNumberChanged}
-            className="form-control"
-            min={0}
-            max={100}
-            value={0}
-          />
-        </div>
-        <img src={yellowCards} width="30" height="30" />
-        <div className="smallNumeric">
-          <NumericInput
-            onChange={this.yellowCardsNumberChanged}
-            className="form-control"
-            min={0}
-            max={100}
-            value={0}
-          />
-        </div>
-        <img src={redCards} width="30" height="30" />
-        <div className="smallNumeric">
-          <NumericInput
-            onChange={this.redCardsNumberChanged}
-            className="form-control"
-            min={0}
-            max={100}
-            value={0}
-          />
+
+        <div className="item-b">
+          <div className="playerStatisticByRefereeFlex">
+            <img src={goals} width="30" height="30" />
+            <div className="smallNumeric">
+              <NumericInput onChange={this.goalsNumberChanged} className="form-control" min={0} max={100} value={0} />
+            </div>
+            <img src={assists} width="30" height="30" />
+            <div className="smallNumeric">
+              <NumericInput onChange={this.assistsNumberChanged} className="form-control" min={0} max={100} value={0} />
+            </div>
+            <img src={yellowCards} width="30" height="30" />
+            <div className="smallNumeric">
+              <NumericInput
+                onChange={this.yellowCardsNumberChanged}
+                className="form-control"
+                min={0}
+                max={100}
+                value={0}
+              />
+            </div>
+            <img src={redCards} width="30" height="30" />
+            <div className="smallNumeric">
+              <NumericInput
+                onChange={this.redCardsNumberChanged}
+                className="form-control"
+                min={0}
+                max={100}
+                value={0}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );

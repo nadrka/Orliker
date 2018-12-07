@@ -10,18 +10,18 @@ const PlayerRequest = props => {
         <div className="TeamInvitationInfo">
           <img src={profilePicture} width="50" height="50" />
           <div className="TeamInvitationName">{r.player.number}</div>
-          <div className="TeamInvitationName">
-            {r.player.firstName + " " + r.player.secondName}
-          </div>
+          <div className="TeamInvitationName">{r.player.firstName + " " + r.player.secondName}</div>
         </div>
         <div className="TeamInvitationOptions">
           <img
+            onClick={() => props.onAcceptTapped(r.id)}
             className="TeamInvitationOption"
             src={accept}
             width="45"
             height="45"
           />
           <img
+            onClick={() => props.onRejectTapped(r.id)}
             className="TeamInvitationOption"
             src={reject}
             width="45"

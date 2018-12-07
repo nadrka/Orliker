@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 import "./RefereeMatchStatistics.css";
-import { getData } from "../../utils/NetworkFunctions";
+import { getData, postDataWithoutResponse, putData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import MatchDetails from "../../components/Match/Details/MatchDetails";
 import PlayerStatisticsByReferee from "../../components/RefereeMatchStatistics/PlayerStatisticsByReferee/PlayerStatisticsByReferee";
 import TeamStatisticsByReferee from "../../components/RefereeMatchStatistics/TeamStatisticsByReferee/TeamStatisticsByReferee";
-export const MATCH_ID = 1;
+export const MATCH_ID = 2;
 class RefereeMatchStatistics extends Component {
   state = {
     matchInfo: {
       id: 1,
       leagueId: 1,
       matchDate: "02-02-18",
-      refereeId: 3,
+      referee: {
+        id: 0,
+        firstName: "",
+        secondName: ""
+      },
       place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
       acceptMatchDate: "12312",
       homeTeam: {
@@ -132,14 +136,25 @@ class RefereeMatchStatistics extends Component {
     this.creatStatisticForMatch(statistics);
   };
 
-  creatStatisticForMatch = statistics => {};
+  creatStatisticForMatch = async statistics => {
+    try {
+      await postDataWithoutResponse(ROUTES.STATISTICS, statistics);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  updateMatchResult = () => {
+  updateMatchResult = async () => {
     const result = {
       homeTeamResult: this.state.matchInfo.homeTeam.result,
       awayTeamResult: this.state.matchInfo.awayTeam.result,
       status: "Played"
     };
+    try {
+      await putData(`${ROUTES.MATCHES}/${MATCH_ID}`, result);
+    } catch (error) {
+      console.log(error);
+    }
     console.log(result);
   };
 
@@ -213,8 +228,12 @@ class RefereeMatchStatistics extends Component {
     });
     return (
       <div>
-        <div className="teamsStatisticsByReferee">
-          <h1>{this.state.matchInfo.leagueId} Liga</h1>
+        <div className="flex topSection" style={{ justifyContent: "center", marginBottom: "20px" }}>
+          <div className="flex class">
+            <div className="bigFontBigMargin" style={{ minHeight: "80px", marginBottom: "20px" }}>
+              {this.state.matchInfo.leagueId} Liga
+            </div>
+          </div>
         </div>
 
         <div className="teamsStatisticsByReferee">
@@ -237,6 +256,7 @@ class RefereeMatchStatistics extends Component {
         </div>
         <div>
           <MatchDetails
+            referee={this.state.matchInfo.referee}
             date={this.state.matchInfo.matchDate}
             place={this.state.matchInfo.place}
           />
@@ -247,10 +267,7 @@ class RefereeMatchStatistics extends Component {
           <div className="teamStatisticsByReferee">{awayPlayers}</div>
         </div>
         <div className="teamsStatisticsByReferee">
-          <button
-            onClick={this.handleRequestButtonClick}
-            className="requestButton"
-          >
+          <button onClick={this.handleRequestButtonClick} className="requestButton">
             {" "}
             Wyślij wyzwanie
           </button>
