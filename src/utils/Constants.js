@@ -17,5 +17,6 @@ export const ROUTES = {
   MATCHES: "matches",
   PLACES: "places",
   REFEREES: "referees",
-  INVITATIONS: "invitations"
+  INVITATIONS: "invitations",
+  STATISTICS: "statistics"
 };

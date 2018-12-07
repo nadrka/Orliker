@@ -83,11 +83,11 @@ class LeagueTable extends Component {
       let objectToSend = {
         homeTeamId: this.props.user.teamId,
         awayTeamId: this.state.pickedTeam.id,
-        status: "Upcoming",
+        status: "ToAccept",
         leagueId: 1,
-        place: this.state.pickedPlace.place,
-        //placeId: this.state.pickedPlace.id,
-        //refereeId: this.state.pickeReferee.id,
+        // place: this.state.pickedPlace.place,
+        placeId: this.state.pickedPlace.id,
+        refereeId: this.state.pickeReferee.id,
         matchDate: this.state.startDate
       };
       console.log(objectToSend);

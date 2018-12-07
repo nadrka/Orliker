@@ -3,19 +3,23 @@ import PositionHeader from "../PositionHeader/PositionHeader";
 import PlayerDetails from "../PlayerDetails/PlayerDetails";
 import "./TeamStatistics.css";
 let isGoalkeeper = statistic => {
-  return statistic.player.position === "Goalkeeper";
+  return statistic.player.position === "Bramkarz";
 };
 
 let isDefender = statistic => {
-  return statistic.player.position === "Defender";
+  return statistic.player.position === "Obrońca";
 };
 
 let isMidfielder = statistic => {
-  return statistic.player.position === "Midfielder";
+  return statistic.player.position === "Pomocnik";
 };
 
 let isStriker = statistic => {
-  return statistic.player.position === "Striker";
+  return statistic.player.position === "Napastnik";
+};
+
+let noPostion = statistic => {
+  return statistic.player.position === "";
 };
 
 let getStatistics = statistic => {
@@ -30,20 +34,14 @@ let getStatistics = statistic => {
     />
   );
 };
-const teamStatistics = props => {
-  const goalkeeperStatistics = props.team.statistics
-    .filter(isGoalkeeper)
-    .map(getStatistics);
-  const defenderStatistics = props.team.statistics
-    .filter(isDefender)
-    .map(getStatistics);
-  const midfielderStatistics = props.team.statistics
-    .filter(isMidfielder)
-    .map(getStatistics);
-  const strikerStatistics = props.team.statistics
-    .filter(isStriker)
-    .map(getStatistics);
 
+const teamStatistics = props => {
+  const goalkeeperStatistics = props.team.statistics.filter(isGoalkeeper).map(getStatistics);
+  const defenderStatistics = props.team.statistics.filter(isDefender).map(getStatistics);
+  const midfielderStatistics = props.team.statistics.filter(isMidfielder).map(getStatistics);
+  const strikerStatistics = props.team.statistics.filter(isStriker).map(getStatistics);
+  const withoutPosition = props.team.statistics.filter(noPostion).map(getStatistics);
+  console.log(props);
   return (
     <div className="TeamStatistics">
       <div className="TeamName">APOEL MORENA</div>
@@ -55,6 +53,8 @@ const teamStatistics = props => {
       {midfielderStatistics}
       <PositionHeader position="Napastnicy" />
       {strikerStatistics}
+      <PositionHeader position="Zawodnicy bez pozycji" />
+      {withoutPosition}
     </div>
   );
 };
