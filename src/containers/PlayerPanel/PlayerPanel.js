@@ -4,10 +4,11 @@ import PlayerDetails from "./PlayerDetails/PlayerDetails";
 import PlayerPanelOptions from "./PlayerPanelOptions/PlayerPanelOptions";
 import "./PlayerPanel.css";
 import profilePicture from "../../assets/images/profilePicture.jpg";
+import userImagePlaceHolder from "../../assets/images/user-image-placeholder.jpg";
 import PlayerCarrer from "../PlayerCarrer/PlayerCarrer";
 import Schedule from "../../components/Schedule/Schedule";
 import PlayerLeagueSchedule from "../PlayerLeagueSchedule/PlayerLeagueSchedule";
-import { getData, postDataWithResponse } from "../../utils/NetworkFunctions";
+import { getData, postDataWithResponse, putFormatData } from "../../utils/NetworkFunctions";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import TextField from "material-ui/TextField";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -88,6 +89,19 @@ class PlayerPanel extends Component {
     this.setState({ modal: modalCopy });
   };
 
+  uploadHandler = async file => {
+    const formData = new FormData();
+    formData.append("userImage", file, file.name);
+    await putFormatData(`${ROUTES.PLAYERS}/image`, formData);
+    const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
+    this.setState({ player });
+  };
+
+  fileChangedHandler = event => {
+    const file = event.target.files[0];
+    this.uploadHandler(file);
+  };
+
   onChange = (event, newValue) => {
     const modalCopy = { ...this.state.modal };
     modalCopy.teamName = newValue;
@@ -127,17 +141,24 @@ class PlayerPanel extends Component {
         break;
     }
     let teamView = null;
-    if (this.state.player != null && this.state.player.teamId.sd != null) {
+    if (this.state.player != null && this.state.player.teamId != null) {
       teamView = <ClubDetails team={this.state.team} />;
     } else {
-      teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;
+      if (this.props.loggedIn) {
+        teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;
+      }
+    }
+    let img = null;
+    if (this.state.player != null && this.state.player.user.imgURL != null) {
+      // img = "Z serwera";
+      img = <img src={"http://localhost:3000/" + this.state.player.user.imgURL} width="300" height="300" />;
+    } else {
+      img = <img src={userImagePlaceHolder} width="300" height="300" />;
     }
     return (
       <div>
         <div className="PlayerPanel">
-          <div className="ProfilePicture">
-            <img src={profilePicture} width="300" height="300" />
-          </div>
+          <div className="ProfilePicture">{img}</div>
           <div>
             <PlayerDetails
               player={
@@ -152,6 +173,23 @@ class PlayerPanel extends Component {
                   : this.state.player
               }
             />
+            {this.props.loggedUser && (
+              <div>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  onChange={this.fileChangedHandler}
+                  ref={fileInput => (this.fileInput = fileInput)}
+                />
+                <button
+                  style={{ color: "black", marginTop: "20px", marginLeft: "10px" }}
+                  onClick={() => this.fileInput.click()}
+                >
+                  {" "}
+                  Pick profile photo{" "}
+                </button>
+              </div>
+            )}
           </div>
           {teamView}
         </div>

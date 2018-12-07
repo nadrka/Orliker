@@ -47,6 +47,7 @@ class TeamList extends Component {
     console.log(invitationId);
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/accept`);
+      await this.getInvitations();
     } catch (error) {
       console.log(error);
     }
@@ -55,8 +56,9 @@ class TeamList extends Component {
   handleRejectTap = async invitationId => {
     console.log(invitationId);
     try {
-      postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
+      await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
       await this.getInvitations();
+
       createNotification("success", "Niestety operacja nie udała się", "Zaproszenie zostało odrzucone!");
     } catch (error) {
       console.log(error);
