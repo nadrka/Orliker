@@ -12,7 +12,11 @@ class RefereeMatchStatistics extends Component {
       id: 1,
       leagueId: 1,
       matchDate: "02-02-18",
-      refereeId: 3,
+      referee: {
+        id: 0,
+        firstName: "",
+        secondName: ""
+      },
       place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
       acceptMatchDate: "12312",
       homeTeam: {
@@ -224,7 +228,7 @@ class RefereeMatchStatistics extends Component {
     });
     return (
       <div>
-        <div className="flex topSection" style={{ justifyContent: "center" }}>
+        <div className="flex topSection" style={{ justifyContent: "center", marginBottom: "20px" }}>
           <div className="flex class">
             <div className="bigFontBigMargin" style={{ minHeight: "80px", marginBottom: "20px" }}>
               {this.state.matchInfo.leagueId} Liga
@@ -251,7 +255,11 @@ class RefereeMatchStatistics extends Component {
           </div>
         </div>
         <div>
-          <MatchDetails date={this.state.matchInfo.matchDate} place={this.state.matchInfo.place} />
+          <MatchDetails
+            referee={this.state.matchInfo.referee}
+            date={this.state.matchInfo.matchDate}
+            place={this.state.matchInfo.place}
+          />
         </div>
         <div className="teamsStatisticsByReferee">
           <div className="teamStatisticsByReferee">{homePlayers}</div>

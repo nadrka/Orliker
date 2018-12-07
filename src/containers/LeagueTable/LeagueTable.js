@@ -10,7 +10,7 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import App from "../../App";
 import "react-datepicker/dist/react-datepicker.css";
-
+import moment from "moment";
 const customStyles = {
   content: {
     top: "40%",
@@ -90,6 +90,7 @@ class LeagueTable extends Component {
         refereeId: this.state.pickeReferee.id,
         matchDate: this.state.startDate
       };
+
       console.log(objectToSend);
       await postDataWithResponse(ROUTES.MATCHES, objectToSend, { Authorization: this.props.user.token });
     } catch (error) {
@@ -242,7 +243,7 @@ class LeagueTable extends Component {
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
-                    dateFormat="MMMM d, yyyy h:mm aa"
+                    dateFormat="yyyy/MM/dd hh:mm"
                     timeCaption="time"
                   />
                 </div>

@@ -13,7 +13,11 @@ class Match extends Component {
     matchInfo: {
       leagueId: 1,
       matchDate: "02-02-18",
-      refereeId: 3,
+      referee: {
+        id: 1,
+        firstName: "",
+        secondName: ""
+      },
       place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
       acceptMatchDate: "12312",
       homeTeam: {
@@ -50,16 +54,13 @@ class Match extends Component {
   }
 
   getMatchInfo = async () => {
-    let matchInfo = await getData(
-      `${ROUTES.MATCHES}/${this.props.match.params.id}`
-    );
+    let matchInfo = await getData(`${ROUTES.MATCHES}/${this.props.match.params.id}`);
+    console.log(matchInfo);
     this.setState({ matchInfo: matchInfo });
   };
 
   getMatchStatistics = async () => {
-    let matchStatistics = await getData(
-      `${ROUTES.MATCHES}/${this.props.match.params.id}/statistics`
-    );
+    let matchStatistics = await getData(`${ROUTES.MATCHES}/${this.props.match.params.id}/statistics`);
     console.log(matchStatistics);
     this.setState({ matchStatistics: matchStatistics });
   };
@@ -69,6 +70,7 @@ class Match extends Component {
       <div>
         <MatchHeader match={this.state.matchInfo} />
         <MatchDetails
+          referee={this.state.matchInfo.referee}
           date={this.state.matchInfo.matchDate}
           place={this.state.matchInfo.place}
         />

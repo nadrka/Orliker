@@ -25,7 +25,7 @@ const matchDetails = props => {
           <span className="glyphicon glyphicon-eye-open" />
           &nbsp; Sędzia spotkania:
         </div>
-        <div>Janusz Grzyb</div>
+        <div>{props.referee.firstName + " " + props.referee.secondName}</div>
       </div>
     </div>
   );

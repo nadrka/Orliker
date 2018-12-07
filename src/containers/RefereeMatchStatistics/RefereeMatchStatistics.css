@@ -9,6 +9,31 @@
   justify-content: space-evenly;
 }
 
+.playerStatisticByRefereeGrid {
+  grid-template-columns: 200px 200px;
+  grid-gap: 10px;
+  grid-template-rows: auto;
+}
+
+.playerStatisticByRefereeFlex {
+  display: flex;
+  flex-direction: row;
+}
+
+.item-a {
+  justify-self: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row: 1;
+}
+
+.item-b {
+  justify-self: center;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row: 1;
+}
+
 .requestButton {
   width: 200px;
   min-height: 50px;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./ReceivedChallenge.css";
 import { Button, ButtonToolbar } from "react-bootstrap";
-
+import moment from "moment";
 class ReceivedChallenge extends Component {
   render() {
     return (
@@ -20,7 +20,7 @@ class ReceivedChallenge extends Component {
               </div>
             </div>
             <div className="flex section">
-              Data meczu: {this.props.value.date}
+              Data meczu: {moment(this.props.value.date).format("DD/MM/YYYY HH:mm")}
               <br />
               Miejsce: {this.props.value.place}
             </div>
