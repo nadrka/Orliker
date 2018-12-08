@@ -9,7 +9,8 @@ const teamInvitation = props => {
       <div className="TeamInvitation">
         <div className="TeamInvitationInfo">
           <div className="TeamInvitationLeague">{invitation.team.league} Liga</div>
-          <img src={apoel} width="50" height="50" />
+          <img src={"http://localhost:3000/" + invitation.team.imgURL} width="50" height="50" />
+
           <div className="TeamInvitationName">{invitation.team.name}</div>
         </div>
         <div className="TeamInvitationOptions">

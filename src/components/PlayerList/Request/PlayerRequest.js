@@ -8,7 +8,7 @@ const PlayerRequest = props => {
     return (
       <div className="TeamInvitation">
         <div className="TeamInvitationInfo">
-          <img src={profilePicture} width="50" height="50" />
+          <img src={"http://localhost:3000/" + r.player.imgURL} width="50" height="50" />
           <div className="TeamInvitationName">{r.player.number}</div>
           <div className="TeamInvitationName">{r.player.firstName + " " + r.player.secondName}</div>
         </div>

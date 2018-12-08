@@ -151,9 +151,8 @@ class PlayerPanel extends Component {
     let img = null;
     if (this.state.player != null && this.state.player.user.imgURL != null) {
       // img = "Z serwera";
-      img = <img src={"http://localhost:3000/" + this.state.player.user.imgURL} width="300" height="300" />;
+      img = <img src={"http://localhost:3000/" + this.state.player.user.imgURL} width="315" height="300" />;
     } else {
-      img = <img src={userImagePlaceHolder} width="300" height="300" />;
     }
     return (
       <div>

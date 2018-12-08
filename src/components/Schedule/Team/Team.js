@@ -11,23 +11,13 @@ const team = props => {
         <Link to="/panel/team" className="Result">
           {props.name}
         </Link>
-        <img
-          src={apoel}
-          width="50"
-          height="50"
-          style={{ marginLeft: "15px" }}
-        />
+        <img src={"http://localhost:3000/" + props.imgURL} width="52" height="55" style={{ marginLeft: "15px" }} />
       </div>
     );
   } else {
     teamNameWithLogo = (
       <div className="Team GrayLink">
-        <img
-          src={apoel}
-          width="50"
-          height="50"
-          style={{ marginRight: "15px" }}
-        />
+        <img src={"http://localhost:3000/" + props.imgURL} width="52" height="55" style={{ marginRight: "15px" }} />
         <Link to="/panel/team" className="Result">
           {props.name}
         </Link>

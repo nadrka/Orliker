@@ -13,62 +13,10 @@ class LeagueIndividualStatistics extends Component {
   state = {
     league: null,
     individualStatistics: {
-      bestScorers: [
-        {
-          player: {
-            id: 1,
-            firstName: "Karol",
-            secondName: "Nadratowski"
-          },
-          team: {
-            id: 1,
-            name: "Apoel Morena"
-          },
-          goals: 1
-        }
-      ],
-      bestAsistants: [
-        {
-          player: {
-            id: 1,
-            firstName: "Karol",
-            secondName: "Nadratowski"
-          },
-          team: {
-            id: 1,
-            name: "Apoel Morena"
-          },
-          assists: 5
-        }
-      ],
-      mostYellowCards: [
-        {
-          player: {
-            id: 1,
-            firstName: "Karol",
-            secondName: "Nadratowski"
-          },
-          team: {
-            id: 1,
-            name: "Apoel Morena"
-          },
-          yellowCards: 3
-        }
-      ],
-      mostRedCards: [
-        {
-          player: {
-            id: 1,
-            firstName: "Karol",
-            secondName: "Nadratowski"
-          },
-          team: {
-            id: 1,
-            name: "Apoel Morena"
-          },
-          redCards: 2
-        }
-      ]
+      bestScorers: [],
+      bestAsistants: [],
+      mostYellowCards: [],
+      mostRedCards: []
     }
   };
 
@@ -83,126 +31,114 @@ class LeagueIndividualStatistics extends Component {
     if (prevState.league !== this.state.league) {
       this.getIndividualStatistics(this.state.league);
     }
-    if (!prevState.league && this.props.leagues.length > 0)
-      this.setState({ league: this.props.leagues[0].id });
+    if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
   }
 
   getIndividualStatistics = async league => {
-    let individualStatistics = await getData(
-      `${ROUTES.LEAGUES}/${league}/statistics`
-    );
+    let individualStatistics = await getData(`${ROUTES.LEAGUES}/${league}/statistics`);
 
     this.setState({ individualStatistics: individualStatistics });
   };
   render() {
-    const scorers = this.state.individualStatistics.bestScorers.map(
-      (stats, i) => {
-        let classToUse = i % 2 ? "secondRow" : "firstRow";
-        return (
-          <tr className={classToUse}>
-            <td>{`${i + 1}.`}</td>
-            <td
+    const scorers = this.state.individualStatistics.bestScorers.map((stats, i) => {
+      let classToUse = i % 2 ? "secondRow" : "firstRow";
+      return (
+        <tr className={classToUse}>
+          <td>{`${i + 1}.`}</td>
+          <td
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              textAlign: "right"
+            }}
+          >
+            <img
+              src={"http://localhost:3000/" + stats.player.imgURL}
               style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                textAlign: "right"
+                height: "50px",
+                width: "55px",
+                verticalAlign: "center",
+                align: "middle",
+                paddingRight: "10px"
               }}
-            >
-              <img
-                src={profilePicture}
-                alt="no pic"
-                style={{
-                  height: "50px",
-                  width: "auto",
-                  verticalAlign: "center",
-                  align: "middle",
-                  paddingRight: "10px"
-                }}
-              />
-            </td>
-            <td className="BlackLink">
-              {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
-              {stats.player.firstName + " " + stats.player.secondName}
-              {/* </Link> */}
-            </td>
-            <td>{stats.team.name}</td>
-            <td>{stats.goals}</td>
-          </tr>
-        );
-      }
-    );
-    const assistants = this.state.individualStatistics.bestAsistants.map(
-      (stats, i) => {
-        let classToUse = i % 2 ? "secondRow" : "firstRow";
-        return (
-          <tr className={classToUse}>
-            <td>{`${i + 1}.`}</td>
-            <td
+            />
+          </td>
+          <td className="BlackLink">
+            {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
+            {stats.player.firstName + " " + stats.player.secondName}
+            {/* </Link> */}
+          </td>
+          <td>{stats.team.name}</td>
+          <td>{stats.goals}</td>
+        </tr>
+      );
+    });
+    const assistants = this.state.individualStatistics.bestAsistants.map((stats, i) => {
+      let classToUse = i % 2 ? "secondRow" : "firstRow";
+      return (
+        <tr className={classToUse}>
+          <td>{`${i + 1}.`}</td>
+          <td
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              textAlign: "right"
+            }}
+          >
+            <img
+              src={"http://localhost:3000/" + stats.player.imgURL}
               style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                textAlign: "right"
+                height: "50px",
+                width: "55px",
+                verticalAlign: "center",
+                align: "middle",
+                paddingRight: "10px"
               }}
-            >
-              <img
-                src={profilePicture}
-                alt="no pic"
-                style={{
-                  height: "50px",
-                  width: "auto",
-                  verticalAlign: "center",
-                  align: "middle",
-                  paddingRight: "10px"
-                }}
-              />
-            </td>
-            <td className="BlackLink">
-              {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
-              {stats.player.firstName + " " + stats.player.secondName}
-              {/* </Link> */}
-            </td>
-            <td>{stats.team.name}</td>
-            <td>{stats.assists}</td>
-          </tr>
-        );
-      }
-    );
-    const yellow = this.state.individualStatistics.mostYellowCards.map(
-      (stats, i) => {
-        let classToUse = i % 2 ? "secondRow" : "firstRow";
-        return (
-          <tr className={classToUse}>
-            <td>{`${i + 1}.`}</td>
-            <td
+            />
+          </td>
+          <td className="BlackLink">
+            {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
+            {stats.player.firstName + " " + stats.player.secondName}
+            {/* </Link> */}
+          </td>
+          <td>{stats.team.name}</td>
+          <td>{stats.assists}</td>
+        </tr>
+      );
+    });
+    const yellow = this.state.individualStatistics.mostYellowCards.map((stats, i) => {
+      let classToUse = i % 2 ? "secondRow" : "firstRow";
+      return (
+        <tr className={classToUse}>
+          <td>{`${i + 1}.`}</td>
+          <td
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              textAlign: "right"
+            }}
+          >
+            <img
+              src={"http://localhost:3000/" + stats.player.imgURL}
               style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                textAlign: "right"
+                height: "50px",
+                width: "55px",
+                verticalAlign: "center",
+                align: "middle",
+                paddingRight: "10px"
               }}
-            >
-              <img
-                src={profilePicture}
-                alt="no pic"
-                style={{
-                  height: "50px",
-                  width: "auto",
-                  verticalAlign: "center",
-                  align: "middle",
-                  paddingRight: "10px"
-                }}
-              />
-            </td>
-            <td className="BlackLink">
-              {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
-              {stats.player.firstName + " " + stats.player.secondName}
-              {/* </Link> */}
-            </td>
-            <td>{stats.team.name}</td>
-            <td>{stats.yellowCards}</td>
-          </tr>
-        );
-      }
-    );
+            />
+          </td>
+          <td className="BlackLink">
+            {/* <Link className="teamLink" to={"panel/team/" + 1}> */}
+            {stats.player.firstName + " " + stats.player.secondName}
+            {/* </Link> */}
+          </td>
+          <td>{stats.team.name}</td>
+          <td>{stats.yellowCards}</td>
+        </tr>
+      );
+    });
     const red = this.state.individualStatistics.mostRedCards.map((stats, i) => {
       let classToUse = i % 2 ? "secondRow" : "firstRow";
       return (
@@ -216,11 +152,10 @@ class LeagueIndividualStatistics extends Component {
             }}
           >
             <img
-              src={profilePicture}
-              alt="no pic"
+              src={"http://localhost:3000/" + stats.player.imgURL}
               style={{
                 height: "50px",
-                width: "auto",
+                width: "55px",
                 verticalAlign: "center",
                 align: "middle",
                 paddingRight: "10px"
@@ -246,9 +181,7 @@ class LeagueIndividualStatistics extends Component {
               <DropdownButton title="Wybierz ligę" style={{ marginBottom: 5 }}>
                 {this.props.leagues.map(league => {
                   return (
-                    <MenuItem
-                      onSelect={() => this.setState({ league: league.id })}
-                    >
+                    <MenuItem onSelect={() => this.setState({ league: league.id })}>
                       {league.leagueNumber}. liga
                     </MenuItem>
                   );
@@ -263,10 +196,7 @@ class LeagueIndividualStatistics extends Component {
             <img src={goals} width="50" height="50" />
           </div>
           <table className="TableWrapper" style={{ width: "80%" }}>
-            <tr
-              className="headerSection"
-              style={{ backgroundColor: " #2b7a78" }}
-            >
+            <tr className="headerSection" style={{ backgroundColor: " #2b7a78" }}>
               <th>Pozycja</th>
               <th />
               <th>Imię i nazwisko</th>
@@ -280,10 +210,7 @@ class LeagueIndividualStatistics extends Component {
             <img src={assists} width="50" height="50" />
           </div>
           <table className="TableWrapper" style={{ width: "80%" }}>
-            <tr
-              className="headerSection"
-              style={{ backgroundColor: " #2b7a78" }}
-            >
+            <tr className="headerSection" style={{ backgroundColor: " #2b7a78" }}>
               <th>Pozycja</th>
               <th />
               <th>Imię i nazwisko</th>
@@ -297,10 +224,7 @@ class LeagueIndividualStatistics extends Component {
             <img src={yellowCard} width="50" height="50" />
           </div>
           <table className="TableWrapper" style={{ width: "80%" }}>
-            <tr
-              className="headerSection"
-              style={{ backgroundColor: " #2b7a78" }}
-            >
+            <tr className="headerSection" style={{ backgroundColor: " #2b7a78" }}>
               <th>Pozycja</th>
               <th />
               <th>Imię i nazwisko</th>
@@ -314,10 +238,7 @@ class LeagueIndividualStatistics extends Component {
             <img src={redCard} width="50" height="50" />
           </div>
           <table className="TableWrapper" style={{ width: "80%" }}>
-            <tr
-              className="headerSection"
-              style={{ backgroundColor: " #2b7a78" }}
-            >
+            <tr className="headerSection" style={{ backgroundColor: " #2b7a78" }}>
               <th>Pozycja</th>
               <th />
               <th>Imię i nazwisko</th>

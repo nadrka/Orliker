@@ -8,62 +8,17 @@ import TeamStatisticsByReferee from "../../components/RefereeMatchStatistics/Tea
 export const MATCH_ID = 2;
 class RefereeMatchStatistics extends Component {
   state = {
-    matchInfo: {
-      id: 1,
-      leagueId: 1,
-      matchDate: "02-02-18",
-      referee: {
-        id: 0,
-        firstName: "",
-        secondName: ""
-      },
-      place: "Boisko Orlik SP 76 Arena - Jagiellońska 14",
-      acceptMatchDate: "12312",
-      homeTeam: {
-        id: 1,
-        name: "Hanza Lider",
-        result: 0,
-        position: 0
-      },
-      awayTeam: {
-        id: 2,
-        name: "Apoel Morena",
-        result: 0,
-        position: 0
-      }
-    },
+    matchInfo: null,
     players: {
-      homeTeam: [
-        // {
-        //   id: 1,
-        //   firstName: "Jan",
-        //   secondName: "Naj",
-        //   number: 69
-        // }
-      ],
+      homeTeam: [],
       awayTeam: []
     },
-    playersStatistics: [
-      {
-        teamId: 1,
-        player: {
-          id: 1,
-          firstName: "Jan",
-          secondName: "Naj",
-          number: 69
-        },
-        goals: 1,
-        assists: 1,
-        yellowCards: 1,
-        redCards: 1,
-        didPlay: true
-      }
-    ]
+    playersStatistics: []
   };
 
-  componentDidMount() {
-    this.getMatchInfo();
-    this.getPlayersForMatch();
+  async componentDidMount() {
+    await this.getMatchInfo();
+    await this.getPlayersForMatch();
   }
 
   getMatchInfo = async () => {
@@ -201,77 +156,84 @@ class RefereeMatchStatistics extends Component {
 
   render() {
     console.log(this.state.players);
-    const homePlayers = this.state.players.homeTeam.map(player => {
-      return (
-        <PlayerStatisticsByReferee
-          onGoalsChanged={this.handleGoalsChanged}
-          onAssistsChanged={this.handleAssistsChanged}
-          onYellowCardsChanged={this.handleYellowCardsChanged}
-          onRedCardsChanged={this.handleRedCardsChanged}
-          onCheckboxChanged={this.handleDidPlayChanged}
-          player={player}
-        />
-      );
-    });
-    const awayPlayers = this.state.players.awayTeam.map(player => {
-      return (
-        <PlayerStatisticsByReferee
-          key={player.id}
-          onGoalsChanged={this.handleGoalsChanged}
-          onAssistsChanged={this.handleAssistsChanged}
-          onYellowCardsChanged={this.handleYellowCardsChanged}
-          onRedCardsChanged={this.handleRedCardsChanged}
-          onCheckboxChanged={this.handleDidPlayChanged}
-          player={player}
-        />
-      );
-    });
+    let homePlayers = null;
+    let awayPlayers = null;
+    if (this.state.matchInfo != null) {
+      homePlayers = this.state.players.homeTeam.map(player => {
+        return (
+          <PlayerStatisticsByReferee
+            onGoalsChanged={this.handleGoalsChanged}
+            onAssistsChanged={this.handleAssistsChanged}
+            onYellowCardsChanged={this.handleYellowCardsChanged}
+            onRedCardsChanged={this.handleRedCardsChanged}
+            onCheckboxChanged={this.handleDidPlayChanged}
+            player={player}
+          />
+        );
+      });
+      awayPlayers = this.state.players.awayTeam.map(player => {
+        return (
+          <PlayerStatisticsByReferee
+            key={player.id}
+            onGoalsChanged={this.handleGoalsChanged}
+            onAssistsChanged={this.handleAssistsChanged}
+            onYellowCardsChanged={this.handleYellowCardsChanged}
+            onRedCardsChanged={this.handleRedCardsChanged}
+            onCheckboxChanged={this.handleDidPlayChanged}
+            player={player}
+          />
+        );
+      });
+    }
     return (
       <div>
-        <div className="flex topSection" style={{ justifyContent: "center", marginBottom: "20px" }}>
-          <div className="flex class">
-            <div className="bigFontBigMargin" style={{ minHeight: "80px", marginBottom: "20px" }}>
-              {this.state.matchInfo.leagueId} Liga
+        {this.state.matchInfo != null && (
+          <div>
+            <div className="flex topSection" style={{ justifyContent: "center", marginBottom: "20px" }}>
+              <div className="flex class">
+                <div className="bigFontBigMargin" style={{ minHeight: "80px", marginBottom: "20px" }}>
+                  {this.state.matchInfo.leagueId} Liga
+                </div>
+              </div>
+            </div>
+            <div className="teamsStatisticsByReferee">
+              <div className="teamStatisticsByReferee">
+                <TeamStatisticsByReferee
+                  name={this.state.matchInfo.homeTeam.name}
+                  id={this.state.matchInfo.homeTeam.id}
+                  isHomeTeam={true}
+                  onResultChanged={this.handleResultChange}
+                />
+              </div>
+              <div className="teamStatisticsByReferee">
+                <TeamStatisticsByReferee
+                  name={this.state.matchInfo.awayTeam.name}
+                  id={this.state.matchInfo.awayTeam.id}
+                  isHomeTeam={false}
+                  onResultChanged={this.handleResultChange}
+                />
+              </div>
+            </div>
+            <div>
+              <MatchDetails
+                referee={this.state.matchInfo.referee}
+                date={this.state.matchInfo.matchDate}
+                place={this.state.matchInfo.place}
+              />
+            </div>
+            <div className="teamsStatisticsByReferee">
+              <div className="teamStatisticsByReferee">{homePlayers}</div>
+
+              <div className="teamStatisticsByReferee">{awayPlayers}</div>
+            </div>
+            <div className="teamsStatisticsByReferee">
+              <button onClick={this.handleRequestButtonClick} className="requestButton">
+                {" "}
+                Wyślij wyzwanie
+              </button>
             </div>
           </div>
-        </div>
-
-        <div className="teamsStatisticsByReferee">
-          <div className="teamStatisticsByReferee">
-            <TeamStatisticsByReferee
-              name={this.state.matchInfo.homeTeam.name}
-              id={this.state.matchInfo.homeTeam.id}
-              isHomeTeam={true}
-              onResultChanged={this.handleResultChange}
-            />
-          </div>
-          <div className="teamStatisticsByReferee">
-            <TeamStatisticsByReferee
-              name={this.state.matchInfo.awayTeam.name}
-              id={this.state.matchInfo.awayTeam.id}
-              isHomeTeam={false}
-              onResultChanged={this.handleResultChange}
-            />
-          </div>
-        </div>
-        <div>
-          <MatchDetails
-            referee={this.state.matchInfo.referee}
-            date={this.state.matchInfo.matchDate}
-            place={this.state.matchInfo.place}
-          />
-        </div>
-        <div className="teamsStatisticsByReferee">
-          <div className="teamStatisticsByReferee">{homePlayers}</div>
-
-          <div className="teamStatisticsByReferee">{awayPlayers}</div>
-        </div>
-        <div className="teamsStatisticsByReferee">
-          <button onClick={this.handleRequestButtonClick} className="requestButton">
-            {" "}
-            Wyślij wyzwanie
-          </button>
-        </div>
+        )}
       </div>
     );
   }

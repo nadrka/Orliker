@@ -1,12 +1,12 @@
 import React from "react";
 import "./PlayerInvitation";
-import profilePicture from "../../../assets/images/profilePicture.jpg";
+
 const PlayerInvitation = props => {
   const players = props.playerWithoutTeam.map(p => {
     return (
       <div className="TeamInvitation">
         <div className="TeamInvitationInfo">
-          <img src={profilePicture} width="50" height="50" />
+          <img src={"http://localhost:3000/" + p.imgURL} width="50" height="50" />
           <div className="TeamInvitationName">{p.number} </div>
           <div className="TeamInvitationName">{p.firstName + " " + p.secondName}</div>
         </div>

@@ -8,25 +8,8 @@ import { ROUTES } from "../../utils/Constants";
 import { createNotification } from "../../utils/Notification";
 class PlayerList extends Component {
   state = {
-    playerWithoutTeam: [
-      {
-        id: 1,
-        firstName: "Gustaw",
-        secondName: "Ohler",
-        number: 9
-      }
-    ],
-    request: [
-      {
-        id: 1,
-        player: {
-          id: 1,
-          firstName: "Karol",
-          secondName: "Nadratowski",
-          number: 21
-        }
-      }
-    ]
+    playerWithoutTeam: [],
+    request: []
   };
   async componentDidMount() {
     await this.getPlayersWithoutTeam();
@@ -55,6 +38,7 @@ class PlayerList extends Component {
   handleAcceptTap = async invitationId => {
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/accept`);
+      await this.getJoinRequests();
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +47,7 @@ class PlayerList extends Component {
   handleRejectTap = async invitationId => {
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
+      await this.getJoinRequests();
     } catch (error) {
       console.log(error);
     }

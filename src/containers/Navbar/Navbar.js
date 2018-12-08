@@ -62,12 +62,15 @@ class NavigationBar extends Component {
                 <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
               </NavItem>
               <NavItem eventKey={5}>
-                <NavLink to="/invitation">Zaproszenia</NavLink>
+                <NavLink to="/player/invitation">Zaproszenia</NavLink>
               </NavItem>
               <NavItem eventKey={6}>
                 <NavLink to="/matchInvitations">Wyzwania</NavLink>
               </NavItem>
               <NavItem eventKey={7}>
+                <NavLink to="/team/invitation">Zaproszenia</NavLink>
+              </NavItem>
+              <NavItem eventKey={8}>
                 <NavLink onClick={() => this.logout()} to="/login">
                   Wyloguj
                 </NavLink>

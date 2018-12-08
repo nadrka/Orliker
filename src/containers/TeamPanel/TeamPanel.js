@@ -126,7 +126,7 @@ class TeamPanel extends Component {
     if (this.state.team != null && this.state.team.imgURL != null) {
       img = <img className="img" src={"http://localhost:3000/" + this.state.team.imgURL} alt="no pic" />;
     } else {
-      img = <img className="img" src={require("../../assets/images/apoel.png")} alt="no pic" />;
+      // img = <img className="img" src={require("../../assets/images/apoel.png")} alt="no pic" />;
     }
     return (
       <div className="flex mainContainerTeamPanel">

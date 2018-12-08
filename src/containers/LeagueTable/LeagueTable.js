@@ -146,11 +146,10 @@ class LeagueTable extends Component {
             }}
           >
             <img
-              src={require("../../assets/images/apoel.png")}
-              alt="no pic"
+              src={"http://localhost:3000/" + team.imgURL}
               style={{
                 height: "50px",
-                width: "auto",
+                width: "60px",
                 verticalAlign: "center",
                 align: "middle",
                 paddingRight: "10px"
