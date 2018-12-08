@@ -92,7 +92,7 @@ class PlayerPanel extends Component {
   uploadHandler = async file => {
     const formData = new FormData();
     formData.append("userImage", file, file.name);
-    await putFormatData(`${ROUTES.PLAYERS}/image`, formData);
+    await putFormatData(`${ROUTES.PLAYERS}/image`, formData, { Authorization: this.props.loggedUser.token });
     const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
     this.setState({ player });
   };

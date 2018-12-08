@@ -53,7 +53,7 @@ class TeamPanel extends Component {
   uploadHandler = async file => {
     const formData = new FormData();
     formData.append("teamImage", file, file.name);
-    await putFormatData(`${ROUTES.TEAMS}/image`, formData);
+    await putFormatData(`${ROUTES.TEAMS}/image`, formData, { Authorization: this.props.user.token });
     const team = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}`);
     this.setState({ team });
   };
