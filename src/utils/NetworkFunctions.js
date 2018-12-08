@@ -27,6 +27,12 @@ export async function putData(route, data, additionalHeaders = {}) {
   });
 }
 
+export async function putFormatData(route, data, additionalHeaders = {}) {
+  await axios.put(`${BASEURL}${route}`, data, {
+    headers: Object.assign({ "Content-Type": "multipart/form-data" }, additionalHeaders)
+  });
+}
+
 export async function deleteDate(route, additionalHeaders = {}) {
   await axios.delete(`${BASEURL}${route}`, {
     headers: Object.assign({ "Content-Type": "application/json" }, additionalHeaders)

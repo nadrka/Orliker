@@ -10,7 +10,7 @@ const TeamRequest = props => {
           return (
             <div className="TeamInvitation">
               <div className="TeamInvitationInfo">
-                <img src={apoel} width="50" height="50" />
+                <img src={"http://localhost:3000/" + t.imgURL} width="50" height="50" />
                 <div className="TeamInvitationName">{t.name}</div>
               </div>
               <button onClick={() => props.onRequestTapped(t.id)} className="RequestButton">

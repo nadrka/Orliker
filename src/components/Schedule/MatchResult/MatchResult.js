@@ -11,11 +11,11 @@ const matchResult = props => {
   }
   return (
     <div className="MatchResult">
-      <Team name={props.homeTeam.name} isPlayingHome={true} />
+      <Team name={props.homeTeam.name} imgURL={props.homeTeam.imgURL} isPlayingHome={true} />
       <div className="Result">
         {props.homeTeam.result} : {props.awayTeam.result}
       </div>
-      <Team name={props.awayTeam.name} isPlayingHome={false} />
+      <Team name={props.awayTeam.name} imgURL={props.awayTeam.imgURL} isPlayingHome={false} />
     </div>
   );
 };

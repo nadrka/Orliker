@@ -10,7 +10,7 @@ class ClubDetails extends Component {
       return (
         <div className="ClubDetails">
           <div>
-            <img src={apoelPicture} width="150" height="150" />
+            <img src={"http://localhost:3000/" + this.props.team.imgURL} width="160" height="150" />
           </div>
           <div className="Span Link">
             <span>

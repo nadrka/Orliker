@@ -5,7 +5,7 @@ import LeagueSchedule from "../LeagueSchedule/LeagueSchedule";
 import PanelOption from "../../components/PanelOptions/PanelOption/PanelOption";
 import PanelOptions from "../../components/PanelOptions/PanelOptions";
 import Schedule from "../../components/Schedule/Schedule";
-import { getData, putData } from "../../utils/NetworkFunctions";
+import { getData, putData, putFormatData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import { Glyphicon } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -49,6 +49,19 @@ class TeamPanel extends Component {
       console.log(error);
     }
   }
+
+  uploadHandler = async file => {
+    const formData = new FormData();
+    formData.append("teamImage", file, file.name);
+    await putFormatData(`${ROUTES.TEAMS}/image`, formData, { Authorization: this.props.user.token });
+    const team = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}`);
+    this.setState({ team });
+  };
+
+  fileChangedHandler = event => {
+    const file = event.target.files[0];
+    this.uploadHandler(file);
+  };
 
   getStyle(index) {
     if (index === this.state.option) {
@@ -109,12 +122,17 @@ class TeamPanel extends Component {
   }
   render() {
     let { lastMatch } = this.state;
+    let img = null;
+    if (this.state.team != null && this.state.team.imgURL != null) {
+      img = <img className="img" src={"http://localhost:3000/" + this.state.team.imgURL} alt="no pic" />;
+    } else {
+      // img = <img className="img" src={require("../../assets/images/apoel.png")} alt="no pic" />;
+    }
     return (
       <div className="flex mainContainerTeamPanel">
         <div className="flex topSection">
-          <div className="flex picSection">
-            <img src={require("../../assets/images/apoel.png")} alt="no pic" className="img" />
-          </div>
+          <div className="flex picSection">{img}</div>
+
           {this.state.team && (
             <div className="flex textSection">
               {this.renderName()}
@@ -135,6 +153,20 @@ class TeamPanel extends Component {
                     }`
                   : "-"}
               </div>
+              {this.state.canChange && (
+                <div>
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={this.fileChangedHandler}
+                    ref={fileInput => (this.fileInput = fileInput)}
+                  />
+                  <button style={{ color: "black", marginTop: "10px" }} onClick={() => this.fileInput.click()}>
+                    {" "}
+                    Pick team logo{" "}
+                  </button>
+                </div>
+              )}
             </div>
           )}
           <div className="flex marginSection" />

@@ -10,7 +10,13 @@ class SentChallenge extends Component {
       <div className="MatchInfo challengeHeight width60percent">
         <div className="flex section">
           <div className="imageWrapper">
-            <img src={require("../../assets/images/apoel.png")} alt="no pic" className="img" />
+            <img
+              src={"http://localhost:3000/" + this.props.value.imgURL}
+              width="59"
+              height="55"
+              style={{ marginLeft: "15px" }}
+              className="img"
+            />
           </div>
           <div>
             Rzuciłeś drużynie
