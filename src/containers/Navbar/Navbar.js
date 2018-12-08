@@ -23,6 +23,7 @@ import MatchInvitations from "../MatchInvitations/MatchInvitations";
 import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
 
 import { NotificationContainer } from "react-notifications";
+import RefereePanel from "../RefereePanel/RefereePanel";
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -91,7 +92,7 @@ class NavigationBar extends Component {
                 <NavLink to="/table">Tabela</NavLink>
               </NavItem>
               <NavItem eventKey={3}>
-                <NavLink to={"/panel/player/" + this.props.user.id}>Panel Użytkownika</NavLink>
+                <NavLink to={"/panel/referee/" + this.props.user.id}>Panel Użytkownika</NavLink>
               </NavItem>
               <NavItem eventKey={4}>
                 <NavLink onClick={() => this.logout()} to="/login">
@@ -172,6 +173,7 @@ class NavigationBar extends Component {
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />
+        <Route path="/panel/referee/:id" exact component={RefereePanel} />
         <Route path="/" exact component={Register} />
         <NotificationContainer />
       </div>

@@ -119,7 +119,11 @@ class PlayerPanel extends Component {
     switch (this.state.choosenOption) {
       case "schedule":
         choosenOption = (
-          <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} />
+          <Schedule
+            upcomingMatches={this.state.upcomingMatches}
+            playedMatches={this.state.playedMatches}
+            category={0}
+          />
         );
         break;
       case "statistics":

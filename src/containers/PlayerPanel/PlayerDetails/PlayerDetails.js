@@ -26,7 +26,6 @@ class PlayerDetails extends Component {
       let objToSend = {};
       if (toChange === "name") {
         var names = value.split(" ", 2);
-        console.log("First name: " + names[0]);
         this.props.changeName(names[0], names[1]);
         objToSend["firstName"] = names[0];
         objToSend["secondName"] = names[1];

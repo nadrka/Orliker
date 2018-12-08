@@ -219,16 +219,17 @@ class RegisterBox extends Component {
 
   login = async () => {
     let data = {
-      // login: this.state.loginForm.fields.email.value,
-      // password: this.state.loginForm.fields.password.value,
-      login: "karol",
-      password: "12345"
+      login: this.state.loginForm.fields.email.value,
+      password: this.state.loginForm.fields.password.value
+      // login: "karol",
+      // password: "12345"
     };
     console.log(data);
     try {
       let response = await postDataWithResponse(ROUTES.AUTH, data, {});
       this.props.setUser(response);
-      this.props.history.push("/panel/player/" + response.id);
+      if (response.role === "Referee") this.props.history.push("/panel/referee/" + response.id);
+      else this.props.history.push("/panel/player/" + response.id);
     } catch (error) {
       console.log(error);
     }

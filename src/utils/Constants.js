@@ -18,5 +18,6 @@ export const ROUTES = {
   PLACES: "places",
   REFEREES: "referees",
   INVITATIONS: "invitations",
-  STATISTICS: "statistics"
+  STATISTICS: "statistics",
+  USERS: "users"
 };
