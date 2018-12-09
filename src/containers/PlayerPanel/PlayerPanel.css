@@ -8,3 +8,6 @@
 .ProfilePicture {
   margin-left: 10%;
 }
+.coverClass {
+  object-fit: cover;
+}

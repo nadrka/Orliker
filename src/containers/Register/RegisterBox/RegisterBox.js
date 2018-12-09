@@ -15,7 +15,7 @@ class RegisterBox extends Component {
           elementType: "input",
           elementConfig: {
             type: "email",
-            placeholder: "Adres email"
+            placeholder: "Login"
           },
           value: "",
           validation: {
@@ -47,7 +47,7 @@ class RegisterBox extends Component {
           elementType: "input",
           elementConfig: {
             type: "email",
-            placeholder: "Adres email"
+            placeholder: "Login"
           },
           value: "",
           validation: {
