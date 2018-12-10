@@ -42,7 +42,7 @@ class NavigationBar extends Component {
 
   navBar() {
     if (this.props.user) {
-      if (this.props.user.role === "Player")
+      if (this.props.user.role === "Player" && !this.props.user.isCaptain)
         return (
           <Navbar.Collapse>
             <Nav />
@@ -68,7 +68,7 @@ class NavigationBar extends Component {
               </NavItem>
 
               <NavItem eventKey={7}>
-                <NavLink to="/team/invitation">Zaproszenia</NavLink>
+                <NavLink to="/player/invitation">Zaproszenia</NavLink>
               </NavItem>
               <NavItem eventKey={8}>
                 <NavLink onClick={() => this.logout()} to="/login">
@@ -105,7 +105,7 @@ class NavigationBar extends Component {
             </Nav>
           </Navbar.Collapse>
         );
-      } else if (this.props.user.role === "Captain") {
+      } else if (this.props.user.isCaptain) {
         return (
           <Navbar.Collapse>
             <Nav />
@@ -127,23 +127,20 @@ class NavigationBar extends Component {
                 </MenuItem>
               </NavDropdown>
               <NavItem eventKey={5}>
-                <NavLink to="/player/invitation">Zaproszenia</NavLink>
+                <NavLink to="/team/invitation">Zaproszenia</NavLink>
               </NavItem>
               <NavItem eventKey={6}>
                 <NavLink to="/matchInvitations">Wyzwania</NavLink>
-              </NavItem>
-              <NavItem eventKey={7}>
-                <NavLink to={"/panel/team/" + this.props.user.teamId}>Panel Druzyny</NavLink>
-              </NavItem>
-              <NavItem eventKey={8}>
-                <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
               </NavItem>
               <NavItem eventKey={9}>
                 <NavLink onClick={() => this.logout()} to="/login">
                   Wyloguj
                 </NavLink>
               </NavItem>
-              {`${this.props.user.firstName} ${this.props.user.secondName}`}
+              <div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <NavLink to={"/panel/player/"}>{this.props.user.firstName + " " + this.props.user.secondName}</NavLink>
+                <NavLink to={"/panel/team/" + this.props.user.teamId}>Do Zmiany</NavLink>
+              </div>
             </Nav>
           </Navbar.Collapse>
         );
