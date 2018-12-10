@@ -40,27 +40,16 @@ class PlayerPanel extends Component {
   };
 
   async componentDidMount() {
-    try {
-      const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
-      let team = null,
-        upcomingMatches = [],
-        playedMatches = [];
-      if (player.teamId) {
-        team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
-        upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
-        playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
-      }
-      console.log("done");
-      console.log(player);
-      this.setState({
-        player: player,
-        team: team,
-        playedMatches: playedMatches,
-        upcomingMatches: upcomingMatches
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
+    const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
+    const upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
+    const playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
+    this.setState({
+      player: player,
+      team: team,
+      playedMatches: playedMatches,
+      upcomingMatches: upcomingMatches
+    });
   }
 
   createMatchRequest = async () => {
@@ -144,11 +133,7 @@ class PlayerPanel extends Component {
     switch (this.state.choosenOption) {
       case "schedule":
         choosenOption = (
-          <Schedule
-            upcomingMatches={this.state.upcomingMatches}
-            playedMatches={this.state.playedMatches}
-            category={0}
-          />
+          <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} />
         );
         break;
       case "statistics":
@@ -159,21 +144,13 @@ class PlayerPanel extends Component {
     if (this.state.player != null && this.state.player.teamId != null) {
       teamView = <ClubDetails team={this.state.team} />;
     } else {
-      if (this.props.loggedUser) {
+      if (this.props.loggedIn) {
         teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;
       }
     }
     let img = null;
     if (this.state.player != null && this.state.player.user.imgURL != null) {
-      // img = "Z serwera";
-      img = (
-        <img
-          src={"http://localhost:3000/" + this.state.player.user.imgURL}
-          width="315"
-          height="300"
-          className="coverClass"
-        />
-      );
+      img = <img src={"http://localhost:3000/" + this.state.player.user.imgURL} width="315" height="300" />;
     } else {
     }
     return (

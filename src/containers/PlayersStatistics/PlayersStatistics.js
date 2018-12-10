@@ -50,7 +50,7 @@ class PlayersStatistics extends Component {
             }}
           >
             <img
-              src={require("../../assets/images/apoel.png")}
+              src={"http://localhost:3000/" + player.imgURL}
               alt="no pic"
               style={{
                 height: "50px",

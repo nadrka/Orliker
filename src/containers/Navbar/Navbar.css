@@ -15,3 +15,14 @@
 .kg-nav-item:hover {
   color: yellow;
 }
+
+.nav-dropdown {
+  color: black;
+  font-weight: bold;
+  background-color: red;
+}
+
+.dropdown-link a {
+  background: red !important;
+  color: yellow !important;
+}
