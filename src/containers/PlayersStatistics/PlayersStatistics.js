@@ -38,6 +38,7 @@ class PlayersStatistics extends Component {
       return player1.number - player2.number;
     });
     var toRender = this.props.players.map((player, i) => {
+      console.log(player.user.imgURL);
       let classToUse = i % 2 ? "secondRow" : "firstRow";
       return (
         <tr className={classToUse}>
@@ -50,11 +51,10 @@ class PlayersStatistics extends Component {
             }}
           >
             <img
-              src={"http://localhost:3000/" + player.imgURL}
-              alt="no pic"
+              src={"http://localhost:3000/" + player.user.imgURL}
               style={{
                 height: "50px",
-                width: "auto",
+                width: "52px",
                 verticalAlign: "top",
                 align: "right",
                 paddingRight: "10px"

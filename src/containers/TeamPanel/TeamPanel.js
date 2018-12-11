@@ -60,6 +60,7 @@ class TeamPanel extends Component {
 
   fileChangedHandler = event => {
     const file = event.target.files[0];
+    console.log(file);
     this.uploadHandler(file);
   };
 
