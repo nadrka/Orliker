@@ -21,7 +21,6 @@ import MatchRequest from "../MatchRequest/MatchRequest";
 import PlayerList from "../PlayerList/PlayerList";
 import MatchInvitations from "../MatchInvitations/MatchInvitations";
 import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
-
 import { NotificationContainer } from "react-notifications";
 import RefereePanel from "../RefereePanel/RefereePanel";
 class NavigationBar extends Component {
@@ -47,35 +46,33 @@ class NavigationBar extends Component {
           <Navbar.Collapse>
             <Nav />
             <Nav pullRight>
-              <MenuItem eventKey={1}>
+              <NavItem eventKey={1}>
                 <NavLink to="/news">Aktualności</NavLink>
-              </MenuItem>
-              <NavDropdown eventKey={0} title="Liga" id="basic-nav-dropdown1">
-                <MenuItem eventKey={2}>
-                  <NavLink to="/schedule">Terminarz</NavLink>
-                </MenuItem>
-                <MenuItem eventKey={3}>
-                  <NavLink to="/table">Tabela</NavLink>
-                </MenuItem>
-                <MenuItem eventKey={4}>
-                  {" "}
-                  <NavLink to="/league/statistics">Statystyki</NavLink>
-                </MenuItem>
-              </NavDropdown>
-
-              <NavItem eventKey={4}>
-                <NavLink to={"/panel/player/" + this.props.user.id}>Panel Zawodnika</NavLink>
               </NavItem>
-
-              <NavItem eventKey={7}>
+              <NavItem eventKey={2}>
+                <NavLink to="/schedule">Terminarz</NavLink>
+              </NavItem>
+              <NavItem eventKey={3}>
+                <NavLink to="/table">Tabela</NavLink>
+              </NavItem>
+              <NavItem eventKey={4}>
+                {" "}
+                <NavLink to="/league/statistics">Statystyki</NavLink>
+              </NavItem>
+              <NavItem eventKey={5}>
                 <NavLink to="/player/invitation">Zaproszenia</NavLink>
               </NavItem>
-              <NavItem eventKey={8}>
+              <NavItem eventKey={6}>
                 <NavLink onClick={() => this.logout()} to="/login">
                   Wyloguj
                 </NavLink>
               </NavItem>
-              {`${this.props.user.firstName} ${this.props.user.secondName}`}
+              <div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <NavLink to={"/panel/player/" + this.props.user.id}>
+                  {this.props.user.firstName + " " + this.props.user.secondName}
+                </NavLink>
+                <NavLink to={"/panel/team/" + this.props.user.teamId}>{this.props.user.teamName}</NavLink>
+              </div>
             </Nav>
           </Navbar.Collapse>
         );
@@ -93,15 +90,16 @@ class NavigationBar extends Component {
               <NavItem eventKey={2}>
                 <NavLink to="/table">Tabela</NavLink>
               </NavItem>
-              <NavItem eventKey={3}>
-                <NavLink to={"/panel/referee/" + this.props.user.id}>Panel Użytkownika</NavLink>
-              </NavItem>
               <NavItem eventKey={4}>
                 <NavLink onClick={() => this.logout()} to="/login">
                   Wyloguj
                 </NavLink>
               </NavItem>
-              {`${this.props.user.firstName} ${this.props.user.secondName}`}
+              <div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <NavLink to={"/panel/referee/" + this.props.user.id}>
+                  {this.props.user.firstName + " " + this.props.user.secondName}
+                </NavLink>
+              </div>
             </Nav>
           </Navbar.Collapse>
         );
@@ -113,19 +111,17 @@ class NavigationBar extends Component {
               <NavItem eventKey={1}>
                 <NavLink to="/news">Aktualności</NavLink>
               </NavItem>
-              <NavDropdown className="dropdown-link" eventKey={0} title="Liga">
-                <MenuItem eventKey={2}>
-                  <NavLink to="/schedule">Terminarz</NavLink>
-                </MenuItem>
+              <NavItem eventKey={2}>
+                <NavLink to="/schedule">Terminarz</NavLink>
+              </NavItem>
 
-                <MenuItem className="dropdown-link" eventKey={3}>
-                  <NavLink to="/table">Tabela</NavLink>
-                </MenuItem>
-                <MenuItem eventKey={4}>
-                  {" "}
-                  <NavLink to="/league/statistics">Statystyki</NavLink>
-                </MenuItem>
-              </NavDropdown>
+              <NavItem eventKey={3}>
+                <NavLink to="/table">Tabela</NavLink>
+              </NavItem>
+              <NavItem eventKey={4}>
+                {" "}
+                <NavLink to="/league/statistics">Statystyki</NavLink>
+              </NavItem>
               <NavItem eventKey={5}>
                 <NavLink to="/team/invitation">Zaproszenia</NavLink>
               </NavItem>
@@ -138,8 +134,10 @@ class NavigationBar extends Component {
                 </NavLink>
               </NavItem>
               <div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <NavLink to={"/panel/player/"}>{this.props.user.firstName + " " + this.props.user.secondName}</NavLink>
-                <NavLink to={"/panel/team/" + this.props.user.teamId}>Do Zmiany</NavLink>
+                <NavLink to={"/panel/player/" + this.props.user.id}>
+                  {this.props.user.firstName + " " + this.props.user.secondName}
+                </NavLink>
+                <NavLink to={"/panel/team/" + this.props.user.teamId}> {this.props.user.teamName}</NavLink>
               </div>
             </Nav>
           </Navbar.Collapse>

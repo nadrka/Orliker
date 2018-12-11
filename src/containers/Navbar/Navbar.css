@@ -16,8 +16,26 @@
   color: yellow;
 }
 
-.nav-dropdown {
-  color: black;
-  font-weight: bold;
-  background-color: red;
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: red !important;
+  background-color: blue !important;
+  background-image: none !important;
+  filter: none !important;
+}
+
+.dropdown-menu-normal:hover,
+.dropdown-menu-normal a:hover {
+  background: transparent !important;
+  color: #5cac7c;
+  text-decoration: underline !important;
+  text-align: right;
+  float: right;
+}
+
+.dropdown-menu-normal,
+.dropdown-menu-normal a {
+  color: #5cac7c !important;
+  text-align: right;
+  float: right;
 }
