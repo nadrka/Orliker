@@ -61,8 +61,7 @@ class PlayerPanel extends Component {
   createMatchRequest = async () => {
     try {
       let objectToSend = {
-        captainId: 5,
-        currentLegueId: 1,
+        captainId: this.props.player.user.id,
         name: this.state.modal.teamName
       };
       this.hideModal();
