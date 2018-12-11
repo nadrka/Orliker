@@ -44,6 +44,7 @@ class PlayerPanel extends Component {
     const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
     const upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
     const playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
+    console.log(player);
     this.setState({
       player: player,
       team: team,
@@ -55,8 +56,7 @@ class PlayerPanel extends Component {
   createMatchRequest = async () => {
     try {
       let objectToSend = {
-        captainId: 5,
-        currentLegueId: 1,
+        captainId: this.props.player.user.id,
         name: this.state.modal.teamName
       };
       this.hideModal();
