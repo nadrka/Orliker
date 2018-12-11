@@ -16,6 +16,7 @@
 .PlayerDetail {
   display: flex;
   flex-direction: row;
+  align-items: center;
   border-bottom: dashed 1px #c5c6c7;
   padding-left: 10px;
   padding-bottom: 2px;
@@ -24,6 +25,10 @@
 
 .glyphicon {
   margin-left: 5px;
+}
+
+.smallBtn {
+  height: 20px;
 }
 
 .inputClass {

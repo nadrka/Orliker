@@ -34,3 +34,7 @@ span:hover {
 .Active {
   color: #45a29e;
 }
+
+.containClass {
+  object-fit: contain;
+}

@@ -71,7 +71,9 @@ class NavigationBar extends Component {
                 <NavLink to={"/panel/player/" + this.props.user.id}>
                   {this.props.user.firstName + " " + this.props.user.secondName}
                 </NavLink>
-                <NavLink to={"/panel/team/" + this.props.user.teamId}>{this.props.user.teamName}</NavLink>
+                {this.props.user.teamId && (
+                  <NavLink to={"/panel/team/" + this.props.user.teamId}>{this.props.user.teamName}</NavLink>
+                )}
               </div>
             </Nav>
           </Navbar.Collapse>

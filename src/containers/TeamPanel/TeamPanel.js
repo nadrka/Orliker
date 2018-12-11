@@ -125,7 +125,7 @@ class TeamPanel extends Component {
     let { lastMatch } = this.state;
     let img = null;
     if (this.state.team != null && this.state.team.imgURL != null) {
-      img = <img className="img" src={"http://localhost:3000/" + this.state.team.imgURL} alt="no pic" />;
+      img = <img className="img coverClass" src={"http://localhost:3000/" + this.state.team.imgURL} alt="no pic" />;
     } else {
       // img = <img className="img" src={require("../../assets/images/apoel.png")} alt="no pic" />;
     }

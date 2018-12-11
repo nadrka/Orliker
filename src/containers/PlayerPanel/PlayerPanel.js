@@ -41,9 +41,15 @@ class PlayerPanel extends Component {
 
   async componentDidMount() {
     const player = await getData(`${ROUTES.PLAYERS}/${this.props.match.params.id}`);
-    const team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
-    const upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
-    const playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
+    let team = null,
+      upcomingMatches = [],
+      playedMatches = [];
+    if (player.teamId) {
+      team = await getData(`${ROUTES.TEAMS}/${player.teamId}`);
+      upcomingMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/upcoming`);
+      playedMatches = await getData(`${ROUTES.TEAMS}/${player.teamId}/matches/played`);
+    }
+
     this.setState({
       player: player,
       team: team,
@@ -144,13 +150,20 @@ class PlayerPanel extends Component {
     if (this.state.player != null && this.state.player.teamId != null) {
       teamView = <ClubDetails team={this.state.team} />;
     } else {
-      if (this.props.loggedIn) {
+      if (this.props.loggedUser) {
         teamView = <CreateNewTeam onOpen={this.handleOpen} onJoinRequest={this.handleOpen} />;
       }
     }
     let img = null;
     if (this.state.player != null && this.state.player.user.imgURL != null) {
-      img = <img src={"http://localhost:3000/" + this.state.player.user.imgURL} width="315" height="300" />;
+      img = (
+        <img
+          src={"http://localhost:3000/" + this.state.player.user.imgURL}
+          width="315"
+          height="300"
+          className="coverClass"
+        />
+      );
     } else {
     }
     return (
