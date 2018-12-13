@@ -29,7 +29,7 @@ class ReceivedChallenge extends Component {
         <div className="flex section">
           Data meczu: {moment(this.props.value.date).format("DD/MM/YYYY HH:mm")}
           <br />
-          Miejsce: {this.props.value.place}
+          Miejsce: {this.props.value.place.place}
         </div>
         <div className="flex section contentInColumn">
           Podejmujesz?

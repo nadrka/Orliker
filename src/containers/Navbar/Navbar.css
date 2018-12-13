@@ -39,3 +39,11 @@
   text-align: right;
   float: right;
 }
+
+.rightNavBarElement {
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  height: 100% !important;
+  flex: 1;
+}

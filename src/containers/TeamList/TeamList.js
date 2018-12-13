@@ -31,7 +31,7 @@ class TeamList extends Component {
   }
 
   getInvitations = async () => {
-    let invitations = await getData(`${ROUTES.PLAYERS}/7/invitations`);
+    let invitations = await getData(`${ROUTES.PLAYERS}/363/invitations`);
     console.log(invitations);
     this.setState({ invitations: invitations });
   };
@@ -70,7 +70,7 @@ class TeamList extends Component {
       let objectToSend = {
         teamId: teamId,
         requestType: "player",
-        playerId: 1
+        playerId: 390
       };
 
       console.log(objectToSend);

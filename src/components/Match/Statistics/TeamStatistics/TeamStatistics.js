@@ -31,6 +31,7 @@ let getStatistics = statistic => {
       assists={statistic.assists}
       yellowCards={statistic.yellowCards}
       redCards={statistic.redCards}
+      imgURL={statistic.player.imgURL}
     />
   );
 };
@@ -44,7 +45,7 @@ const teamStatistics = props => {
   console.log(props);
   return (
     <div className="TeamStatistics">
-      <div className="TeamName">APOEL MORENA</div>
+      <div className="TeamName">{props.name.toUpperCase()}</div>
       <PositionHeader position="Bramkarze" />
       {goalkeeperStatistics}
       <PositionHeader position="Obrońcy" />

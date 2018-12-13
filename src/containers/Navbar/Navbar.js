@@ -12,6 +12,7 @@ import TeamPanel from "../TeamPanel/TeamPanel";
 import Match from "../Match/Match";
 import TeamList from "../TeamList/TeamList";
 import "../../components/UI/Link/Link.css";
+import "./Navbar.css";
 import { setUser, setLeagues } from "../../actions/actions";
 import { connect } from "react-redux";
 import { getData } from "../../utils/NetworkFunctions";
@@ -67,14 +68,16 @@ class NavigationBar extends Component {
                   Wyloguj
                 </NavLink>
               </NavItem>
-              <div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <NavLink to={"/panel/player/" + this.props.user.id}>
-                  {this.props.user.firstName + " " + this.props.user.secondName}
-                </NavLink>
-                {this.props.user.teamId && (
-                  <NavLink to={"/panel/team/" + this.props.user.teamId}>{this.props.user.teamName}</NavLink>
-                )}
-              </div>
+              <NavItem eventKey={7}>
+                <div className="flex rightNavBarElement">
+                  <NavLink to={"/panel/player/" + this.props.user.id}>
+                    {this.props.user.firstName + " " + this.props.user.secondName}
+                  </NavLink>
+                  {this.props.user.teamId && (
+                    <NavLink to={"/panel/team/" + this.props.user.teamId}>{this.props.user.teamName}</NavLink>
+                  )}
+                </div>
+              </NavItem>
             </Nav>
           </Navbar.Collapse>
         );
@@ -204,7 +207,7 @@ class NavigationBar extends Component {
           {this.navBar()}
         </Navbar>
         <Route path="/matchRequest" exact component={MatchRequest} />
-        <Route path="/sedzia" exact component={RefereeMatchStatistics} />
+        <Route path="/match/enterResult/:id" exact component={RefereeMatchStatistics} />
         <Route path="/news" exact component={News} />
         <Route path="/singleNews/:id" exact component={SingleNews} />
         <Route path="/panel/player/:id" exact component={PlayerPanel} />

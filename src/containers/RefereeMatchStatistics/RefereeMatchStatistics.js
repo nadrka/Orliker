@@ -5,7 +5,7 @@ import { ROUTES } from "../../utils/Constants";
 import MatchDetails from "../../components/Match/Details/MatchDetails";
 import PlayerStatisticsByReferee from "../../components/RefereeMatchStatistics/PlayerStatisticsByReferee/PlayerStatisticsByReferee";
 import TeamStatisticsByReferee from "../../components/RefereeMatchStatistics/TeamStatisticsByReferee/TeamStatisticsByReferee";
-export const MATCH_ID = 2;
+
 class RefereeMatchStatistics extends Component {
   state = {
     matchInfo: null,
@@ -22,12 +22,12 @@ class RefereeMatchStatistics extends Component {
   }
 
   getMatchInfo = async () => {
-    let matchInfo = await getData(`${ROUTES.MATCHES}/${MATCH_ID}`);
+    let matchInfo = await getData(`${ROUTES.MATCHES}/${this.props.match.params.id}`);
     this.setState({ matchInfo: matchInfo });
   };
 
   getPlayersForMatch = async () => {
-    let playersXD = await getData(`${ROUTES.MATCHES}/${MATCH_ID}/players`);
+    let playersXD = await getData(`${ROUTES.MATCHES}/${this.props.match.params.id}/players`);
     const homePlayerStatistics = playersXD.homeTeam.map(player => {
       return {
         teamId: this.state.matchInfo.homeTeam.id,
@@ -80,7 +80,7 @@ class RefereeMatchStatistics extends Component {
       return {
         playerId: statistic.player.id,
         teamId: statistic.teamId,
-        matchId: MATCH_ID,
+        matchId: this.props.match.params.id,
         goals: statistic.goals,
         assists: statistic.assists,
         yellowCards: statistic.yellowCards,
@@ -106,7 +106,7 @@ class RefereeMatchStatistics extends Component {
       status: "Played"
     };
     try {
-      await putData(`${ROUTES.MATCHES}/${MATCH_ID}`, result);
+      await putData(`${ROUTES.MATCHES}/${this.props.match.params.id}`, result);
     } catch (error) {
       console.log(error);
     }
@@ -229,7 +229,7 @@ class RefereeMatchStatistics extends Component {
             <div className="teamsStatisticsByReferee">
               <button onClick={this.handleRequestButtonClick} className="requestButton">
                 {" "}
-                Wyślij wyzwanie
+                Wpisz wynik
               </button>
             </div>
           </div>

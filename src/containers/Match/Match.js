@@ -74,7 +74,11 @@ class Match extends Component {
           date={this.state.matchInfo.matchDate}
           place={this.state.matchInfo.place}
         />
-        <MatchStatistics statistics={this.state.matchStatistics} />
+        <MatchStatistics
+          statistics={this.state.matchStatistics}
+          homeTeamName={this.state.matchInfo.homeTeam.name}
+          awayTeamName={this.state.matchInfo.awayTeam.name}
+        />
       </div>
     );
   }

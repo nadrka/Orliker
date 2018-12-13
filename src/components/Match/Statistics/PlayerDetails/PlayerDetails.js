@@ -8,7 +8,7 @@ const playerDetails = props => {
     <div className="MatchPlayerDetails">
       <div className="MatchPlayerInfo">
         <div className="MatchPlayerInfoNumber">{props.number}</div>
-        <img src={profilePicture} width="60" height="60" />
+        <img src={"http://localhost:3000/" + props.imgURL} width="60" height="60" className="coverClass" />
         <div className="MatchPlayerInfoName GrayLink">
           <Link to="panel/player">{props.name}</Link>
         </div>
