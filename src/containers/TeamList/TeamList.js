@@ -6,6 +6,8 @@ import { getData, postDataWithResponse, postDataWithoutResponse } from "../../ut
 import { ROUTES } from "../../utils/Constants";
 import "./TeamList.css";
 import { createNotification } from "../../utils/Notification";
+import { connect } from "react-redux";
+
 class TeamList extends Component {
   state = {
     invitations: [],
@@ -31,7 +33,7 @@ class TeamList extends Component {
   }
 
   getInvitations = async () => {
-    let invitations = await getData(`${ROUTES.PLAYERS}/363/invitations`);
+    let invitations = await getData(`${ROUTES.PLAYERS}/${this.props.loggedUser.id}/invitations`);
     console.log(invitations);
     this.setState({ invitations: invitations });
   };
@@ -70,7 +72,7 @@ class TeamList extends Component {
       let objectToSend = {
         teamId: teamId,
         requestType: "player",
-        playerId: 390
+        playerId: this.props.loggedUser.id
       };
 
       console.log(objectToSend);
@@ -105,4 +107,8 @@ class TeamList extends Component {
   }
 }
 
-export default TeamList;
+const mapStateToProps = state => {
+  return { loggedUser: state.user };
+};
+
+export default connect(mapStateToProps)(TeamList);

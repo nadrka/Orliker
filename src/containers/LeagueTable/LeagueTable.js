@@ -85,7 +85,7 @@ class LeagueTable extends Component {
         homeTeamId: this.props.user.teamId,
         awayTeamId: this.state.pickedTeam.id,
         status: "ToAccept",
-        leagueId: 1,
+        leagueId: this.state.user.team.currentLeagueId,
         // place: this.state.pickedPlace.place,
         placeId: this.state.pickedPlace.id,
         refereeId: this.state.pickeReferee.id,
