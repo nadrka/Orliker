@@ -42,6 +42,7 @@ class NavigationBar extends Component {
 
   navBar() {
     if (this.props.user) {
+      console.log(this.props.user.isCaptain);
       if (this.props.user.role === "Player" && !this.props.user.isCaptain)
         return (
           <Navbar.Collapse>

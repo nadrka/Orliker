@@ -5,14 +5,20 @@ class Searchbar extends Component {
     inputValue: ""
   };
   updateInputValue(evt) {
-    console.log(evt.target.value);
+    // console.log(evt.target.value);
     this.setState({
       inputValue: evt.target.value
     });
   }
 
   searchFor = () => {
-    console.log(this.state.inputValue);
+    // console.log(this.state.inputValue);
+  };
+
+  handleKeyPress = e => {
+    if (e.key === "Enter") {
+      this.props.onSerchbarChanged(this.state.inputValue);
+    }
   };
 
   render() {
@@ -24,11 +30,9 @@ class Searchbar extends Component {
             class="form-control input-lg"
             placeholder="Szukaj..."
             onChange={evt => this.updateInputValue(evt)}
+            onKeyPress={this.handleKeyPress}
           />
-          <span
-            class="input-group-btn"
-            onClick={() => this.props.onSerchbarChanged(this.state.inputValue)}
-          >
+          <span class="input-group-btn" onClick={() => this.props.onSerchbarChanged(this.state.inputValue)}>
             <button class="btn btn-info btn-lg" type="button">
               <i class="glyphicon glyphicon-search" />
             </button>
