@@ -69,6 +69,7 @@ class LeagueTable extends Component {
     let teams = await getData(`${ROUTES.LEAGUES}/${id}/teams`);
     this.setState({ teams: teams });
   }
+
   async getTeamsAllStadiums(id) {
     let places = await getData(`${ROUTES.PLACES}`);
     this.setState({ places: places });
@@ -85,8 +86,6 @@ class LeagueTable extends Component {
         homeTeamId: this.props.user.teamId,
         awayTeamId: this.state.pickedTeam.id,
         status: "ToAccept",
-        leagueId: this.state.user.team.currentLeagueId,
-        // place: this.state.pickedPlace.place,
         placeId: this.state.pickedPlace.id,
         refereeId: this.state.pickeReferee.id,
         matchDate: this.state.startDate

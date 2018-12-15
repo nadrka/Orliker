@@ -11,7 +11,9 @@ import { connect } from "react-redux";
 class PlayerList extends Component {
   state = {
     playerWithoutTeam: [],
-    request: []
+    filterPlayerWithoutTeam: [],
+    request: [],
+    shouldShowFilteredPlayers: false
   };
   async componentDidMount() {
     await this.getPlayersWithoutTeam();
@@ -29,6 +31,7 @@ class PlayerList extends Component {
 
   getPlayersWithoutTeam = async () => {
     let playersWithoutTeam = await getData(`${ROUTES.PLAYERS}/without/team`);
+    console.log(playersWithoutTeam);
     this.setState({ playerWithoutTeam: playersWithoutTeam });
   };
 
@@ -73,7 +76,25 @@ class PlayerList extends Component {
     }
   };
 
+  handleSearchbarChange = text => {
+    console.log(text);
+    if (text.length > 0) {
+      const filteredPlayers = this.state.playerWithoutTeam.filter(player => {
+        return player.firstName.includes(text) || player.secondName.includes(text);
+      });
+      this.setState({ shouldShowFilteredPlayers: true, filterPlayerWithoutTeam: filteredPlayers });
+    } else {
+      this.setState({ shouldShowFilteredPlayers: false });
+    }
+  };
+
   render() {
+    let players = [];
+    if (this.state.shouldShowFilteredPlayers == false) {
+      players = this.state.playerWithoutTeam;
+    } else {
+      players = this.state.filterPlayerWithoutTeam;
+    }
     return (
       <div>
         <div className="SearchbarBar">
@@ -84,7 +105,7 @@ class PlayerList extends Component {
           onRejectTapped={this.handleRejectTap}
           request={this.state.request}
         />
-        <PlayerInvitation onRequestTapped={this.handleReuqestTap} playerWithoutTeam={this.state.playerWithoutTeam} />
+        <PlayerInvitation onRequestTapped={this.handleReuqestTap} playerWithoutTeam={players} />
       </div>
     );
   }

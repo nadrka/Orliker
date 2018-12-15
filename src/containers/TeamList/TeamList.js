@@ -11,7 +11,9 @@ import { connect } from "react-redux";
 class TeamList extends Component {
   state = {
     invitations: [],
-    teamsForLeague: []
+    teamsForLeague: [],
+    filteredTeamsForLeague: [],
+    isFiltering: false
   };
 
   async componentDidMount() {
@@ -46,7 +48,6 @@ class TeamList extends Component {
   async createMatchRequest() {}
 
   handleAcceptTap = async invitationId => {
-    console.log(invitationId);
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/accept`);
       await this.getInvitations();
@@ -56,7 +57,6 @@ class TeamList extends Component {
   };
 
   handleRejectTap = async invitationId => {
-    console.log(invitationId);
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
       await this.getInvitations();
@@ -86,10 +86,30 @@ class TeamList extends Component {
   };
 
   handleSearchbarChange = inputValue => {
-    console.log(inputValue);
+    if (inputValue.length > 0) {
+      let filteredTeams = this.state.teamsForLeague.map(league => {
+        const teams = league.teams.filter(team => {
+          return team.name.includes(inputValue);
+        });
+        return {
+          league: league.league,
+          teams: teams
+        };
+      });
+      this.setState({ isFiltering: true, filteredTeamsForLeague: filteredTeams });
+    } else {
+      this.setState({ isFiltering: false });
+    }
   };
 
   render() {
+    let teams = [];
+    if (this.state.isFiltering == false) {
+      teams = this.state.teamsForLeague;
+    } else {
+      teams = this.state.filteredTeamsForLeague;
+    }
+
     return (
       <div>
         <div className="SearchbarBar">
@@ -101,7 +121,7 @@ class TeamList extends Component {
           onRejectTapped={this.handleRejectTap}
           invitations={this.state.invitations}
         />
-        <TeamRequest onRequestTapped={this.handleReuqestTap} teams={this.state.teamsForLeague} />
+        <TeamRequest onRequestTapped={this.handleReuqestTap} teams={teams} />
       </div>
     );
   }
