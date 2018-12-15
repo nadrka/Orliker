@@ -130,14 +130,14 @@ class LeagueTable extends Component {
   };
 
   renderTable() {
-    let canSend = this.props.user && this.props.user.isCaptain;
     var toRender = this.state.teams.map((team, i) => {
       let classToUse = i % 2 ? "secondRow" : "firstRow";
+      let canSend = this.props.user && this.props.user.isCaptain && team.id != this.props.user.teamId;
       return (
         <tr
           className={classToUse}
           style={{
-            backgroundColor: i == 0 ? "#33F422" : i > this.state.teams.length - 4 ? "#F5260A" : undefined
+            backgroundColor: i == 0 ? "#15ff00" : i > this.state.teams.length - 4 ? "#D80000" : undefined
           }}
         >
           <td>{`${i + 1}.`}</td>
