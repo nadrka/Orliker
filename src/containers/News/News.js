@@ -43,6 +43,7 @@ class News extends Component {
         <div className="flex mainContainer">
           <div className="newsContainer">
             <div className="newsHeader">{news.title}</div>
+            <div className="newsDate">Autor: {news.team ? news.team.name : "Organizator"}</div>
             <div className="newsDate">{moment(news.dateOfPublication).format("DD.MM.YYYY HH:mm")}</div>
             <div className="newsText">{this.trimText(news.content, news.id)}</div>
           </div>
