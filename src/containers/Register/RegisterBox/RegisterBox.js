@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser } from "../../../actions/actions";
 import { ROUTES } from "../../../utils/Constants";
+import { createNotification } from "../../../utils/Notification";
 
 class RegisterBox extends Component {
   state = {
@@ -28,7 +29,7 @@ class RegisterBox extends Component {
         password: {
           elementType: "input",
           elementConfig: {
-            type: "text",
+            type: "password",
             placeholder: "Hasło"
           },
           value: "",
@@ -52,7 +53,8 @@ class RegisterBox extends Component {
           value: "",
           validation: {
             required: true,
-            isEmail: true
+            isEmail: true,
+            minLength: 5
           },
           valid: false,
           touched: false
@@ -86,7 +88,7 @@ class RegisterBox extends Component {
         password: {
           elementType: "input",
           elementConfig: {
-            type: "text",
+            type: "password",
             placeholder: "Hasło"
           },
           value: "",
@@ -99,7 +101,7 @@ class RegisterBox extends Component {
         repeatPassword: {
           elementType: "input",
           elementConfig: {
-            type: "text",
+            type: "password",
             placeholder: "Powtórz hasło"
           },
           value: "",
@@ -224,13 +226,13 @@ class RegisterBox extends Component {
       // login: "karol",
       // password: "12345"
     };
-    console.log(data);
     try {
       let response = await postDataWithResponse(ROUTES.AUTH, data, {});
       this.props.setUser(response);
       if (response.role === "Referee") this.props.history.push("/panel/referee/" + response.id);
       else this.props.history.push("/panel/player/" + response.id);
     } catch (error) {
+      createNotification("error", "Logowanie nie powiodło się!", "Prośba została wysłana!");
       console.log(error);
     }
   };
