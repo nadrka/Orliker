@@ -38,7 +38,7 @@ class LeagueTable extends Component {
       id: 0
     },
     places: [{ id: 1, place: "ZADUPIE" }, { id: 2, place: "Decathlon" }],
-    pickedPlace: { id: 1, place: "" },
+    pickedPlace: { id: 0, place: "" },
     referees: [
       { id: 1, firstName: "Janusz", secondName: "Grzyb" },
       { id: 1, firstName: "Janusz", secondName: "Grzyb" }
@@ -118,9 +118,15 @@ class LeagueTable extends Component {
   };
 
   closeModal = () => {
-    if (this.state.pickeReferee.id == 0 || this.state.pickedPlace.id == 0) {
+    if (this.state.pickeReferee.id == 0) {
       this.setState({ modalIsOpen: false });
-      createNotification("error", "Sędzie lub boisko nie zostało wybrane", "Wyzwanie zostało poprawnie stworzone!");
+      createNotification("error", "Sędzie nie został wybrany!", "Wyzwanie zostało poprawnie stworzone!");
+    } else if (this.state.pickedPlace.id == 0) {
+      this.setState({ modalIsOpen: false });
+      createNotification("error", "Boisko nie zostało wybrane!", "Wyzwanie zostało poprawnie stworzone!");
+    } else if (this.state.startDate < new Date()) {
+      this.setState({ modalIsOpen: false });
+      createNotification("error", "Data nie moze być starsza od dzisiejszej!", "Wyzwanie zostało poprawnie stworzone!");
     } else {
       this.createMatchRequest();
       this.setState({ modalIsOpen: false });
