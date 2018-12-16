@@ -230,6 +230,7 @@ class RegisterBox extends Component {
       let response = await postDataWithResponse(ROUTES.AUTH, data, {});
       this.props.setUser(response);
       if (response.role === "Referee") this.props.history.push("/panel/referee/" + response.id);
+      else if (response.role === "Admin") this.props.history.push("/news");
       else this.props.history.push("/panel/player/" + response.id);
     } catch (error) {
       createNotification("error", "Logowanie nie powiodło się!", "Prośba została wysłana!");

@@ -142,7 +142,7 @@ class PlayerPanel extends Component {
         );
         break;
       case "statistics":
-        choosenOption = <PlayerCarrer />;
+        choosenOption = <PlayerCarrer id={this.props.match.params.id} />;
         break;
     }
     let teamView = null;

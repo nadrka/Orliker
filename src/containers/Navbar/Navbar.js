@@ -132,6 +132,33 @@ class NavigationBar extends Component {
             </Nav>
           </Navbar.Collapse>
         );
+      } else if (this.props.user.role === "Admin") {
+        return (
+          <Navbar.Collapse>
+            <Nav />
+            <Nav pullRight>
+              <NavItem eventKey={0}>
+                <NavLink to="/news">Aktualności</NavLink>
+              </NavItem>
+              <NavItem eventKey={1}>
+                <NavLink to="/schedule">Terminarz</NavLink>
+              </NavItem>
+              <NavItem eventKey={2}>
+                <NavLink to="/table">Tabela</NavLink>
+              </NavItem>
+              <NavItem eventKey={4}>
+                <NavLink onClick={() => this.logout()} to="/login">
+                  Wyloguj
+                </NavLink>
+              </NavItem>
+              {/*<div className="flex" style={{ flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <NavLink to={"/panel/referee/" + this.props.user.id}>
+                  {this.props.user.firstName + " " + this.props.user.secondName}
+                </NavLink>
+        </div>*/}
+            </Nav>
+          </Navbar.Collapse>
+        );
       } else if (this.props.user.isCaptain) {
         return (
           <Navbar.Collapse>
