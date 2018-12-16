@@ -16,23 +16,20 @@ class PlayerList extends Component {
     shouldShowFilteredPlayers: false
   };
   async componentDidMount() {
-    await this.getPlayersWithoutTeam();
     await this.getJoinRequests();
+    await this.getPlayersWithoutTeam();
+  }
 
-    const p = this.state.playerWithoutTeam.filter(player => {
+  getPlayersWithoutTeam = async () => {
+    let playersWithoutTeam = await getData(`${ROUTES.PLAYERS}/without/team`);
+    const pu = playersWithoutTeam.filter(player => {
       const x = this.state.request.filter(r => {
         return r.player.id == player.id;
       });
 
       return !(x.length > 0);
     });
-    this.setState({ playerWithoutTeam: p });
-  }
-
-  getPlayersWithoutTeam = async () => {
-    let playersWithoutTeam = await getData(`${ROUTES.PLAYERS}/without/team`);
-    console.log(playersWithoutTeam);
-    this.setState({ playerWithoutTeam: playersWithoutTeam });
+    this.setState({ playerWithoutTeam: pu });
   };
 
   getJoinRequests = async () => {
@@ -53,6 +50,7 @@ class PlayerList extends Component {
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
       await this.getJoinRequests();
+      await this.getPlayersWithoutTeam();
     } catch (error) {
       console.log(error);
     }
@@ -67,8 +65,9 @@ class PlayerList extends Component {
       };
 
       console.log(objectToSend);
-
       await postDataWithResponse(ROUTES.INVITATIONS, objectToSend);
+      await this.getJoinRequests();
+      await this.getPlayersWithoutTeam();
       createNotification("success", "Niestety operacja nie udała się", "Zaproszenie zostało wysłane!");
     } catch (error) {
       createNotification("error", "Niestety operacja nie udała się", "Zaproszenie zostało wysłane!");

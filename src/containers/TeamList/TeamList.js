@@ -41,7 +41,8 @@ class TeamList extends Component {
   };
 
   getAllTeams = async () => {
-    let teams = await getData(`${ROUTES.TEAMS}`);
+    let teams = await getData(`${ROUTES.PLAYERS}/${this.props.loggedUser.id}/team/requests`);
+    console.log(teams);
     this.setState({ teamsForLeague: teams });
   };
 
@@ -60,8 +61,9 @@ class TeamList extends Component {
     try {
       await postDataWithoutResponse(`${ROUTES.INVITATIONS}/${invitationId}/reject`);
       await this.getInvitations();
+      await this.getAllTeams();
 
-      createNotification("success", "Niestety operacja nie udała się", "Zaproszenie zostało odrzucone!");
+      createNotification("success", "Zaproszenie zostało odrzucone!", "Zaproszenie zostało odrzucone!");
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +81,7 @@ class TeamList extends Component {
 
       await postDataWithResponse(ROUTES.INVITATIONS, objectToSend);
       createNotification("success", "Niestety operacja nie udała się", "Prośba została wysłana!");
+      this.getAllTeams();
     } catch (error) {
       createNotification("success", "Niestety operacja nie udała się", "Prośba została wysłana!");
       console.log(error);

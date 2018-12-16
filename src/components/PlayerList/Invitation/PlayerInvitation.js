@@ -10,10 +10,19 @@ const PlayerInvitation = props => {
           <div className="TeamInvitationName">{p.number} </div>
           <div className="TeamInvitationName">{p.firstName + " " + p.secondName}</div>
         </div>
-        <button onClick={() => props.onRequestTapped(p.id)} className="RequestButton">
-          {" "}
-          Zaproś do druzyny
-        </button>
+        {!p.isSent && (
+          <button onClick={() => props.onRequestTapped(p.id)} className="RequestButton">
+            {" "}
+            Zaproś do druzyny
+          </button>
+        )}
+
+        {p.isSent && (
+          <button disabled={true} className="RequestButton">
+            {" "}
+            Zaproszenie wysłane
+          </button>
+        )}
       </div>
     );
   });
