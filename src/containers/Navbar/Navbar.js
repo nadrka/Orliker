@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from "react-bootstrap";
 import soccerLogo from "../../assets/images/soccer-logo.png";
-import { Route, Link, NavLink, withRouter } from "react-router-dom";
+import { Route, Link, NavLink, withRouter, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import PlayerPanel from "../PlayerPanel/PlayerPanel";
 import Register from "../Register/RegisterBox/RegisterBox";
 import LeagueTable from "../LeagueTable/LeagueTable";
@@ -40,6 +41,27 @@ class NavigationBar extends Component {
     this.props.setUser(null);
     //this.props.history.push("/login");
   }
+
+  isNormalPlayer = () => {
+    return this.props.user != null && !this.props.user.isCaptain;
+  };
+
+  isCaptain = () => {
+    return this.props.user != null && this.props.user.isCaptain;
+  };
+
+  isReferee = () => {
+    return this.props.user != null && this.props.user.role === "Referee";
+  };
+
+  isAdmin = () => {
+    return this.props.user != null && this.props.user.role === "Admin";
+  };
+
+  redirectUnauthorizedUser = () => {
+    this.logout();
+    return <Redirect to="/login" />;
+  };
 
   navBar() {
     if (this.props.user) {
@@ -209,21 +231,46 @@ class NavigationBar extends Component {
           {this.navBar()}
         </Navbar>
         <Route path="/matchRequest" exact component={MatchRequest} />
-        <Route path="/match/enterResult/:id" exact component={RefereeMatchStatistics} />
+
         <Route path="/news" exact component={News} />
         <Route path="/singleNews/:id" exact component={SingleNews} />
+        <Route path="/addNews" exact component={AddNews} />
         <Route path="/panel/player/:id" exact component={PlayerPanel} />
         <Route path="/panel/team/:id" exact component={TeamPanel} />
         <Route path="/login" exact component={Register} />
         <Route path="/table" exact component={LeagueTable} />
         <Route path="/match/details/:id" exact component={Match} />
-        <Route path="/player/invitation" exact component={TeamList} />
-        <Route path="/team/invitation" exact component={PlayerList} />
         <Route path="/schedule" exact component={LeagueSchedule} />
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
-        <Route path="/matchInvitations" exact component={MatchInvitations} />
-        <Route path="/panel/referee/:id" exact component={RefereePanel} />
-        <Route path="/addNews" exact component={AddNews} />
+
+        {this.isNormalPlayer() ? (
+          <Route path="/player/invitation" exact component={TeamList} />
+        ) : (
+          this.redirectUnauthorizedUser()
+        )}
+
+        {this.isCaptain() ? (
+          <Route path="/team/invitation" exact component={PlayerList} />
+        ) : (
+          this.redirectUnauthorizedUser()
+        )}
+        {this.isCaptain() ? (
+          <Route path="/matchInvitations" exact component={MatchInvitations} />
+        ) : (
+          this.redirectUnauthorizedUser()
+        )}
+
+        {this.isReferee() ? (
+          <Route path="/match/enterResult/:id" exact component={RefereeMatchStatistics} />
+        ) : (
+          this.redirectUnauthorizedUser()
+        )}
+        {this.isReferee() ? (
+          <Route path="/panel/referee/:id" exact component={RefereePanel} />
+        ) : (
+          this.redirectUnauthorizedUser()
+        )}
+
         <Route path="/" exact component={Register} />
         <NotificationContainer />
       </div>
