@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import moment from "moment";
+import { Button } from "react-bootstrap";
 
 class News extends Component {
   state = {
@@ -39,20 +40,37 @@ class News extends Component {
   renderNewses = () => {
     const newses = this.state.news.map((news, i) => {
       return (
-        <div className="newsContainer">
-          <div className="newsHeader">{news.title}</div>
-          <div className="newsDate">{moment(news.dateOfPublication).format("DD.MM.YYYY HH:mm")}</div>
-          <div className="newsText">{this.trimText(news.content, news.id)}</div>
+        <div className="flex mainContainer">
+          <div className="newsContainer">
+            <div className="newsHeader">{news.title}</div>
+            <div className="newsDate">{moment(news.dateOfPublication).format("DD.MM.YYYY HH:mm")}</div>
+            <div className="newsText">{this.trimText(news.content, news.id)}</div>
+          </div>
         </div>
       );
     });
     return newses;
   };
 
+  renderButton() {
+    return (
+      <div className="flex buttonOnRight">
+        <Link to="/addNews">
+          <Button bsStyle="primary">Dodaj nowy post</Button>
+        </Link>
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div className="flex mainContainer">
-        <div className="header">Aktualności</div>
+      <div className="flex columnFlex">
+        <div className="flex topSection" style={{ justifyContent: "center" }}>
+          <div className="flex class">
+            <div className="bigFontBigMargin">Aktualności</div>
+          </div>
+          {this.renderButton()}
+        </div>
         {this.renderNewses()}
       </div>
     );

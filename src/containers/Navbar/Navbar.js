@@ -24,6 +24,7 @@ import MatchInvitations from "../MatchInvitations/MatchInvitations";
 import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndividualStatistics";
 import { NotificationContainer } from "react-notifications";
 import RefereePanel from "../RefereePanel/RefereePanel";
+import AddNews from "../AddNews/AddNews";
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -222,6 +223,7 @@ class NavigationBar extends Component {
         <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
         <Route path="/matchInvitations" exact component={MatchInvitations} />
         <Route path="/panel/referee/:id" exact component={RefereePanel} />
+        <Route path="/addNews" exact component={AddNews} />
         <Route path="/" exact component={Register} />
         <NotificationContainer />
       </div>

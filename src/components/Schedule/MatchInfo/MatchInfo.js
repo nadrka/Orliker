@@ -5,12 +5,11 @@ import "./MatchInfo.css";
 import { Link } from "react-router-dom";
 import moment from "moment";
 const matchInfo = props => {
+  let link = "/match/details/" + props.matchDetails.id;
+  if (props.referee) link = "/match/enterResult/" + props.matchDetails.id;
   return (
     <div className="MatchInfo">
-      <MatchDate
-        className="MatchDate"
-        date={moment(props.matchDetails.matchDate).format("DD.MM.YYYY HH:mm")}
-      />
+      <MatchDate className="MatchDate" date={moment(props.matchDetails.matchDate).format("DD.MM.YYYY HH:mm")} />
       <MatchResult
         className="MatchResult"
         homeTeam={props.matchDetails.homeTeam}
@@ -18,7 +17,7 @@ const matchInfo = props => {
       />
       <div>
         <Link
-          to={"/match/details/" + props.matchDetails.id}
+          to={link}
           className="btn btn-info btn-lg"
           style={{
             backgroundColor: "#d3d3d3",

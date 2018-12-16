@@ -7,7 +7,7 @@ const schedule = props => {
   });
 
   const upcomingMatches = props.upcomingMatches.map(match => {
-    return <MatchInfo key={match.id} matchDetails={match} />;
+    return <MatchInfo key={match.id} matchDetails={match} referee={props.referee} />;
   });
 
   let layout;

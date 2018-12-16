@@ -65,6 +65,7 @@ class RefereePanel extends Component {
         upcomingMatches={this.state.upcomingMatches}
         playedMatches={this.state.playedMatches}
         category={category}
+        referee={this.props.match.params.id == this.props.user.id}
       />
     );
   }
@@ -74,7 +75,14 @@ class RefereePanel extends Component {
       <div>
         <div className="PlayerPanel">
           <div className="ProfilePicture">
-            <img src={profilePicture} width="300" height="300" />
+            {this.state.referee && (
+              <img
+                src={"http://localhost:3000/" + this.state.referee.imgURL}
+                width="315"
+                height="300"
+                className="coverClass"
+              />
+            )}
           </div>
           <div>{this.refereeDetails()}</div>
         </div>
