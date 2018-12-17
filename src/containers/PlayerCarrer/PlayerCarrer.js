@@ -1,69 +1,29 @@
 import React, { Component } from "react";
 
 import "./PlayerCarrer.css";
+import { getData } from "../../utils/NetworkFunctions";
+import { ROUTES } from "../../utils/Constants";
 class PlayerCarrer extends Component {
   state = {
-    carrerStatistics: {
-      statistic: {
-        id: 1,
-        year: "2018/2019",
-        team: "Barcelona",
-        league: "La Liga",
-        matches: "20",
-        goals: "16",
-        assists: "5"
-      },
-      statistic2: {
-        id: 2,
-        year: "2017/2018",
-        team: "Barcelona",
-        league: "La Liga",
-        matches: "20",
-        goals: "16",
-        assists: "5"
-      },
-      statistic3: {
-        id: 3,
-        year: "2017/2018",
-        team: "Barcelona",
-        league: "La Liga",
-        matches: "20",
-        goals: "16",
-        assists: "5"
-      },
-      statistic4: {
-        id: 4,
-        year: "2017/2018",
-        team: "Barcelona",
-        league: "La Liga",
-        matches: "20",
-        goals: "16",
-        assists: "5"
-      },
-      statistic5: {
-        id: 5,
-        year: "2017/2018",
-        team: "Barcelona",
-        league: "La Liga",
-        matches: "20",
-        goals: "16",
-        assists: "5"
-      }
-    }
+    carrerStatistics: []
   };
+
+  async componentDidMount() {
+    const stats = await getData(`${ROUTES.PLAYERS}/${this.props.id}/historicStats`);
+    this.setState({ carrerStatistics: stats });
+  }
+
   render() {
-    const transformedCarrerStatistics = Object.keys({
-      ...this.state.carrerStatistics
-    }).map(key => {
-      let statistic = this.state.carrerStatistics[key];
+    const transformedCarrerStatistics = this.state.carrerStatistics.map(stats => {
       return (
-        <tr key={statistic.id}>
-          <td className="superTD">{statistic.year}</td>
-          <td>{statistic.team}</td>
-          <td>{statistic.league}</td>
-          <td>{statistic.matches}</td>
-          <td>{statistic.goals}</td>
-          <td>{statistic.assists}</td>
+        <tr key={stats.id}>
+          <td className="superTD">{stats.season.name}</td>
+          <td>{stats.team.name}</td>
+          <td>{stats.matches}</td>
+          <td>{stats.goals}</td>
+          <td>{stats.assists}</td>
+          <td>{stats.yellowsCards}</td>
+          <td>{stats.redCards}</td>
         </tr>
       );
     });
@@ -71,12 +31,13 @@ class PlayerCarrer extends Component {
       <table>
         <thead>
           <tr className="borderedTr">
-            <th className="superTD">Season</th>
-            <th>Team</th>
-            <th>League</th>
-            <th>Matches</th>
-            <th>Goals</th>
-            <th>Assists</th>
+            <th className="superTD">Sezon</th>
+            <th>Zespół</th>
+            <th>Mecze</th>
+            <th>Gole</th>
+            <th>Asysty</th>
+            <th>Żółte kartki</th>
+            <th>Czerwone kartki</th>
           </tr>
         </thead>
         <tbody>{transformedCarrerStatistics}</tbody>
