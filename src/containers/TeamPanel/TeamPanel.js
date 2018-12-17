@@ -9,10 +9,12 @@ import { getData, putData, putFormatData } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
 import { Glyphicon } from "react-bootstrap";
 import { connect } from "react-redux";
+import NewsComponent from "../../components/NewsComponent/NewsComponent";
 
 const MENUOPTIONS = {
   MATCHES: 0,
-  PLAYERS: 1
+  PLAYERS: 1,
+  NEWS: 2
 };
 
 class TeamPanel extends Component {
@@ -24,6 +26,7 @@ class TeamPanel extends Component {
       players: null,
       playedMatches: [],
       upcomingMatches: [],
+      news: [],
       lastMatch: null,
       canChange: false,
       isBeingChanged: false
@@ -36,6 +39,9 @@ class TeamPanel extends Component {
       const players = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/playersWithStats`);
       const upcomingMatches = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/matches/upcoming`);
       const playedMatches = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/matches/played`);
+      const news = await getData(`${ROUTES.TEAMS}/${this.props.match.params.id}/news`);
+      console.log(news);
+
       const lastMatch = playedMatches[0];
       this.setState({
         team: team,
@@ -43,7 +49,8 @@ class TeamPanel extends Component {
         playedMatches: playedMatches,
         upcomingMatches: upcomingMatches,
         lastMatch: lastMatch,
-        canChange: this.props.user && this.props.user.isCaptain && this.props.match.params.id == this.props.user.teamId
+        canChange: this.props.user && this.props.user.isCaptain && this.props.match.params.id == this.props.user.teamId,
+        news: news
       });
     } catch (error) {
       console.log(error);
@@ -77,6 +84,10 @@ class TeamPanel extends Component {
       return (
         <Schedule upcomingMatches={this.state.upcomingMatches} playedMatches={this.state.playedMatches} category={0} />
       );
+    } else if (this.state.option == MENUOPTIONS.NEWS) {
+      return this.state.news.map((news, i) => {
+        return <NewsComponent news={news} teamName={this.state.team.name} />;
+      });
     }
   }
   async handlePressedKey(e) {
@@ -174,8 +185,8 @@ class TeamPanel extends Component {
         </div>
         <div className="flex bottomSection">
           <PanelOptions
-            labels={["Mecze", "Zawodnicy"]}
-            options={[MENUOPTIONS.MATCHES, MENUOPTIONS.PLAYERS]}
+            labels={["Mecze", "Zawodnicy", "Aktualności"]}
+            options={[MENUOPTIONS.MATCHES, MENUOPTIONS.PLAYERS, MENUOPTIONS.NEWS]}
             fun={arg => {
               this.setState({ option: arg });
             }}

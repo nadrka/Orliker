@@ -6,6 +6,7 @@ import { ROUTES } from "../../utils/Constants";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import NewsComponent from "../../components/NewsComponent/NewsComponent";
 
 class News extends Component {
   state = {
@@ -18,35 +19,12 @@ class News extends Component {
 
   getAllNewses = async () => {
     let news = await getData(`${ROUTES.NEWSES}`);
-    console.log(news);
     this.setState({ news });
   };
 
-  trimText(text, id) {
-    if (text.length > 250) {
-      return (
-        <div>
-          {text.substring(0, 450) + "..."}{" "}
-          <Link className="linkContainer" to={"/singleNews/" + id}>
-            Zobacz więcej
-          </Link>
-        </div>
-      );
-    } else return text;
-  }
-
   renderNewses = () => {
     const newses = this.state.news.map((news, i) => {
-      return (
-        <div className="flex mainContainer">
-          <div className="newsContainer">
-            <div className="newsHeader">{news.title}</div>
-            <div className="newsDate">Autor: {news.team ? news.team.name : "Organizator"}</div>
-            <div className="newsDate">{moment(news.dateOfPublication).format("DD.MM.YYYY HH:mm")}</div>
-            <div className="newsText">{this.trimText(news.content, news.id)}</div>
-          </div>
-        </div>
-      );
+      return <NewsComponent news={news} />;
     });
     return newses;
   };
