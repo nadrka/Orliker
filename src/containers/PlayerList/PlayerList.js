@@ -7,6 +7,9 @@ import { getData, postDataWithResponse, postDataWithoutResponse } from "../../ut
 import { ROUTES } from "../../utils/Constants";
 import { createNotification } from "../../utils/Notification";
 import { connect } from "react-redux";
+import { isNormalPlayer, isCaptain } from "../../utils/Guard";
+import { setUser, setLeagues } from "../../actions/actions";
+import { Redirect } from "react-router-dom";
 
 class PlayerList extends Component {
   state = {
@@ -15,9 +18,27 @@ class PlayerList extends Component {
     request: [],
     shouldShowFilteredPlayers: false
   };
+
+  logout() {
+    this.props.setUser(null);
+    this.props.history.push("/login");
+  }
+
+  redirectUnauthorizedUser = () => {
+    this.logout();
+    createNotification(
+      "error",
+      "Próba przejścia do podstrony bez potrzebnej autoryzacji",
+      "Wyzwanie zostało poprawnie stworzone!"
+    );
+  };
   async componentDidMount() {
-    await this.getJoinRequests();
-    await this.getPlayersWithoutTeam();
+    if (isCaptain(this.props.loggedUser)) {
+      await this.getJoinRequests();
+      await this.getPlayersWithoutTeam();
+    } else {
+      this.redirectUnauthorizedUser();
+    }
   }
 
   getPlayersWithoutTeam = async () => {
@@ -115,4 +136,18 @@ const mapStateToProps = state => {
   return { loggedUser: state.user };
 };
 
-export default connect(mapStateToProps)(PlayerList);
+const mapDispatchToProps = dispatch => {
+  return {
+    setLeagues: leagues => {
+      dispatch(setLeagues(leagues));
+    },
+    setUser: user => {
+      dispatch(setUser(user));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerList);

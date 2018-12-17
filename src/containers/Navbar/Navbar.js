@@ -26,6 +26,7 @@ import LeagueIndividualStatistics from "../LeagueIndividualStatistics/LeagueIndi
 import { NotificationContainer } from "react-notifications";
 import RefereePanel from "../RefereePanel/RefereePanel";
 import AddNews from "../AddNews/AddNews";
+import { createNotification } from "../../utils/Notification";
 class NavigationBar extends Component {
   async componentDidMount() {
     try {
@@ -42,24 +43,13 @@ class NavigationBar extends Component {
     //this.props.history.push("/login");
   }
 
-  isNormalPlayer = () => {
-    return this.props.user != null && !this.props.user.isCaptain;
-  };
-
-  isCaptain = () => {
-    return this.props.user != null && this.props.user.isCaptain;
-  };
-
-  isReferee = () => {
-    return this.props.user != null && this.props.user.role === "Referee";
-  };
-
-  isAdmin = () => {
-    return this.props.user != null && this.props.user.role === "Admin";
-  };
-
   redirectUnauthorizedUser = () => {
     this.logout();
+    createNotification(
+      "error",
+      "Próba przejścia do podstrony bez potrzebnej autoryzacji",
+      "Wyzwanie zostało poprawnie stworzone!"
+    );
     return <Redirect to="/login" />;
   };
 
@@ -230,48 +220,39 @@ class NavigationBar extends Component {
           </Navbar.Header>
           {this.navBar()}
         </Navbar>
-        <Route path="/matchRequest" exact component={MatchRequest} />
+        <Switch>
+          <Route path="/matchRequest" exact component={MatchRequest} />
 
-        <Route path="/news" exact component={News} />
-        <Route path="/singleNews/:id" exact component={SingleNews} />
-        <Route path="/addNews" exact component={AddNews} />
-        <Route path="/panel/player/:id" exact component={PlayerPanel} />
-        <Route path="/panel/team/:id" exact component={TeamPanel} />
-        <Route path="/login" exact component={Register} />
-        <Route path="/table" exact component={LeagueTable} />
-        <Route path="/match/details/:id" exact component={Match} />
-        <Route path="/schedule" exact component={LeagueSchedule} />
-        <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
+          <Route path="/news" exact component={News} />
+          <Route path="/singleNews/:id" exact component={SingleNews} />
+          <Route path="/addNews" exact component={AddNews} />
+          <Route path="/panel/player/:id" exact component={PlayerPanel} />
+          <Route path="/panel/team/:id" exact component={TeamPanel} />
+          <Route path="/login" exact component={Register} />
+          <Route path="/table" exact component={LeagueTable} />
+          <Route path="/match/details/:id" exact component={Match} />
+          <Route path="/schedule" exact component={LeagueSchedule} />
+          <Route path="/league/statistics" exact component={LeagueIndividualStatistics} />
 
-        {this.isNormalPlayer() ? (
           <Route path="/player/invitation" exact component={TeamList} />
-        ) : (
-          this.redirectUnauthorizedUser()
-        )}
 
-        {this.isCaptain() ? (
+          {/* {this.isCaptain() ? ( */}
           <Route path="/team/invitation" exact component={PlayerList} />
-        ) : (
-          this.redirectUnauthorizedUser()
-        )}
-        {this.isCaptain() ? (
+          {/* // ) : (
+          //   this.redirectUnauthorizedUser()
+          // )} */}
+          {/* {this.isCaptain() ? ( */}
           <Route path="/matchInvitations" exact component={MatchInvitations} />
-        ) : (
-          this.redirectUnauthorizedUser()
-        )}
+          {/* // ) : (
+          //   this.redirectUnauthorizedUser()
+          // )} */}
 
-        {this.isReferee() ? (
           <Route path="/match/enterResult/:id" exact component={RefereeMatchStatistics} />
-        ) : (
-          this.redirectUnauthorizedUser()
-        )}
-        {this.isReferee() ? (
-          <Route path="/panel/referee/:id" exact component={RefereePanel} />
-        ) : (
-          this.redirectUnauthorizedUser()
-        )}
 
-        <Route path="/" exact component={Register} />
+          <Route path="/panel/referee/:id" exact component={RefereePanel} />
+
+          <Route path="/" exact component={Register} />
+        </Switch>
         <NotificationContainer />
       </div>
     );
