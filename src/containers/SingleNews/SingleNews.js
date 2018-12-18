@@ -13,12 +13,13 @@ class SingleNews extends Component {
     let news = await getData(`${ROUTES.NEWSES}/${this.props.match.params.id}`);
     this.setState({ currentNews: news });
   }
+
   render() {
     return (
       <div className="flex mainContainer">
         <div className="header">
           <Link
-            to="/news"
+            onClick={() => this.props.history.goBack()}
             className="btn btn-info btn-lg"
             style={{
               backgroundColor: "#d3d3d3",

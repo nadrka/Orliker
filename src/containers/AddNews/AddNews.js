@@ -7,11 +7,12 @@ import { connect } from "react-redux";
 class AddNews extends Component {
   async submit(event) {
     event.preventDefault();
-    postDataWithoutResponse(
+    await postDataWithoutResponse(
       ROUTES.NEWSES,
       { title: event.target.elements.title.value, content: event.target.elements.content.value },
       { Authorization: this.props.user.token }
     );
+    this.props.history.goBack();
   }
 
   render() {

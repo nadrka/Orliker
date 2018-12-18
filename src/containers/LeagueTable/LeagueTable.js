@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./LeagueTable.css";
 import { Link } from "react-router-dom";
 import { LEAGUEOPTIONS } from "../LeagueSchedule/LeagueSchedule";
-import { DropdownButton, MenuItem } from "react-bootstrap";
+import { DropdownButton, MenuItem, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getData, postDataWithResponse } from "../../utils/NetworkFunctions";
 import { ROUTES } from "../../utils/Constants";
@@ -23,6 +23,11 @@ const customStyles = {
     height: "45%",
     width: "35%"
   }
+};
+const CANCHANGESEASON = {
+  NO: 0,
+  CANEND: 1,
+  CANSTART: 2
 };
 Modal.setAppElement(App);
 class LeagueTable extends Component {
@@ -49,12 +54,14 @@ class LeagueTable extends Component {
       secondName: ""
     },
     modalIsOpen: false,
-    startDate: new Date()
+    startDate: new Date(),
+    canChangeSeason: CANCHANGESEASON.NO
   };
 
   componentDidMount() {
     this.getTeamsAllStadiums();
     this.getTeamsAllReferees();
+    this.getCurrentSeason();
     if (this.props.leagues.length > 0) {
       this.setState({ league: this.props.leagues[0].id });
     }
@@ -63,6 +70,17 @@ class LeagueTable extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.league !== this.state.league) this.getTeamsForLeague(this.state.league);
     if (!prevState.league && this.props.leagues.length > 0) this.setState({ league: this.props.leagues[0].id });
+  }
+
+  async getCurrentSeason() {
+    const season = await getData(`${ROUTES.SEASONS}/currentSeason`);
+    let canChange = CANCHANGESEASON.NO;
+    if (season) {
+      if (moment().isAfter(moment(season.endDate))) canChange = CANCHANGESEASON.CANEND;
+    } else {
+      canChange = CANCHANGESEASON.CANSTART;
+    }
+    this.setState({ canChangeSeason: canChange });
   }
 
   async getTeamsForLeague(id) {
@@ -190,6 +208,19 @@ class LeagueTable extends Component {
     return toRender;
   }
 
+  startEndLeagueButtons() {
+    if (this.props.user && this.props.user.role === "Admin")
+      return (
+        <div className="flex buttonOnRight">
+          {this.state.canChangeSeason === CANCHANGESEASON.CANSTART && (
+            <Button bsStyle="success">Rozpocznij nowy sezon</Button>
+          )}
+          {this.state.canChangeSeason === CANCHANGESEASON.CANEND && <Button bsStyle="danger">Zakończ sezon</Button>}
+        </div>
+      );
+    return null;
+  }
+
   render() {
     return (
       <div>
@@ -206,6 +237,7 @@ class LeagueTable extends Component {
                   );
                 })}
               </DropdownButton>
+              {this.startEndLeagueButtons()}
             </div>
           </div>
         </div>
